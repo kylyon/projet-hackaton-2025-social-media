@@ -1,16 +1,12 @@
 name: "Deploiement CI/CD"
 
-
 on:
   push:
     branches: 
       - main
-      - dancodeur
   pull_request:
     branches:
       - main
-      - dancodeur
-
 jobs:
 
 # Deploiement du frontend

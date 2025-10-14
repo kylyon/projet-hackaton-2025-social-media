@@ -80,7 +80,19 @@ npm run dev # Démarrage du serveur
 #### Backend: `backend/`
 
 ```shell
-npm start # Démarrage du serveur
+npm run start # Démarrage du serveur (prod)
+npm run dev # Démarrage du serveur avec auto-reload (dev)
+```
+
+### Commande utile
+
+```shell
+# Backend
+- Test unitaire : npm run test 
+
+# Frontend
+- Test unitaire : npm run test 
+- Check code quality : npm run lint
 ```
 
 ## Contributeurs
