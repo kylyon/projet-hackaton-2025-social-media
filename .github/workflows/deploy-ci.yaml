@@ -3,9 +3,13 @@ name: "Deploiement CI/CD"
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
+      - dancodeur
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+      - dancodeur
 
 jobs:
 
