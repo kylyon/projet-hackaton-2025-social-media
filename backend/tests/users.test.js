@@ -10,6 +10,6 @@ describe('GET /', () => {
     const response = await request(app).get('/'); 
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: 'User route is working!' });
+    expect(response.body).toEqual({ message: "User route is working", status: "200" });
   });
 });
