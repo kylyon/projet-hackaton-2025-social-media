@@ -1,7 +1,15 @@
 {
   "version": 2,
-  "public": false,
-  "github": {
-    "enabled": false
-  }
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ]
 }

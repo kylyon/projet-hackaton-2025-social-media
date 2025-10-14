@@ -1,6 +1,6 @@
 # projet-hackaton-2025-social-media
 
-Création d'un réseau social du style twiter
+Création d'un réseau social du style **X**
 
 ## 🎯 Objectifs
 - Manipulations avancées en JavaScript / Node.js Gestion du déploiement, 
@@ -10,16 +10,17 @@ Création d'un réseau social du style twiter
 ## 🧰 Technologies
  
 ### Frontend
-- Vue /Nuxt
+- Vue
 - Tailwind css
 - GSAP (Optionel)
 
 ### Backend
-- Express , Moongose, 
+- Express
+- Moongose 
 - Node.js
 - Cors
 
-### Versionning && CI/CD
+### Versioning & CI/CD
 - Github
 - Github Actions
 
@@ -29,39 +30,69 @@ Création d'un réseau social du style twiter
 
 git clone https://github.com/kylyon/projet-hackaton-2025-social-media.git
 
+cd projet-hackaton-2025-social-media
+
 ```
 
 ### Arborescence
 
 ```shell
+ls
 
-|_projet-hackaton-2025-social-media
+projet-hackaton-2025-social-media
 |
-|____backend
+|___.github\workflows
+|
+|___backend
 |           
-|____frontend
+|___frontend
 |           
 |
-|_.gitignore
+|.gitignore
 |
-|_README.md
-
-cd projet-hackaton-2025-social-media
+|README.md
 
 ```
 
-## Lancement du projet
+## Installation des dépendances
 
 ```shell
 
-cd projet-hackaton-2025-social-media/backend && npm install
+# Backend
 
-cd projet-hackaton-2025-social-media/frontend && npm install
+cd backend 
+npm install
 
-/backend && npm start
-/frontend && npm run dev 
+# Frontend
+cd frontend
+npm install
 
+```
 
+### Démmarrage du projet
+
+#### Frontend: `fronted/`
+
+```shell
+npm run dev # Démarrage du serveur
+```
+
+#### Backend: `backend/`
+
+```shell
+npm run start # Démarrage du serveur (prod)
+npm run dev # Démarrage du serveur avec auto-reload (dev)
+```
+
+### Commande utile
+
+```shell
+# Backend
+- Test unitaire : npm run test 
+
+# Frontend
+- Test unitaire : npm run test 
+- Check code quality : npm run lint
 ```
 
 ## Contributeurs
