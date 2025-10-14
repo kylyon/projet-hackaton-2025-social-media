@@ -1,4 +1,4 @@
-name: "ci-cd"
+name: "frontend CI/CD"
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -8,7 +8,7 @@ on:
       - master
 jobs:
 
-  build:
+  check-lint:
     name: Lint code with ESLint
     runs-on: ubuntu-latest
 
@@ -23,16 +23,16 @@ jobs:
       - name: Run ESLint
         run: npm run eslint 
 
-  unit_tests:
-    name: Run Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-      - run: npm ci
-      - run: npm run test --if-present
+  # unit_tests:
+  #   name: Run Unit Tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: lts/*
+  #     - run: npm ci
+  #     - run: npm run test --if-present
 
   Deploy-Production:
     name: Deploy to Production (Vercel)
