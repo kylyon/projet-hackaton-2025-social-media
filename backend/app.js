@@ -26,5 +26,5 @@ app.get("/", (req, res) => {
   res.status(200).send({ message: "API Hackathon 2025 is running", status: "200" });
 }); 
 
-module.exports = app // Export de l'application pour l'utiliser dans server.js
+module.exports = app;
 
