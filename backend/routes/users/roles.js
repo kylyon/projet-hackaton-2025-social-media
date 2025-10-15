@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getRoles } = require("../controllers/rolesControllers");
+const { getRoles } = require("../../controllers/users/rolesControllers");
 
 /**
  * @swagger
