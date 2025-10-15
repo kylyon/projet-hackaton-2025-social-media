@@ -1,1 +1,1 @@
-<!--User section : Avatar, nom prénom username, hobbie-->
+<!--Avatar, nom prénom username, hobbie-->

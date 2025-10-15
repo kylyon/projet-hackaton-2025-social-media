@@ -1,35 +1,19 @@
 <template>
   <main class="flex flex-col justify-center">
-     <checkBackendApi />
+     <LabelInput label="Email" placeholder="Entrez votre nom" v-model="name" />
+     <LabelInput label="Mot de passe" placeholder="Entrez votre email" v-model="email" />
+    <AppButton label="Connexion" @click="login" />
 
-     <!--Intégration du Menu avec Headless UI -->
-  <Menu>
-    <MenuButton>Options</MenuButton>
-    <MenuItems>
-      <!-- Use the `active` state to conditionally style the active item. -->
-      <MenuItem
-        v-for="link in links"
-        :key="link.href"
-        as="template"
-        v-slot="{ active }"
-      >
-        <a
-          :href="link.href"
-          :class="{ 'bg-blue-500 text-white': active, 'bg-white text-black': !active }"
-        >
-          {{ link.label }}
-        </a>
-      </MenuItem>
-    </MenuItems>
-  </Menu>
+
 
   </main>
 </template>
 
 <script setup>
 
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import checkBackendApi from './components/checkBackendApi.vue';
+import LabelInput from './components/LabelInput.vue';
+import AppButton from './components/Button.vue';
+
 
 
 const links = [
