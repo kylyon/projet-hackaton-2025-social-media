@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-export default class DB
+class DB
 {
     static #_db;
     static #instance = null
@@ -38,3 +38,5 @@ export default class DB
 
     
 }
+
+module.exports = DB;
