@@ -43,8 +43,8 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-args: '--prod'
           working-directory: ./frontend
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.FRONTEND_VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.FRONTEND_VERCEL_ORG_ID }}
 
 # Deploiement du backend
 
@@ -76,5 +76,5 @@ jobs:
             vercel-token: ${{ secrets.VERCEL_TOKEN }}
             vercel-args: '--prod'
             working-directory: ./backend
-            vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-            vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+            vercel-project-id: ${{ secrets.BACKEND_VERCEL_PROJECT_ID }}
+            vercel-org-id: ${{ secrets.BACKEND_VERCEL_ORG_ID}}
