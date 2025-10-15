@@ -13,7 +13,7 @@ const swaggerDefinition = {
       url: `http://localhost:${process.env.PORT || 3000}`,
     },
     {
-      url: `https://hackaton-backend-api.vercel.app:${process.env.PORT || 3000}`,
+      url: `/`,
     }
   ],
 };
