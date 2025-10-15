@@ -1,20 +1,19 @@
 <template>
   <main class="flex flex-col justify-center">
-    <LoginCard />
-     <Footer />
+     <LabelInput label="Email" placeholder="Entrez votre nom" v-model="name" />
+     <LabelInput label="Mot de passe" placeholder="Entrez votre email" v-model="email" />
+    <AppButton label="Connexion" @click="login" />
 
-     <!--Intégration du Menu avec Headless UI -->
-  
+
 
   </main>
 </template>
 
 <script setup>
 
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import LoginCard from './components/LoginCard.vue';
-import Footer from './components/Footer.vue';
-import Login from './pages/Login.vue';
+import LabelInput from './components/LabelInput.vue';
+import AppButton from './components/Button.vue';
+
 
 
 const links = [
