@@ -26,8 +26,12 @@ if (process.env.NODE_ENV !== "test") {
 
 // Import des routes
 
-const userRoutes = require("./routes/users/roles");
-app.use("/roles", userRoutes);
+const userRoutes = require("./routes/users/users");
+const rolesRoutes = require("./routes/roles/roles");
+
+app.use("/users", userRoutes);
+app.use("/roles", rolesRoutes);
+
 app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions)); 
 
 
