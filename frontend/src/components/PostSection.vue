@@ -1,0 +1,1 @@
+<!--Un container qui va contenir tous les posts-->
