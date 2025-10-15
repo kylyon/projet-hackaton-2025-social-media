@@ -6,7 +6,8 @@ const DB = require("./utils/dbhandler");
 
 // Integration de Swagger pour la documentation de l'API
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./swagger');
+const {swaggerSpec, swaggerUiOptions} = require('./swagger');
+
 
 
 const app = express()
@@ -22,11 +23,12 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 
+
 // Import des routes
 
 const userRoutes = require("./routes/users/roles");
 app.use("/roles", userRoutes);
-app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); 
+app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions)); 
 
 
 app.get("/", (req, res) => {
