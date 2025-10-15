@@ -48,10 +48,10 @@ onMounted(async () => {
 
 // Exemple Get multiple data from more endpoints
 const urls = [
-  "http://localhost:3000/comments",
-  "http://localhost:3000/users",
-  "http://localhost:3000/roles",
-  "http://localhost:3000/hobbies"
+  `${url}/comments`,
+  `${url}/users`,
+  `${url}/roles`,
+  `${url}/hobbies`
 ];
 
 onMounted(async () => {
