@@ -9,9 +9,9 @@ const swaggerDefinition = {
     description: 'Documentation de l\'API pour le projet hackaton 2025',
   },
   servers: [
-    // {
-    //   url: `http://localhost:${process.env.PORT || 3000}`,
-    // },
+    {
+      url: `http://localhost:${process.env.PORT || 3000}`,
+    },
     {
       url: `https://hackaton-backend-api.vercel.app:${process.env.PORT || 3000}`,
     }
