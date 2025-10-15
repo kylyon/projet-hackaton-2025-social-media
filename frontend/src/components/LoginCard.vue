@@ -6,7 +6,7 @@
             </form>
 
             <div className="max-w-sm mx-auto p-6">
-                <p>Pas de compte ? <a href="#">S'inscrire</a></p>
+                <p>Pas de compte ? <a class="hover:underline" href="#">S'inscrire</a></p>
             </div>
         </div>
 
