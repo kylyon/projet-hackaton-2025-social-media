@@ -4,8 +4,6 @@ const authMiddleware = async (req, res, next) =>
 {
     const token = req.cookies?.auth_token;
 
-    console.log(req.cookie)
-
     if(!token) return res.status(400).json({message: "Token manquant"});
 
     const entry = await AuthToken.getAuthToken(token);
@@ -17,7 +15,7 @@ const authMiddleware = async (req, res, next) =>
         return res.status(400).json({message: "Token expiré"});
     }
 
-    req.user = entry.user
+    req.user = entry.user;
     next()
 }
 

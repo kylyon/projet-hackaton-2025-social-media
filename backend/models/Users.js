@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import crypto from "crypto"
 
 const tokenSchema = new mongoose.Schema(
     {
@@ -47,9 +48,18 @@ export default class User
         this.#_adressesList = adressesList;
         this.#_password = password;
         this.#_role = "user";
+
+        //Generate UUID
+        const salt = crypto.randomBytes(16)
+        this.#_uuid = crypto.createHmac("sha512", salt).update(email + fisrtname + lastname + username).digest("hex")
     }
 
     //Getter
+
+    get uuid()
+    {
+        return this.#_uuid;
+    }
 
     get username()
     {
@@ -121,6 +131,7 @@ export default class User
     {
         try {
             const userDB = await UserModel.create({
+                uuid: this.#_uuid,
                 email: this.#_email, 
                 fisrtname : this.#_firstname , 
                 lastname : this.#_lastname, 
@@ -131,9 +142,9 @@ export default class User
                 role : this.#_role 
             })
 
-
-
-            return true;
+            const user = userDB.toJSON()
+            delete user.password
+            return user;
         } catch (error) {
             console.error("Erreur lors de la création de l'utilisateur dans la base de données", error)
             return false
