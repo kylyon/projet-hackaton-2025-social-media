@@ -1,11 +1,12 @@
 <template>
   <div>
-    <h1>Page Login</h1>
-    <p>Connecte toi !</p>
+    <LoginCard />
   </div>
 </template>
 
 <script>
+import LoginCard from '../components/LoginCard.vue';
+
 export default {
   name: "Profile",
 }
