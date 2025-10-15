@@ -19,6 +19,8 @@ Création d'un réseau social du style **X**
 - Moongose 
 - Node.js
 - Cors
+- Swagger-jsdoc
+- Swagger-ui-express
 
 ### Versioning & CI/CD
 - Github
