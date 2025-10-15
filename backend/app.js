@@ -28,9 +28,15 @@ if (process.env.NODE_ENV !== "test") {
 
 const userRoutes = require("./routes/users/users");
 const rolesRoutes = require("./routes/roles/roles");
+const hobbiesRoutes = require("./routes/hobbies/hobbies");
+const commentsRoutes = require("./routes/comments/comments");
 
+// Utilisation des routes
+
+app.use("/hobbies", hobbiesRoutes);
 app.use("/users", userRoutes);
 app.use("/roles", rolesRoutes);
+app.use("/comments", commentsRoutes);
 
 app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions)); 
 

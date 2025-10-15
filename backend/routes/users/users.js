@@ -23,7 +23,7 @@ router.get('/', getUsers);
 
 /**
  * @swagger
- * /users:
+ * /users/add:
  *   post:
  *     summary: Crée un nouvel utilisateur
  *     tags: [Users]
@@ -31,11 +31,11 @@ router.get('/', getUsers);
  *       200:
  *         description: Liste des utilisateurs
  */
-router.post('/', createUsers);
+router.post('/add', createUsers);
 
 /**
  * @swagger
- * /users:
+ * /users/1:
  *   get:
  *     summary: Récupère un utilisateur par ID
  *     tags: [Users]
@@ -48,7 +48,7 @@ router.get('/:id', getUsersById);
 
 /**
  * @swagger
- * /users:
+ * /users/update/1:
  *   put:
  *     summary: Met à jour un utilisateur par ID
  *     tags: [Users]
@@ -56,12 +56,12 @@ router.get('/:id', getUsersById);
  *       200:
  *         description: Mise à jour de l'utilisateur
  */
-router.put('/:id', updatesUsers);
+router.put('/update/:id', updatesUsers);
 
 
 /**
  * @swagger
- * /users:
+ * /users/delete/{id}:
  *   delete:
  *     summary: Supprime un utilisateur par ID
  *     tags: [Users]
@@ -69,6 +69,6 @@ router.put('/:id', updatesUsers);
  *       200:
  *         description: Utilisateur supprimé
  */
-router.delete('/:id', deleteUsers);
+router.delete('/delete/:id', deleteUsers);
 
 module.exports = router;

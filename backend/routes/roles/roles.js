@@ -9,7 +9,7 @@ const {
 
 /**
  * @swagger
- * /roles:
+ * /roles/:
  *   get:
  *     summary: Récupère la liste des rôles
  *     tags: [Roles]
@@ -21,7 +21,7 @@ router.get('/', getRoles);
 
 /**
  * @swagger
- * /roles:
+ * /roles/add:
  *   post:
  *     summary: Crée un nouveau rôle
  *     tags: [Roles]
@@ -29,11 +29,11 @@ router.get('/', getRoles);
  *       200:
  *         description: création du rôle
  */
-router.post('/', createRoles);
+router.post('/add', createRoles);
 
 /**
  * @swagger
- * /roles:
+ * /roles/update/1:
  *   put:
  *     summary: Met à jour un rôle
  *     tags: [Roles]
@@ -41,11 +41,11 @@ router.post('/', createRoles);
  *       200:
  *         description: rôle mis à jour
  */
-router.put('/:id', updateRoles);
+router.put('/update/:id', updateRoles);
 
 /**
  * @swagger
- * /roles:
+ * /roles/delete/1:
  *   delete:
  *     summary: Supprime un rôle
  *     tags: [Roles]
@@ -53,6 +53,6 @@ router.put('/:id', updateRoles);
  *       200:
  *         description: rôle supprimé
  */
-router.delete('/:id', deleteRoles);
+router.delete('/delete/:id', deleteRoles);
 
 module.exports = router;
