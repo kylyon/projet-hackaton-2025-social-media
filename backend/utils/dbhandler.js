@@ -36,6 +36,17 @@ class DB
         }
     }
 
+    /*static async query(searchQuery)
+    {
+        if(DB.#instance) throw new Error("La base de données n'est pas connectée");
+
+        try {
+            const res = 
+        } catch (error) {
+            
+        }
+    }*/
+
     
 }
 

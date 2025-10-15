@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
     {
+        uuid: { type: String, required: true, unique: true },
         email : { type: String, required: true, unique: true },
         fisrtname: String,
         lastname: String,
-        username: String,
+        username: { type: String, required: true, unique: true },
         avatar: String,
         adressesList: Array,
         password: String,
@@ -18,7 +19,7 @@ const UserModel = mongoose.model("User", userSchema);
 
 export default class User
 {
-    #_id
+    #_uuid
     #_email;
     #_firstname;
     #_lastname;
@@ -39,6 +40,8 @@ export default class User
         this.#_password = password;
         this.#_role = "user";
     }
+
+    //Getter
 
     get username()
     {
@@ -79,6 +82,20 @@ export default class User
     {
         return this.#_role
     }
+
+    //Static methods
+
+    static async findUser(userInfo)
+    {
+        try {
+            const userDB = await UserModel.find(userInfo)
+            return userDB.length > 0 ? userDB : null
+        } catch (error) {
+            console.log("[Error user]",error)
+        }
+    }
+
+    //Instance methods
 
     async createUserDB()
     {
