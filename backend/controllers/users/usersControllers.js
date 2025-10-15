@@ -10,6 +10,7 @@ const createUsers = (req, res) => {
 
 // Get user by ID
 const getUsersById = (req, res) => {
+  res.json({user: req.user})
   res.status(200).json({ message: "User by ID route is working", status: "200" });
 };
 

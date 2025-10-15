@@ -1,23 +1,23 @@
 const { default: AuthToken } = require("../models/Token");
 
-const authMiddleware = (req, res, next) =>
+const authMiddleware = async (req, res, next) =>
 {
-    const token = req.cookie?.auth_token;
+    const token = req.cookies?.auth_token;
 
     console.log(req.cookie)
 
     if(!token) return res.status(400).json({message: "Token manquant"});
 
-    const entry = AuthToken.getAuthToken(token);
+    const entry = await AuthToken.getAuthToken(token);
     if(!entry) return res.status(400).json({message: "Token invalide"});
 
     if(Date.now() > entry.expiresAt)
     {
-        AuthToken.deleteAuthToken(token);
+        await AuthToken.deleteAuthToken(token);
         return res.status(400).json({message: "Token expiré"});
     }
 
-    req.user = {userId: entry.userId}
+    req.user = entry.user
     next()
 }
 

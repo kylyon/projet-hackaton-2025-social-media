@@ -29,13 +29,13 @@ if (process.env.NODE_ENV !== "test") {
 
 const userRoutes = require("./routes/users/users");
 const rolesRoutes = require("./routes/roles/roles");
+const authRoutes = require("./routes/users/auth")
 
 app.use("/users", userRoutes);
 app.use("/roles", rolesRoutes);
+app.use("/auth", authRoutes)
 
 app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions)); 
-app.use("/roles", userRoutes);
-app.use("/auth", authRoutes)
 
 
 app.get("/", (req, res) => {

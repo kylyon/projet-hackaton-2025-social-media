@@ -1,37 +1,36 @@
 import mongoose from "mongoose";
 import crypto from "crypto"
+import User from "./Users.js";
 
-const tokenSchema = new mongoose.Schema(
-    {
-        token: { type: String, required: true, unique: true },
-        userId: { type: String, required: true },
-        expiresAt: String
-    }
-);
+/*const TokenModel = mongoose.model("Token", tokenSchema);*/
 
-const TokenModel = mongoose.model("Token", tokenSchema);
-
-const generateToken = () => 
+const generateToken = (userId, userAgent) => 
 {
-    return crypto.randomBytes(32).toString("hex")
+    const salt = crypto.randomBytes(16)
+    const hash = crypto.createHmac("sha512", salt).update(userId+userAgent).digest("hex");
+    return {salt: salt.toString("hex"), hash}
 }
 
 export default class AuthToken
 {
-    static async createAuthToken(userId, ttl = 3600)
+    static async createAuthToken(userId, userAgent, ttl = 3600)
     {
-        const token = generateToken();
+        const tokenId = generateToken(userId, userAgent).hash;
         const expiresAt = Date.now() * 1000 * ttl
 
         try
         {
-            const tokenDB = await TokenModel.create({
-                token, 
+            const tokenDB = await User.updateUser(
                 userId,
-                expiresAt
-            })
+                {
+                    token : {
+                        tokenId, 
+                        expiresAt
+                    }
+                    
+                })
 
-            return {token, expiresAt}
+            return {tokenId, expiresAt}
         }catch(error)
         {
             console.error("Error", error)
@@ -43,13 +42,13 @@ export default class AuthToken
     {
         try
         {
-            const tokenDB = await TokenModel.find(
+            const tokenDB = await User.findUser(
                 {
-                    token
+                    "token.tokenId": token
                 }
             )
 
-            return tokenDB.length ? tokenDB[0] : null
+            return tokenDB.length ? { token: tokenDB[0].token.tokenId, user:tokenDB[0], expiresAt : tokenDB[0].token.expiresAt } : null
         }catch(error)
         {
             console.error("[Token Error]", error)
@@ -60,13 +59,22 @@ export default class AuthToken
     {
         try
         {
-            const tokenDB = await TokenModel.findOneAndDelete(
+            const userDB = await User.findUser(
                 {
-                    token
+                    "token.tokenId": token
                 }
             )
 
-            return tokenDB
+            if(userDB.length){
+                await User.updateUser(
+                userDB[0].uuid,
+                {
+                    $unset : {"token" : 1}
+                    
+                })
+            }
+
+            return userDB[0]
         }catch(error)
         {
             console.error("[Token Error]", error)

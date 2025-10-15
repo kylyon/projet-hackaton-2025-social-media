@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+const tokenSchema = new mongoose.Schema(
+    {
+        tokenId: { type: String, required: true, unique: true },
+        userId: { type: String, required: true },
+        expiresAt: String
+    }
+);
+
 const userSchema = new mongoose.Schema(
     {
         uuid: { type: String, required: true, unique: true },
@@ -11,7 +19,7 @@ const userSchema = new mongoose.Schema(
         adressesList: Array,
         password: String,
         role: String,
-
+        token : tokenSchema
     }
 );
 
@@ -89,6 +97,18 @@ export default class User
     {
         try {
             const userDB = await UserModel.find(userInfo)
+            return userDB.length > 0 ? userDB : null
+        } catch (error) {
+            console.log("[Error user]",error)
+        }
+    }
+
+    static async updateUser(userId, updatedFields)
+    {
+        try {
+            const userDB = await UserModel.findOneAndUpdate({uuid:userId}, 
+                updatedFields
+            )
             return userDB.length > 0 ? userDB : null
         } catch (error) {
             console.log("[Error user]",error)

@@ -9,6 +9,9 @@ const {
   deleteUsers
 } = require("../../controllers/users/usersControllers.js");
 
+
+const { authMiddleware } = require("../../middleware/authMiddleware")
+
 /**
  * @swagger
  * /users:
@@ -44,7 +47,7 @@ router.post('/', createUsers);
  *         description: Détails de l'utilisateur
  */
 
-router.get('/:id', getUsersById);
+router.get('/:id', authMiddleware, getUsersById);
 
 /**
  * @swagger
