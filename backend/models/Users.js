@@ -139,6 +139,7 @@ export default class User
     //Static methods
 
     /**
+<<<<<<< HEAD
      * Insert the user in the database
      * @returns the user JSON object from MongoDB or false
      */
@@ -168,6 +169,8 @@ export default class User
     }
 
     /**
+=======
+>>>>>>> 9d66de0 (Add comments to code + Hobbies models and controllers)
      * Find users
      * @param {Object} userInfo - The JSON object filter fields
      * @returns an array of Users
@@ -220,6 +223,10 @@ export default class User
 
     //Instance methods
 
+    /**
+     * Insert the user in the database
+     * @returns the user JSON object from MongoDB or false
+     */
     async createUserDB()
     {
         try {

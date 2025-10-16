@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const Hobby  = require("../../models/Hobbies");
+=======
+const { Hobby } = require("../../models/Hobbies");
+>>>>>>> 9d66de0 (Add comments to code + Hobbies models and controllers)
 
 // Get all hobbies
 const getHobbies = async (req, res) => {
