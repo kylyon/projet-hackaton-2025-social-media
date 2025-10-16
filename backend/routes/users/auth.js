@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const { userLogin, userLogout, userRegister } = require("../../controllers/auth/authController")
+const { userLogin, userLogout, userRegister, getAuthToken } = require("../../controllers/auth/authController")
 
 /**
  * @swagger
@@ -38,6 +38,19 @@ router.post('/logout', userLogout);
  *         description: L'utilisateur est créé en base de données
  */
 router.post('/register', userRegister);
+
+
+/**
+ * @swagger
+ * /auth/get_token:
+ *   post:
+ *     summary: Crée un nouvel utilisateur
+ *     tags: [Authentification]
+ *     responses:
+ *       200:
+ *         description: L'utilisateur est créé en base de données
+ */
+router.post('/get_token', getAuthToken);
 
 
 

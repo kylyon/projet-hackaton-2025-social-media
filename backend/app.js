@@ -23,8 +23,6 @@ if (process.env.NODE_ENV !== "test") {
   const db = DB.connect();
 }
 
-
-
 // Import des routes
 
 const userRoutes = require("./routes/users/users");

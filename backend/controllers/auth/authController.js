@@ -34,12 +34,13 @@ const userLogin = async (req, res) => {
 }
 
 const userLogout = async (req, res) => {
-    const token = req.cookies?.auth_token;
+    const auth = req.headers.authorization || "";
+    const token = auth.startsWith("Bearer ") ? auth.slice(7) : req.cookies?.auth_token;
     let user = null
 
     if(token) user = await AuthToken.deleteAuthToken(token);
     res.clearCookie("auth_token");
-    res.status(200).json({message: "Déconnecté", user : user, token: token})
+    res.status(200).json({message: "Déconnecté !", user , token})
 }
 
 const userRegister = async (req, res) => 
@@ -57,8 +58,24 @@ const userRegister = async (req, res) =>
     }
 }
 
+const getAuthToken = async (req, res) => 
+{
+    const { tokenId } = req.body
+
+    try
+    {
+        const token = await AuthToken.getAuthToken(tokenId)
+
+       return res.status(200).json({token})
+    }catch(error)
+    {
+        return res.status(401).json({error})
+    }
+}
+
 module.exports = {
   userLogin, 
   userLogout,
-  userRegister
+  userRegister,
+  getAuthToken,
 };

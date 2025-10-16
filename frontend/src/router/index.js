@@ -5,6 +5,9 @@ import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
 
+//Import des middelware
+import {authMiddleware} from '@/middleware/authMiddleware'
+
 const routes = [
   {
     path: '/',
@@ -14,7 +17,10 @@ const routes = [
   {
     path: '/profil',
     name: 'profil',
-    component: Profile
+    component: Profile,
+    meta : {
+      middleware: [authMiddleware]
+    }
   },
   {
     path: '/register',
