@@ -1,14 +1,10 @@
 <template>
-  <div>
+  <main class="max-w-6xl mx-auto px-4">
     <Header />
     <router-view />
-  </div>
+  </main>
 </template>
 
-
 <script setup>
-
-import Header from './components/Header.vue';
-
-
+import Header from './components/Header.vue'
 </script>
