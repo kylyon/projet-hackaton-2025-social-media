@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-const mongoose = require("mongoose"); 
-=======
 import mongoose from 'mongoose'
->>>>>>> 9d66de0 (Add comments to code + Hobbies models and controllers)
-=======
-import mongoose from 'mongoose'
->>>>>>> 52da464 (Add comments to code + Hobbies models and controllers)
 
 //Modele de schema MongoDB pour les utilisateurs
 const hobbySchema = new mongoose.Schema(
@@ -17,15 +9,7 @@ const hobbySchema = new mongoose.Schema(
 
 const HobbyModel = mongoose.model("Hobby", hobbySchema);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-class Hobby
-=======
 export class Hobby
->>>>>>> 9d66de0 (Add comments to code + Hobbies models and controllers)
-=======
-export class Hobby
->>>>>>> 52da464 (Add comments to code + Hobbies models and controllers)
 {
     //Static methods
     
@@ -69,14 +53,4 @@ export class Hobby
             return new Error("Erreur lors de la suppression de hobby")
         }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
-
-module.exports=Hobby
-=======
-}
->>>>>>> 9d66de0 (Add comments to code + Hobbies models and controllers)
-=======
-}
->>>>>>> 52da464 (Add comments to code + Hobbies models and controllers)

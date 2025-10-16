@@ -3,6 +3,8 @@ import crypto from "crypto"
 
 
 //Modele de schema MongoDB pour les tokens d'authentification
+
+//Modele de schema MongoDB pour les tokens d'authentification
 const tokenSchema = new mongoose.Schema(
     {
         tokenId: { type: String, required: true },
@@ -11,7 +13,6 @@ const tokenSchema = new mongoose.Schema(
     }
 );
 
-//Modele de schema MongoDB pour les utilisateurs
 //Modele de schema MongoDB pour les utilisateurs
 const userSchema = new mongoose.Schema(
     {
@@ -28,7 +29,6 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-//Modification de la fonction toJSON sur le schema de user pour retirer les MDP dans la reponse
 //Modification de la fonction toJSON sur le schema de user pour retirer les MDP dans la reponse
 userSchema.set('toJSON', 
     { 
@@ -148,49 +148,6 @@ export default class User
     //Static methods
 
     /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 50173a9 (Register errors and logic done + User model updated)
-     * Insert the user in the database
-     * @returns the user JSON object from MongoDB or false
-     */
-    static async createUser(userInfo, role="user")
-    {   
-        const { email, username, password, uuid } = userInfo
-
-        try {
-            if(!email | !username | !password | !uuid) throw new UserError("Champs obligatoire manquant", "MISSING_REQUIRED_FIELD");
-
-            const uniqueFiledsError = await checkUniqueFields(email, username);
-
-            if(uniqueFiledsError.length) throw new UserError("Champs dupliqué, impossible de créer l'utilisateur", "ALREADY_USED_FIELD", uniqueFiledsError)
-
-            if(!checkMailValidity(email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
-
-            userInfo.role = role
-
-            const userDB = await UserModel.create(userInfo)
-
-            const user = userDB.toJSON()
-            return user;
-        } catch (error) {
-            console.log(error.message)
-            return {status:500, message : error.message, error}
-        }
-    }
-
-    /**
-<<<<<<< HEAD
-=======
->>>>>>> 9d66de0 (Add comments to code + Hobbies models and controllers)
-=======
->>>>>>> 52da464 (Add comments to code + Hobbies models and controllers)
-=======
->>>>>>> ce725cb (Register errors and logic done + User model updated)
->>>>>>> 50173a9 (Register errors and logic done + User model updated)
      * Find users
      * @param {Object} userInfo - The JSON object filter fields
      * @returns an array of Users
@@ -206,12 +163,6 @@ export default class User
         }
     }
 
-    /**
-     * Update an user
-     * @param {string} userId - The user unique ID of the user to update
-     * @param {Object} updatedFields - The JSON object with the fields to update
-     * @returns 
-     */
     /**
      * Update an user
      * @param {string} userId - The user unique ID of the user to update
@@ -249,6 +200,10 @@ export default class User
 
     //Instance methods
 
+    /**
+     * Insert the user in the database
+     * @returns the user JSON object from MongoDB or false
+     */
     /**
      * Insert the user in the database
      * @returns the user JSON object from MongoDB or false
