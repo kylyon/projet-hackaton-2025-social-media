@@ -11,7 +11,7 @@
       <AppButton label="Connexion" @click="login" class="mt-4" />
 
       <p class="text-center text-sm mt-4">
-        Pas de compte ? <a href="#" class="text-sky-600 hover:underline">S'inscrire</a>
+        Pas de compte ? <a href="./register" class="text-sky-600 hover:underline">S'inscrire</a>
       </p>
     </div>
   </div>
@@ -21,6 +21,8 @@
 import { ref } from 'vue'
 import LabelInput from './LabelInput.vue'
 import AppButton from './Button.vue'
+
+
 
 const email = ref('')
 const password = ref('')
