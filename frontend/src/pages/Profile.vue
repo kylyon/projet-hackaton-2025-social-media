@@ -1,5 +1,5 @@
 <template>
-  <div class="container min-h-screen flex flex-col md:flex-row px-4 md:px-12 gap-12">
+  <div class="container min-h-screen flex flex-col md:flex-row px-4 md:px-12 md:py-12 gap-12">
     <!-- gauche -->
     <div class="w-full md:w-1/3 md:top-20">
       <!-- composant CardProfile -->

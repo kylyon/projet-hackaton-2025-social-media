@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto max-w-3xl flex flex-col justify-center p-4 border rounded-2xl shadow-md gap-4">
+    <div class="container mx-auto max-w-3xl flex flex-col justify-center p-4 rounded-2xl border border-gray-200 shadow-lg gap-4">
         <h1 class="text-xl md:text-2xl font-semibold text-sky-800">Nouvelle publication</h1>
 
         <div class="w-full">

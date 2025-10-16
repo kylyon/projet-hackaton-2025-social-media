@@ -1,6 +1,6 @@
 <template>
      <div class="min-h-screen flex flex-col justify-center p-4">
-        <div class="elements flex flex-col items-center px-6 py-8 md:px-10 md:py-12 rounded-3xl gap-12 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full mx-auto shadow-lg">
+        <div class="elements flex flex-col items-center px-6 py-8 md:px-10 md:py-12 rounded-3xl gap-12 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full mx-auto border border-gray-200 shadow-lg">
             <div class="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2">
                 <img src="#" alt="avatar" class="w-full h-full object-cover" />
             </div>
