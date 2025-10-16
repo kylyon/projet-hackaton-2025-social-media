@@ -10,7 +10,7 @@ const {
 } = require("../../controllers/users/usersControllers.js");
 
 
-const { authMiddleware } = require("../../middleware/authMiddleware")
+const authMiddleware  = require("../../middleware/authMiddleware.js")
 
 /**
  * @swagger

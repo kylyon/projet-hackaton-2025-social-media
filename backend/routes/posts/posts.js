@@ -9,7 +9,7 @@ const {
 
 /**
  * @swagger
- * /Post/:
+ * /posts/:
  *   get:
  *     summary: Récupère la liste des post
  *     tags: [Posts]
@@ -21,7 +21,7 @@ router.get('/', getPosts);
 
 /**
  * @swagger
- * /Post/add:
+ * /posts/add:
  *   post:
  *     summary: Crée un nouveau post
  *     tags: [Posts]
@@ -33,7 +33,7 @@ router.post('/add', createPost);
 
 /**
  * @swagger
- * /Post/update/1:
+ * /posts/update/1:
  *   put:
  *     summary: Met à jour un post
  *     tags: [Posts]
@@ -45,7 +45,7 @@ router.put('/update/:id', updatePost);
 
 /**
  * @swagger
- * /Post/delete/1:
+ * /posts/delete/1:
  *   delete:
  *     summary: Supprime un post
  *     tags: [Posts]

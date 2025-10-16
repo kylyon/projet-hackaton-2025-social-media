@@ -1,6 +1,6 @@
-import Moderator from "./Moderators.js";
+const  Moderator = require ("./Moderators.js"); 
 
-export default class Admin extends Moderator
+class Admin extends Moderator
 {
     banUser(idUser)
     {
@@ -12,3 +12,5 @@ export default class Admin extends Moderator
         console.log(`${this.username} a débanni ${idUser}`);
     }
 }
+
+module.exports = Admin;

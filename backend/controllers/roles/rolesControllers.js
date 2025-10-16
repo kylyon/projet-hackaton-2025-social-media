@@ -1,4 +1,4 @@
-const {default: Role} = require ("../../models/Roles");
+const Role= require ("../../models/Roles");
 
 // Get all roles
 const getRoles = async (req, res) => {

@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import crypto from "node:crypto"
-import {UserError} from "../errors/users/userError.js";
+const mongoose= require("mongoose"); 
+const crypto = require ("node:crypto"); 
+const UserError = require ("../errors/users/userError.js")
 
 
 //Modele de schema MongoDB pour les tokens d'authentification
@@ -42,7 +42,7 @@ const checkMailValidity = (email) =>
     return email.includes("@") && email.includes(".")
 }
 
-export default class User
+class User
 {
     #_uuid
     #_email;
@@ -222,3 +222,6 @@ export default class User
 
 
 }
+
+
+module.exports = User;

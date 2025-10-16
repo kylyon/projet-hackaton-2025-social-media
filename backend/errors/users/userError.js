@@ -1,4 +1,4 @@
-export class UserError extends Error
+class UserError extends Error
 {
     constructor(message, code)
     {
@@ -7,3 +7,5 @@ export class UserError extends Error
         this.code = code
     }
 }
+
+module.exports = UserError;
