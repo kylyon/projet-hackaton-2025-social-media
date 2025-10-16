@@ -47,7 +47,7 @@ router.post('/add', createUsers);
  *         description: Détails de l'utilisateur
  */
 
-router.get('/:id', authMiddleware, getUsersById);
+router.get('/:id', getUsersById);
 
 /**
  * @swagger
