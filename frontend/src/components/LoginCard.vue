@@ -4,9 +4,8 @@
       class="bg-sky-100 flex flex-col items-center justify-center border border-gray-300 rounded-lg shadow m-10 max-w-xs md:max-w-sm lg:max-w-md p-6 w-full"
     >
       <h1 class="text-xl text-center font-bold mb-6">Connexion</h1>
-
-      <LabelInput label="Email" placeholder="Entrez votre email" v-model="email" />
-      <LabelInput label="Mot de passe" placeholder="Entrez votre mot de passe" v-model="password" type="password" />
+      <InputField label="Email" v-model="name" placeholder="Entrez votre mail" typeField="text" />
+      <InputField label="Mot de passe" v-model="password" typeField="text" inputType="password" placeholder="Entrez votre mot de passe" />
 
       <AppButton label="Connexion" @click="login" class="mt-4" />
 
@@ -19,13 +18,11 @@
 
 <script setup>
 import { ref } from 'vue'
-import LabelInput from './LabelInput.vue'
+import InputField from './InputField.vue'
 import AppButton from './Button.vue'
 
+const name = ref('')
 
-
-const email = ref('')
-const password = ref('')
 
 function login() {
   console.log('Connexion avec', email.value, password.value)
