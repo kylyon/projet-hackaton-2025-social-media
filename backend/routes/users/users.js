@@ -64,7 +64,7 @@ router.put('/update/:id', updatesUsers);
 
 /**
  * @swagger
- * /users/delete/{id}:
+ * /users/delete/1:
  *   delete:
  *     summary: Supprime un utilisateur par ID
  *     tags: [Users]
