@@ -47,8 +47,31 @@ const goToProfile = () => {
   router.push('/profil')
 }
 
-const logout = () => {
-  localStorage.removeItem('token')
-  router.push('/login')
+const logout = async () => {
+
+  const res = await fetch("http://localhost:3000/auth/logout", {
+    method: "post",
+    headers: 
+    {
+      "Access-Control-Allow-Origin" : "*",
+      "Authorization" : "Bearer " + (await window.cookieStore.get("auth_token")).value
+
+    }
+  })
+
+  if(res.ok)
+  {
+    const json = await res.json()
+    console.log(json)
+
+    if(json.user)
+    {
+      window.cookieStore.delete("auth_token")
+    }
+
+    router.push('/login')
+  }
+
+  
 }
 </script>

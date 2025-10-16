@@ -1,8 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useCookies } from "vue3-cookies"
 
 import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
+
+//Import des middelware
+import {authMiddleware} from '@/middleware/authMiddleware'
 
 const routes = [
   /*{
@@ -13,7 +17,10 @@ const routes = [
   {
     path: '/profil',
     name: 'profil',
-    component: Profile
+    component: Profile,
+    meta: {
+      requiredAuth : true
+    }
   },
   {
     path: '/login',
@@ -31,5 +38,15 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach( (to, from, next) => {
+  if(to.meta.requiredAuth)
+  {
+    const { cookies } = useCookies()
+
+    return authMiddleware(to, from, next, cookies);
+  }
+  else next()
+} )
 
 export default router

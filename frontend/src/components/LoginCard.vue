@@ -18,13 +18,41 @@
 
 <script setup>
 import { ref } from 'vue'
-import InputField from './InputField.vue'
+import { useRouter } from 'vue-router'
+import LabelInput from './LabelInput.vue'
 import AppButton from './Button.vue'
 
-const name = ref('')
+const router = useRouter()
 
+const email = ref('')
+const password = ref('')
 
-function login() {
+async function login() {
   console.log('Connexion avec', email.value, password.value)
+
+  const res = await fetch("http://localhost:3000/auth/login", {
+    method: "post",
+    body: JSON.stringify({
+      usernameInput: email.value,
+      hashedPassword: password.value
+    }),
+    headers: 
+    {
+      "Access-Control-Allow-Origin" : "*",
+      "Content-type" : "application/json"
+
+    }
+  })
+
+  if(res.ok)
+  {
+    const json = await res.json()
+    window.cookieStore.set("auth_token", json.user.token.tokenId)
+    router.push("/profil")
+  }else{
+    //Mettre les erreurs ici
+    console.log(res)
+  }
+
 }
 </script>

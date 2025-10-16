@@ -1,0 +1,83 @@
+import mongoose from "mongoose";
+import crypto from "crypto"
+import User from "./Users.js";
+
+/*const TokenModel = mongoose.model("Token", tokenSchema);*/
+
+const generateToken = (userId, userAgent) => 
+{
+    const salt = crypto.randomBytes(16)
+    const hash = crypto.createHmac("sha512", salt).update(userId+userAgent).digest("hex");
+    return {salt: salt.toString("hex"), hash}
+}
+
+export default class AuthToken
+{
+    static async createAuthToken(userId, userAgent, ttl = 3600)
+    {
+        const tokenId = generateToken(userId, userAgent).hash;
+        const expiresAt = Date.now() * 1000 * ttl
+
+        try
+        {
+            const tokenDB = await User.updateUser(
+                userId,
+                {
+                    token : {
+                        tokenId, 
+                        expiresAt
+                    }
+                    
+                })
+
+            return {tokenId, expiresAt}
+        }catch(error)
+        {
+            console.error("Error", error)
+        }
+        
+    }
+
+    static async getAuthToken(token)
+    {
+        try
+        {
+            const tokenDB = await User.findUser(
+                {
+                    "token.tokenId": token
+                }
+            )
+
+            return tokenDB.length ? { token: tokenDB[0].token.tokenId, user:tokenDB[0], expiresAt : tokenDB[0].token.expiresAt } : null
+        }catch(error)
+        {
+            console.error("[Token Error]", error)
+        }
+    }
+
+    static async deleteAuthToken(token)
+    {
+        try
+        {
+            const userDB = await User.findUser(
+                {
+                    "token.tokenId": token
+                }
+            )
+
+            if(userDB.length){
+                await User.updateUser(
+                userDB[0].uuid,
+                {
+                    $unset : {"token" : 1}
+                    
+                })
+            }
+
+            return userDB[0]
+        }catch(error)
+        {
+            console.error("[Token Error]", error)
+        }
+    }
+}
