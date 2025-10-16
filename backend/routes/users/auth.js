@@ -44,11 +44,11 @@ router.post('/register', userRegister);
  * @swagger
  * /auth/get_token:
  *   post:
- *     summary: Crée un nouvel utilisateur
+ *     summary: Récupere le token d'authentification
  *     tags: [Authentification]
  *     responses:
  *       200:
- *         description: L'utilisateur est créé en base de données
+ *         description: Le token est récuperer
  */
 router.post('/get_token', getAuthToken);
 
