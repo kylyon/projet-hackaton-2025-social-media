@@ -1,9 +1,18 @@
 <template>
-  <header class="w-full bg-sky-100 text-[#01588A] flex items-center justify-between px-6 py-1 rounded-b-lg shadow-md">
+  <header
+    class="max-w-6xl mx-auto mt-4 mb-4 bg-sky-100 text-[#01588A] flex items-center justify-between px-8 py-1 rounded-2xl shadow-lg"
+  >
     <!-- Logo -->
-    <div class="px-6">
-    <div class="flex items-center space-x-2 cursor-pointer" @click="goHome">
-      <img src="@/assets/logo.svg" alt="Logo Link Up" class="h-10 w-10" />
+    <div
+      class="flex items-center space-x-2 cursor-pointer overflow-hidden"
+      style="height: 45px"
+      @click="goHome"
+    >
+      <img
+        src="@/assets/logo.svg"
+        alt="Logo Link Up"
+        class="h-22 w-22 object-contain -my-2"
+      />
     </div>
 
     <!-- Menu utilisateur -->
@@ -18,11 +27,9 @@
         label="Déconnexion"
         icon="LogoutIcon"
         variant="solid"
-        class="bg-white text-[#01588A] hover:bg-[#DEF3FE]"
         @click="logout"
       />
     </nav>
-    </div>
   </header>
 </template>
 
