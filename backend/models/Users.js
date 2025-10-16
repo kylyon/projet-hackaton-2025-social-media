@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.set('toJSON', 
     { 
-        transform: (document, returnedObject) => { delete user.password; } 
+        transform: (document, returnedObject) => { delete returnedObject.password; } 
     }
 )
 
@@ -122,10 +122,25 @@ export default class User
     static async updateUser(userId, updatedFields)
     {
         try {
-            const userDB = await UserModel.findOneAndUpdate({uuid:userId}, 
+            
+            await UserModel.findOneAndUpdate({uuid:userId}, 
                 updatedFields
             )
-            return userDB.length > 0 ? userDB : null
+            const userDB= await UserModel.findOne({uuid:userId})
+            return userDB ?? null
+        } catch (error) {
+            console.log("[Error user]",error)
+        }
+    }
+
+    // Delete User
+    static async deleteUser(userId)
+    {
+        try {
+            
+           
+            const userDB= await UserModel.findOneAndDelete({uuid:userId}); 
+            return userDB ?? null
         } catch (error) {
             console.log("[Error user]",error)
         }
