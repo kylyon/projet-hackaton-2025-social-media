@@ -1,4 +1,4 @@
-const {default: Post} = require ("../../models/Posts");
+const Post = require ("../../models/Posts");
 
 // Get all Posts
 const getPosts = async (req, res) => {

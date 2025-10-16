@@ -1,5 +1,5 @@
-const { default:UsersFactory } = require("../UsersFactory.js");
-const {default:User} = require ("../../models/Users");
+const UsersFactory = require("../UsersFactory.js");
+const User = require ("../../models/Users");
 
 
 
@@ -57,7 +57,7 @@ const getUsersById = async (req, res) => {
 
       const userID = await User.findUser(
             {
-                username: usernameInput,
+                uuid: usernameInput,
             }
         )
 

@@ -1,9 +1,11 @@
-import User from "./Users.js";
+const User = require ("./Users.js");
 
-export default class Moderator extends User
+class Moderator extends User
 {
     deleteMessage(idMessage)
     {
         console.log(`${this.username} a supprimé le message #${idMessage}`);
     }
 }
+
+module.exports = Moderator;
