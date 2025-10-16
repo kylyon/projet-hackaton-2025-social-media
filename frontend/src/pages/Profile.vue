@@ -3,7 +3,7 @@
     <!-- gauche -->
     <div class="w-full md:w-1/3 md:top-20">
       <!-- composant CardProfile -->
-      gauche
+      <UserCard />
     </div>
 
     <!-- droite -->
@@ -22,7 +22,13 @@
 </template>
 
 <script>
+import UserCard from '@/components/UserCard.vue';
+
 export default {
   name: "Profile",
+  components: {
+    UserCard
+  }
 }
+
 </script>
