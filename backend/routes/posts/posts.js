@@ -12,7 +12,7 @@ const {
  * /Post/:
  *   get:
  *     summary: Récupère la liste des post
- *     tags: [Post]
+ *     tags: [Posts]
  *     responses:
  *       200:
  *         description: Liste des post
@@ -24,7 +24,7 @@ router.get('/', getPosts);
  * /Post/add:
  *   post:
  *     summary: Crée un nouveau post
- *     tags: [Post]
+ *     tags: [Posts]
  *     responses:
  *       200:
  *         description: création du post
@@ -36,7 +36,7 @@ router.post('/add', createPost);
  * /Post/update/1:
  *   put:
  *     summary: Met à jour un post
- *     tags: [Post]
+ *     tags: [Posts]
  *     responses:
  *       200:
  *         description: post mis à jour
@@ -48,7 +48,7 @@ router.put('/update/:id', updatePost);
  * /Post/delete/1:
  *   delete:
  *     summary: Supprime un post
- *     tags: [Post]
+ *     tags: [Posts]
  *     responses:
  *       200:
  *         description: post supprimé
