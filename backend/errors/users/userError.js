@@ -1,4 +1,4 @@
-export default class UserError extends Error
+export class UserError extends Error
 {
     constructor(message, code)
     {

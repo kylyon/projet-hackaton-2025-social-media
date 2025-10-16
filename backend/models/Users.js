@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import crypto from "node:crypto"
-import UserError from "../errors/users/UserError.js";
+import {UserError} from "../errors/users/userError.js";
 
 
 //Modele de schema MongoDB pour les tokens d'authentification
