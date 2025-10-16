@@ -2,6 +2,7 @@
 
 Création d'un réseau social du style **X**
 
+
 ## 🎯 Objectifs
 - Manipulations avancées en JavaScript / Node.js Gestion du déploiement, 
 - CI/CD et versioning 
@@ -21,6 +22,7 @@ Création d'un réseau social du style **X**
 - Cors
 - Swagger-jsdoc
 - Swagger-ui-express
+
 
 ### Versioning & CI/CD
 - Github
@@ -95,7 +97,13 @@ npm run dev # Démarrage du serveur avec auto-reload (dev)
 # Frontend
 - Test unitaire : npm run test 
 - Check code quality : npm run lint
+
 ```
+## Liens utiles
+
+- [Documentation hackaton API](https://hackaton-backend-api.vercel.app/api/)
+- [Backend API Rest](https://hackaton-backend-api.vercel.app/)
+- [Frontend](https://hackaton-frontend-jet.vercel.app/)
 
 ## Contributeurs
 

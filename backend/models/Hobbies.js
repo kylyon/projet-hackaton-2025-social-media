@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require("mongoose"); 
 
 //Modele de schema MongoDB pour les utilisateurs
 const hobbySchema = new mongoose.Schema(
@@ -9,7 +9,7 @@ const hobbySchema = new mongoose.Schema(
 
 const HobbyModel = mongoose.model("Hobby", hobbySchema);
 
-export class Hobby
+class Hobby
 {
     //Static methods
     
@@ -54,3 +54,5 @@ export class Hobby
         }
     }
 }
+
+module.exports=Hobby

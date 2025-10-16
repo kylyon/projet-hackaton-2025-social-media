@@ -1,4 +1,4 @@
-const { Hobby } = require("../../models/Hobbies");
+const Hobby  = require("../../models/Hobbies");
 
 // Get all hobbies
 const getHobbies = async (req, res) => {
