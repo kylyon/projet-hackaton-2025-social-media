@@ -22,7 +22,7 @@
                     <p class="text-xs sm:text-sm md:text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam officiis nobis minus optio amet nemo magnam, quae corrupti modi, sapiente dolore quod eos enim a sequi facere ipsa maxime asperiores!</p>
                 </div>
             </div>
-            <div class="user-components w-full">
+            <div class="user-components w-full space-y-4">
                 <button class="w-full bg-sky-800 text-white py-2 rounded-lg hover:bg-sky-800 transition-colors">
                     Modifier mon profil
                 </button>
