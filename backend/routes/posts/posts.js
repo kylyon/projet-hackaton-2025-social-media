@@ -23,11 +23,11 @@ router.get('/', getPosts);
  * @swagger
  * /Post/add:
  *   post:
- *     summary: Crée un nouveau rôle
+ *     summary: Crée un nouveau post
  *     tags: [Post]
  *     responses:
  *       200:
- *         description: création du rôle
+ *         description: création du post
  */
 router.post('/add', createPost);
 
@@ -35,11 +35,11 @@ router.post('/add', createPost);
  * @swagger
  * /Post/update/1:
  *   put:
- *     summary: Met à jour un rôle
+ *     summary: Met à jour un post
  *     tags: [Post]
  *     responses:
  *       200:
- *         description: rôle mis à jour
+ *         description: post mis à jour
  */
 router.put('/update/:id', updatePost);
 
@@ -47,11 +47,11 @@ router.put('/update/:id', updatePost);
  * @swagger
  * /Post/delete/1:
  *   delete:
- *     summary: Supprime un rôle
+ *     summary: Supprime un post
  *     tags: [Post]
  *     responses:
  *       200:
- *         description: rôle supprimé
+ *         description: post supprimé
  */
 router.delete('/delete/:id', deletePost);
 
