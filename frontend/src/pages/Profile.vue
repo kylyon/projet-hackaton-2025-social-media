@@ -8,9 +8,9 @@
 
     <!-- droite -->
     <div class="flex flex-col w-full md:w-2/3 md:justify-evenly gap-6">
-      <div class="">
+      <div class="card">
         <!-- composant Publication -->
-        droite haut
+        <NewPostCard />
       </div>
 
       <div class="">
@@ -22,12 +22,14 @@
 </template>
 
 <script>
+import NewPostCard from '@/components/NewPostCard.vue';
 import UserCard from '@/components/UserCard.vue';
 
 export default {
   name: "Profile",
   components: {
-    UserCard
+    UserCard,
+    NewPostCard
   }
 }
 
