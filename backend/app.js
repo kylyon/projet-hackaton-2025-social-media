@@ -30,6 +30,7 @@ const rolesRoutes = require("./routes/roles/roles");
 const authRoutes = require("./routes/users/auth")
 const hobbiesRoutes = require("./routes/hobbies/hobbies");
 const commentsRoutes = require("./routes/comments/comments");
+const postsRoutes=require("./routes/posts/posts"); 
 
 // Utilisation des routes
 
@@ -38,6 +39,7 @@ app.use("/users", userRoutes);
 app.use("/roles", rolesRoutes);
 app.use("/auth", authRoutes)
 app.use("/comments", commentsRoutes);
+app.use("/posts", postsRoutes);
 
 app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions)); 
 
