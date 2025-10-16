@@ -1,11 +1,14 @@
 <template>
-  <main class="max-w-6xl mx-auto px-4">
+  <main>
     <Header />
     <router-view />
+    <Footer />
   </main>
 </template>
 
 
 <script setup>
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+
 </script>
