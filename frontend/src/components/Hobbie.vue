@@ -13,7 +13,7 @@ const props = defineProps({
 
 // Si pas de nom, afficher "Aucune passion"
 const displayName = computed(() =>
-  props.name && props.name.trim() !== '' ? props.name : 'Aucune hobbie'
+  props.name && props.name.trim() !== '' ? props.name : 'Aucune passion'
 )
 
 // Classes dynamiques selon si on a une passion ou non
