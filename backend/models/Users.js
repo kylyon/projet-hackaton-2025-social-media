@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import crypto from "crypto"
+import { UserError } from "../errors/users/UserError.js";
 
 
 //Modele de schema MongoDB pour les tokens d'authentification
@@ -16,7 +17,7 @@ const userSchema = new mongoose.Schema(
     {
         uuid: { type: String, required: true, unique: true },
         email : { type: String, required: true, unique: true },
-        fisrtname: String,
+        firstname: String,
         lastname: String,
         username: { type: String, required: true, unique: true },
         avatar: String,
@@ -35,6 +36,11 @@ userSchema.set('toJSON',
 )
 
 const UserModel = mongoose.model("User", userSchema);
+
+const checkMailValidity = (email) =>
+{
+    return email.includes("@") && email.includes(".")
+}
 
 export default class User
 {
@@ -114,6 +120,30 @@ export default class User
     //Static methods
 
     /**
+     * Insert the user in the database
+     * @returns the user JSON object from MongoDB or false
+     */
+    static async createUser(userInfo, role="user")
+    {   
+        const { email, username, password, uuid } = userInfo
+
+        if(!email | !username | !password | !uuid) throw new UserError("Champs obligatoire manquant", "MISSING_REQUIRED_FIELD");
+
+        if(!checkMailValidity(email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
+
+        userInfo.role = role
+
+        try {
+            const userDB = await UserModel.create(userInfo)
+
+            const user = userDB.toJSON()
+            return user;
+        } catch (error) {
+            return {status:500, message : "Erreur lors de la création de l'utilisateur", error}
+        }
+    }
+
+    /**
      * Find users
      * @param {Object} userInfo - The JSON object filter fields
      * @returns an array of Users
@@ -124,7 +154,8 @@ export default class User
             const userDB = await UserModel.find(userInfo)
             return userDB.length > 0 ? userDB : null
         } catch (error) {
-            console.log("[Error user]",error)
+            console.log(error)
+            return {status:500, message : "Erreur lors de la recherche d'utilisateurs", error}
         }
     }
 
@@ -136,6 +167,8 @@ export default class User
      */
     static async updateUser(userId, updatedFields)
     {
+        if(updatedFields.email && !checkMailValidity(updatedFields.email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
+
         try {
             
             await UserModel.findOneAndUpdate({uuid:userId}, 
@@ -144,7 +177,7 @@ export default class User
             const userDB= await UserModel.findOne({uuid:userId})
             return userDB ?? null
         } catch (error) {
-            console.log("[Error user]",error)
+            return {status:500, message : "Erreur lors de la mise à jour d'utilisateurs", error}
         }
     }
 
@@ -157,16 +190,12 @@ export default class User
             const userDB= await UserModel.findOneAndDelete({uuid:userId}); 
             return userDB ?? null
         } catch (error) {
-            console.log("[Error user]",error)
+            return {status:500, message : "Erreur lors de la suppression d'utilisateurs", error}
         }
     }
 
     //Instance methods
 
-    /**
-     * Insert the user in the database
-     * @returns the user JSON object from MongoDB or false
-     */
     async createUserDB()
     {
         try {
