@@ -1,4 +1,4 @@
-import { getAuthToken } from "@/actions/authToken"
+import { getAuthToken } from "@/actions/auth/authToken"
 
 export const authMiddleware = async (to, from, next, cookies) =>
 {
