@@ -27,7 +27,7 @@ const userLogin = async (req, res) => {
             maxAge: 3600 * 1000
         })
 
-        res.status(200).json({message: "User find", status: 200, user: user})
+        res.status(200).json({message: "User find", user: user})
     } catch (error) {
         return res.status(401).json({error, message: "Erreur lors de la connexion de l'utilisateur"})
     }
