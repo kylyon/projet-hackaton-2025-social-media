@@ -1,15 +1,9 @@
 <template>
-  <div>
+  <main>
     <LoginCard />
-    <p>test</p>
-  </div>
+  </main>
 </template>
 
-<script>
-import LoginCard from '../components/LoginCard.vue';
-
-export default {
-  name: "Profile",
-  components: { LoginCard }
-}
+<script setup>
+import LoginCard from '@/components/LoginCard.vue'
 </script>

@@ -1,11 +1,14 @@
 <template>
-  <main class="flex flex-col justify-center">
-    <LoginCard />
+  <main>
+    <Header />
+    <router-view />
+    <Footer />
   </main>
 </template>
 
-<script setup>
 
-import LoginCard from './components/LoginCard.vue';
+<script setup>
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 
 </script>

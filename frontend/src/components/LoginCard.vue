@@ -1,19 +1,25 @@
 <template>
   <div class="min-h-screen flex items-center justify-center">
     <div
-      class="bg-sky-100 flex flex-col items-center justify-center border border-gray-300 rounded-lg shadow m-10 max-w-xs md:max-w-sm lg:max-w-md p-6 w-full"
-    >
-      <h1 class="text-xl text-center font-bold mb-6">Connexion</h1>
+      class="bg-sky-100 flex flex-col items-center justify-center border border-gray-300 rounded-lg shadow-md m-6 max-w-xs md:max-w-sm lg:max-w-md p-6 w-full">
+      <h1 class="text-2xl text-center font-bold mb-6 text-sky-700">
+        Connexion
+      </h1>
 
-      <LabelInput label="Email" placeholder="Entrez votre email" v-model="email" />
-      <LabelInput label="Mot de passe" placeholder="Entrez votre mot de passe" v-model="password" type="password" />
+      <form class="w-full flex flex-col gap-4" @submit.prevent="login">
+        <InputField label="Email" v-model="email" placeholder="Entrez votre email" typeField="text" />
 
-      <AppButton label="Connexion" @click="login" class="mt-4" />
+        <InputField label="Mot de passe" v-model="password" placeholder="Entrez votre mot de passe"
+          typeField="password" />
 
-      <AppButton label="Deconnexion" @click="logout" class="mt-4" />
+        <AppButton label="Connexion" @click="login" class="mt-2" />
+      </form>
 
       <p class="text-center text-sm mt-4">
-        Pas de compte ? <a href="#" class="text-sky-600 hover:underline">S'inscrire</a>
+        Pas encore de compte ?
+        <a href="/register" class="text-sky-700 font-medium hover:underline">
+          S'inscrire
+        </a>
       </p>
     </div>
   </div>
@@ -21,8 +27,11 @@
 
 <script setup>
 import { ref } from 'vue'
-import LabelInput from './LabelInput.vue'
+import { useRouter } from 'vue-router'
+import InputField from './InputField.vue'
 import AppButton from './Button.vue'
+
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -36,48 +45,22 @@ async function login() {
       usernameInput: email.value,
       hashedPassword: password.value
     }),
-    headers: 
+    headers:
     {
-      "Access-Control-Allow-Origin" : "*",
-      "Content-type" : "application/json"
+      "Access-Control-Allow-Origin": "*",
+      "Content-type": "application/json"
 
     }
   })
 
-  
-
-  if(res.ok)
-  {
+  if (res.ok) {
     const json = await res.json()
-    console.log(json)
     window.cookieStore.set("auth_token", json.user.token.tokenId)
+    router.push("/profil")
+  } else {
+    //Mettre les erreurs ici
+    console.log(res)
   }
 
-}
-
-async function logout() {
-  console.log('Connexion avec', email.value, password.value)
-
-  const res = await fetch("http://localhost:3000/auth/logout", {
-    method: "post",
-    headers: 
-    {
-      "Access-Control-Allow-Origin" : "*",
-      "Authorization" : "Bearer " + (await window.cookieStore.get("auth_token")).value
-
-    }
-  })
-
-  if(res.ok)
-  {
-    const json = await res.json()
-    console.log(json)
-
-    if(json.user)
-    {
-      window.cookieStore.delete("auth_token")
-    }
-  }
-  
 }
 </script>
