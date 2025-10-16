@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-// plus besoin d'importer defineProps/defineEmits avec Vue 3.3+
 const props = defineProps({
   label: { type: String, required: true },
   placeholder: { type: String, default: '' },
