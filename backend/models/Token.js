@@ -1,8 +1,5 @@
-import mongoose from "mongoose";
 import crypto from "crypto"
 import User from "./Users.js";
-
-/*const TokenModel = mongoose.model("Token", tokenSchema);*/
 
 const generateToken = (userId, userAgent) => 
 {
