@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import crypto from "crypto"
 
+
+//Modele de schema MongoDB pour les tokens d'authentification
 const tokenSchema = new mongoose.Schema(
     {
         tokenId: { type: String, required: true, unique: true },
@@ -9,6 +11,7 @@ const tokenSchema = new mongoose.Schema(
     }
 );
 
+//Modele de schema MongoDB pour les utilisateurs
 const userSchema = new mongoose.Schema(
     {
         uuid: { type: String, required: true, unique: true },
@@ -24,6 +27,7 @@ const userSchema = new mongoose.Schema(
     }
 );
 
+//Modification de la fonction toJSON sur le schema de user pour retirer les MDP dans la reponse
 userSchema.set('toJSON', 
     { 
         transform: (document, returnedObject) => { delete returnedObject.password; } 
@@ -109,6 +113,11 @@ export default class User
 
     //Static methods
 
+    /**
+     * Find users
+     * @param {Object} userInfo - The JSON object filter fields
+     * @returns an array of Users
+     */
     static async findUser(userInfo)
     {
         try {
@@ -119,6 +128,12 @@ export default class User
         }
     }
 
+    /**
+     * Update an user
+     * @param {string} userId - The user unique ID of the user to update
+     * @param {Object} updatedFields - The JSON object with the fields to update
+     * @returns 
+     */
     static async updateUser(userId, updatedFields)
     {
         try {
@@ -148,6 +163,10 @@ export default class User
 
     //Instance methods
 
+    /**
+     * Insert the user in the database
+     * @returns the user JSON object from MongoDB or false
+     */
     async createUserDB()
     {
         try {

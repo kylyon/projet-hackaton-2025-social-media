@@ -1,6 +1,14 @@
 import crypto from "crypto"
 import User from "./Users.js";
 
+/*const TokenModel = mongoose.model("Token", tokenSchema);*/
+
+/**
+ * Generate a auth token
+ * @param {string} userId - The user unique ID
+ * @param {string} userAgent - The user navigator agent used to login
+ * @returns 
+ */
 const generateToken = (userId, userAgent) => 
 {
     const salt = crypto.randomBytes(16)
@@ -10,6 +18,14 @@ const generateToken = (userId, userAgent) =>
 
 export default class AuthToken
 {
+
+    /**
+     * 
+     * @param {string} userId - The user unique ID
+     * @param {string} userAgent - The user navigator agent used to login
+     * @param {Number} ttl - The time to live of the token
+     * @returns 
+     */
     static async createAuthToken(userId, userAgent, ttl = 3600)
     {
         const tokenId = generateToken(userId, userAgent).hash;
@@ -35,6 +51,11 @@ export default class AuthToken
         
     }
 
+    /**
+     * Get the auth token and its user
+     * @param {string} token 
+     * @returns the auth token
+     */
     static async getAuthToken(token)
     {
         try
@@ -52,6 +73,11 @@ export default class AuthToken
         }
     }
 
+    /**
+     * Delete the auth token
+     * @param {string} token 
+     * @returns the user associated to the deleted token
+     */
     static async deleteAuthToken(token)
     {
         try
