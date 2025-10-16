@@ -10,10 +10,8 @@
 
       <AppButton label="Connexion" @click="login" class="mt-4" />
 
-      <AppButton label="Deconnexion" @click="logout" class="mt-4" />
-
       <p class="text-center text-sm mt-4">
-        Pas de compte ? <a href="#" class="text-sky-600 hover:underline">S'inscrire</a>
+        Pas de compte ? <a href="./register" class="text-sky-600 hover:underline">S'inscrire</a>
       </p>
     </div>
   </div>
@@ -21,8 +19,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import LabelInput from './LabelInput.vue'
 import AppButton from './Button.vue'
+
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
@@ -44,40 +45,15 @@ async function login() {
     }
   })
 
-  
-
   if(res.ok)
   {
     const json = await res.json()
-    console.log(json)
     window.cookieStore.set("auth_token", json.user.token.tokenId)
+    router.push("/profil")
+  }else{
+    //Mettre les erreurs ici
+    console.log(res)
   }
 
-}
-
-async function logout() {
-  console.log('Connexion avec', email.value, password.value)
-
-  const res = await fetch("http://localhost:3000/auth/logout", {
-    method: "post",
-    headers: 
-    {
-      "Access-Control-Allow-Origin" : "*",
-      "Authorization" : "Bearer " + (await window.cookieStore.get("auth_token")).value
-
-    }
-  })
-
-  if(res.ok)
-  {
-    const json = await res.json()
-    console.log(json)
-
-    if(json.user)
-    {
-      window.cookieStore.delete("auth_token")
-    }
-  }
-  
 }
 </script>

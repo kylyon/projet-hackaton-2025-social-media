@@ -1,35 +1,34 @@
 <template>
-  <header class="w-full bg-[#01588A] text-white flex items-center justify-between px-6 py-4 shadow-md">
+  <header class="w-full bg-sky-100 text-[#01588A] flex items-center justify-between px-6 py-1 rounded-b-lg shadow-md">
     <!-- Logo -->
+    <div class="px-6">
     <div class="flex items-center space-x-2 cursor-pointer" @click="goHome">
-      <img src="@/assets/logo.svg" alt="Logo Link Up" class="h-8 w-8" />
-      <h1 class="font-bold text-xl tracking-wide">Link Up</h1>
+      <img src="@/assets/logo.svg" alt="Logo Link Up" class="h-10 w-10" />
     </div>
 
     <!-- Menu utilisateur -->
-    <nav class="flex items-center space-x-6">
-      <button
-        class="flex items-center space-x-1 hover:underline"
+    <nav class="flex items-center space-x-4">
+      <AppButton
+        label="Mon compte"
+        icon="UserIcon"
+        variant="text"
         @click="goToProfile"
-      >
-        <UserIcon class="w-5 h-5 text-white" />
-        <span>Mon compte</span>
-      </button>
-
-      <button
-        class="flex items-center space-x-1 bg-white text-[#01588A] px-3 py-1 rounded-md hover:bg-[#DEF3FE] transition"
+      />
+      <AppButton
+        label="Déconnexion"
+        icon="LogoutIcon"
+        variant="solid"
+        class="bg-white text-[#01588A] hover:bg-[#DEF3FE]"
         @click="logout"
-      >
-        <LogoutIcon class="w-5 h-5" />
-        <span>Déconnexion</span>
-      </button>
+      />
     </nav>
+    </div>
   </header>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { UserIcon, LogOut as LogoutIcon } from 'lucide-vue-next' // ou heroicons si tu préfères
+import AppButton from '@/components/Button.vue'
 
 const router = useRouter()
 
@@ -41,9 +40,31 @@ const goToProfile = () => {
   router.push('/profil')
 }
 
-const logout = () => {
-  // Ici tu gères la déconnexion : suppression du token, redirection, etc.
-  localStorage.removeItem('token')
-  router.push('/login')
+const logout = async () => {
+
+  const res = await fetch("http://localhost:3000/auth/logout", {
+    method: "post",
+    headers: 
+    {
+      "Access-Control-Allow-Origin" : "*",
+      "Authorization" : "Bearer " + (await window.cookieStore.get("auth_token")).value
+
+    }
+  })
+
+  if(res.ok)
+  {
+    const json = await res.json()
+    console.log(json)
+
+    if(json.user)
+    {
+      window.cookieStore.delete("auth_token")
+    }
+
+    router.push('/login')
+  }
+
+  
 }
 </script>

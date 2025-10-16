@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.set('toJSON', 
     { 
-        transform: (document, returnedObject) => { delete user.password; } 
+        transform: (document, returnedObject) => { delete returnedObject.password; } 
     }
 )
 
