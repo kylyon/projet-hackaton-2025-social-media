@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const AuthToken  = require("../../models/Token");
 const User = require("../../models/Users");
 const UsersFactory = require("../UsersFactory");
@@ -7,6 +8,16 @@ const AuthToken = require("../../models/Token");
 const User = require("../../models/Users");
 const UsersFactory  = require("../UsersFactory");
 >>>>>>> 45eee38 (Auth update backend + Route secure by middleware)
+=======
+const AuthToken = require("../../models/Token");
+const User = require("../../models/Users");
+const UsersFactory  = require("../UsersFactory");
+=======
+const AuthToken  = require("../../models/Token");
+const User = require("../../models/Users");
+const UsersFactory = require("../UsersFactory");
+>>>>>>> df8a7ba (frontend: suppression temporaire esLint)
+>>>>>>> 46345e2 (frontend: suppression temporaire esLint)
 
 const userLogin = async (req, res) => {
     //
