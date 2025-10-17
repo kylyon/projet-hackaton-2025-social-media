@@ -38,8 +38,8 @@ import avatar from '@/assets/avatar.jpg'
 
 const user = ref({
   id: 1,
-  nom: 'Jean',
-  username: 'jean123',
+  nom: 'Shanks Leroux',
+  username: 'onepiece.shanks',
   photo: avatar
 })
 
