@@ -1,37 +1,80 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useCookies } from "vue3-cookies"
 
+// Admin
+import adminHome from '@/pages/admin/Admin.vue'
+import AdminLayout from '@/layouts/AdminLayout.vue'
+import adminSetting from '@/pages/admin/Setting.vue'
+
+// Default Path
+import DefaultLayout from '@/layouts/defaulLayout.vue'
 import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
-import Home from '@/pages/Home.vue'
 
+<<<<<<< HEAD
+// Import des middleware
+import { authMiddleware } from '@/middleware/authMiddleware'
+=======
 //Import des middelware
 import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
+>>>>>>> 6b6aff38eb640cd1a7d94c40d71b8f341e486d85
 
 const routes = [
   {
-    path: '/',
-    name: 'dashboard',
-    component: Home
+    path: '/test',
+    component: { template: '<div>Test OK</div>' }
+  }, 
+  {
+    path: "/admin",
+    component: AdminLayout,
+    children: [
+      {
+        path: '',
+        name: "dashboard",
+        component: adminHome,
+        meta: {
+          requiredAuth: false
+        }
+      },
+      {
+        path: 'setting',
+        name: "admin-setting",
+        component: adminSetting,
+        meta: {
+          requiredAuth: false
+        }
+      }
+    ]
   },
   {
-    path: '/profil',
-    name: 'profil',
-    component: Profile,
-    meta: {
-      requiredAuth : true
-    }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: Login
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: Register
+    path: "/",
+    component: DefaultLayout,
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: Profile
+      },
+      {
+        path: 'profil',
+        name: 'profile',
+        component: Profile,
+        meta: {
+          requiredAuth: false
+        }
+      },
+      {
+        path: 'login',
+        name: 'login',
+        component: Login
+      },
+      {
+        path: 'register',
+        name: 'register',
+        component: Register
+      }
+    ]
   }
 ]
 
@@ -40,14 +83,23 @@ const router = createRouter({
   routes
 })
 
+<<<<<<< HEAD
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiredAuth) {
+=======
 router.beforeEach( async (to, from, next) => {
 
   if(to.meta.requiredAuth)
   {
+>>>>>>> 6b6aff38eb640cd1a7d94c40d71b8f341e486d85
     const { cookies } = useCookies()
-
-    return authMiddleware(to, from, next, cookies);
+    return authMiddleware(to, from, next, cookies)
+  } else {
+    next()
   }
+<<<<<<< HEAD
+})
+=======
 
   /*if((to.name === "register" || to.name === "login"))
   {
@@ -58,5 +110,6 @@ router.beforeEach( async (to, from, next) => {
 
   next()
 } )
+>>>>>>> 6b6aff38eb640cd1a7d94c40d71b8f341e486d85
 
 export default router
