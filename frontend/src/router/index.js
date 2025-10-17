@@ -12,13 +12,8 @@ import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
 
-<<<<<<< HEAD
-// Import des middleware
-import { authMiddleware } from '@/middleware/authMiddleware'
-=======
 //Import des middelware
 import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
->>>>>>> 6b6aff38eb640cd1a7d94c40d71b8f341e486d85
 
 const routes = [
   {
@@ -61,7 +56,7 @@ const routes = [
         name: 'profile',
         component: Profile,
         meta: {
-          requiredAuth: false
+          requiredAuth: true
         }
       },
       {
@@ -83,23 +78,15 @@ const router = createRouter({
   routes
 })
 
-<<<<<<< HEAD
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiredAuth) {
-=======
 router.beforeEach( async (to, from, next) => {
 
   if(to.meta.requiredAuth)
   {
->>>>>>> 6b6aff38eb640cd1a7d94c40d71b8f341e486d85
     const { cookies } = useCookies()
     return authMiddleware(to, from, next, cookies)
   } else {
     next()
   }
-<<<<<<< HEAD
-})
-=======
 
   /*if((to.name === "register" || to.name === "login"))
   {
@@ -110,6 +97,5 @@ router.beforeEach( async (to, from, next) => {
 
   next()
 } )
->>>>>>> 6b6aff38eb640cd1a7d94c40d71b8f341e486d85
 
 export default router
