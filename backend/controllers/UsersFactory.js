@@ -1,9 +1,9 @@
-import Admin from "../models/Admins.js";
-import Moderator from "../models/Moderators.js";
-import User from "../models/Users.js";
-import crypto from "crypto"
+const Moderator = require ("../models/Moderators.js");
+const User = require ("../models/Users");
+const crypto =  require ("node:crypto")
+const Admin = require("../models/Admins.js")
 
-export default class UsersFactory
+class UsersFactory
 {
     static async createUser(role, email, firstname, lastname, username, avatar, hobbies, password)
     {
@@ -34,3 +34,5 @@ export default class UsersFactory
         
     }
 }
+
+module.exports = UsersFactory;

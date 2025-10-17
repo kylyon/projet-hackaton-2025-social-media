@@ -1,4 +1,4 @@
-export class UserError extends Error
+class UserError extends Error
 {
     constructor(message, code, fields = [])
     {
@@ -8,3 +8,5 @@ export class UserError extends Error
         this.fields = fields
     }
 }
+
+module.exports = UserError;

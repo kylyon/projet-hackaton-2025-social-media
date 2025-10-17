@@ -4,16 +4,17 @@ import { useCookies } from "vue3-cookies"
 import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
+import Home from '@/pages/Home.vue'
 
 //Import des middelware
 import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
 
 const routes = [
-  /*{
+  {
     path: '/',
-    name: 'login',
-    component: Login
-  },*/
+    name: 'dashboard',
+    component: Home
+  },
   {
     path: '/profil',
     name: 'profil',

@@ -1,5 +1,5 @@
-import crypto from "crypto"
-import User from "./Users.js";
+const crypto = require("node:crypto"); 
+const User = require("./Users.js"); 
 
 /*const TokenModel = mongoose.model("Token", tokenSchema);*/
 
@@ -16,7 +16,7 @@ const generateToken = (userId, userAgent) =>
     return {salt: salt.toString("hex"), hash}
 }
 
-export default class AuthToken
+class AuthToken
 {
 
     /**
@@ -104,3 +104,5 @@ export default class AuthToken
         }
     }
 }
+
+module.exports = AuthToken; 

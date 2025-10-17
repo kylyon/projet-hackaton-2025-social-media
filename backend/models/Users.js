@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import crypto from "crypto"
-import { UserError } from "../errors/users/UserError.js";
+const mongoose= require("mongoose"); 
+const crypto = require ("node:crypto"); 
+const UserError = require ("../errors/users/userError.js")
 
 
 //Modele de schema MongoDB pour les tokens d'authentification
@@ -61,7 +61,7 @@ const checkUniqueFields = async (email, username) =>
     }
 }
 
-export default class User
+class User
 {
     #_uuid
     #_email;
@@ -246,3 +246,6 @@ export default class User
 
 
 }
+
+
+module.exports = User;

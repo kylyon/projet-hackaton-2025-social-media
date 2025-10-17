@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose"); 
 
 const PostSchema = new mongoose.Schema(
     {
@@ -11,7 +11,7 @@ const PostSchema = new mongoose.Schema(
 
 const PostModel = mongoose.model("Post", PostSchema);
 
-export default class Post
+class Post
 {
    
     #_comment_id;
@@ -127,3 +127,5 @@ export default class Post
     }
 
 }
+
+module.exports = Post;
