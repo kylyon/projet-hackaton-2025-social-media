@@ -13,11 +13,16 @@ import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> daed2bc (evol frontend : admin / profile)
 // Import des middleware
 import { authMiddleware } from '@/middleware/authMiddleware'
+=======
+//Import des middelware
+import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
+>>>>>>> bbf7e7d (Register errors and logic done + User model updated)
 
 const routes = [
 <<<<<<< HEAD
@@ -118,13 +123,33 @@ const router = createRouter({
   routes
 })
 
+<<<<<<< HEAD
 router.beforeEach((to, from, next) => {
   if (to.meta.requiredAuth) {
+=======
+router.beforeEach( async (to, from, next) => {
+
+  if(to.meta.requiredAuth)
+  {
+>>>>>>> bbf7e7d (Register errors and logic done + User model updated)
     const { cookies } = useCookies()
     return authMiddleware(to, from, next, cookies)
   } else {
     next()
   }
+<<<<<<< HEAD
 })
+=======
+
+  /*if((to.name === "register" || to.name === "login"))
+  {
+    return next({
+      name: "profil"
+    })
+  }*/
+
+  next()
+} )
+>>>>>>> bbf7e7d (Register errors and logic done + User model updated)
 
 export default router
