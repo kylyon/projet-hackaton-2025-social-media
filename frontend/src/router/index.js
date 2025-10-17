@@ -26,10 +26,7 @@ import Home from '@/pages/Home.vue'
 import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
 
 const routes = [
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
+
   {
     path: '/test',
     component: { template: '<div>Test OK</div>' }

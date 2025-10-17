@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
   <div class="">
+=======
+  <div class="min-h-screen bg-gray-100 p-8">
+>>>>>>> be6e9e1 (evol (frontend) intégration Kpis User)
     <div class="max-w-7xl mx-auto">
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Tableau de bord - Profils Utilisateurs</h1>
       
