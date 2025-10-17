@@ -12,7 +12,7 @@
         <InputField label="Mot de passe" v-model="password" placeholder="Entrez votre mot de passe"
           typeField="password" />
 
-        <AppButton label="Connexion" @click="login" class="mt-2" />
+        <AppButton label="Connexion" class="mt-2" />
       </form>
 
       <p class="text-center text-sm mt-4">
@@ -30,6 +30,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import InputField from './InputField.vue'
 import AppButton from './Button.vue'
+import { loginAction } from "@/actions/auth/authAction.js"
 
 const router = useRouter()
 
@@ -38,29 +39,9 @@ const password = ref('')
 
 async function login() {
   console.log('Connexion avec', email.value, password.value)
+  const isLogged = await loginAction(email.value, password.value)
 
-  const res = await fetch("http://localhost:3000/auth/login", {
-    method: "post",
-    body: JSON.stringify({
-      usernameInput: email.value,
-      hashedPassword: password.value
-    }),
-    headers:
-    {
-      "Access-Control-Allow-Origin": "*",
-      "Content-type": "application/json"
-
-    }
-  })
-
-  if (res.ok) {
-    const json = await res.json()
-    window.cookieStore.set("auth_token", json.user.token.tokenId)
-    router.push("/profil")
-  } else {
-    //Mettre les erreurs ici
-    console.log(res)
-  }
+  if(isLogged) router.push("/profil")
 
 }
 </script>

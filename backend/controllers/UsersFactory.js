@@ -1,23 +1,29 @@
-import Admin from "../models/Admins.js";
-import Moderator from "../models/Moderators.js";
-import User from "../models/Users.js";
+const Moderator = require ("../models/Moderators.js");
+const User = require ("../models/Users");
+const crypto =  require ("node:crypto")
+const Admin = require("../models/Admins.js")
 
-export default class UsersFactory
+class UsersFactory
 {
-    static async createUser(role, email, fisrtname, lastname, username, avatar, adressesList, password)
+    static async createUser(role, email, firstname, lastname, username, avatar, hobbies, password)
     {
+        //Generate UUID
+        const salt = crypto.randomBytes(16)
+        const uuid = crypto.createHmac("sha512", salt).update(email + firstname + lastname + username).digest("hex")
+
+        const userInfo = {uuid, email, firstname, lastname, username, avatar, hobbies, password}
+
         try {
             switch(role.toLowerCase())
             {
                 case "user":
-                    const user = new User(email, fisrtname, lastname, username, avatar, adressesList, password)
-                    const res = await user.createUserDB()
-                    return res;
+                    const user = User.createUser(userInfo)
+                    return user;
                 case "admin":
-                    const admin = new Admin(email, fisrtname, lastname, username, avatar, adressesList, password)
+                    const admin = Admin.createUser(userInfo, "admin")
                     return admin
                 case "moderator":
-                    const moderator = new Moderator(email, fisrtname, lastname, username, avatar, adressesList, password)
+                    const moderator = Moderator.createUser(userInfo, "moderator")
                     return moderator
                 default:
                     throw new Error("Aucun role ne correspond")
@@ -28,3 +34,5 @@ export default class UsersFactory
         
     }
 }
+
+module.exports = UsersFactory;

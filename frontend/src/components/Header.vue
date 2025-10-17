@@ -37,6 +37,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import AppButton from '@/components/Button.vue'
+import { logoutAction } from '@/actions/auth/authAction'
 
 const router = useRouter()
 
@@ -49,30 +50,9 @@ const goToProfile = () => {
 }
 
 const logout = async () => {
+  const res = await logoutAction();
 
-  const res = await fetch("http://localhost:3000/auth/logout", {
-    method: "post",
-    headers: 
-    {
-      "Access-Control-Allow-Origin" : "*",
-      "Authorization" : "Bearer " + (await window.cookieStore.get("auth_token")).value
-
-    }
-  })
-
-  if(res.ok)
-  {
-    const json = await res.json()
-    console.log(json)
-
-    if(json.user)
-    {
-      window.cookieStore.delete("auth_token")
-    }
-
-    router.push('/login')
-  }
-
+  if(res) router.push('/login')
   
 }
 </script>

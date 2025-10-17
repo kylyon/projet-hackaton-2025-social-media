@@ -76,6 +76,11 @@
 import { ref } from "vue"
 import InputField from "./InputField.vue"
 import AppButton from "./Button.vue"
+import { registerAction } from "@/actions/auth/authAction"
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 
 const email = ref("")
 const nom = ref("")
@@ -130,5 +135,26 @@ async function register() {
     })
 
     // Appel API ici
+    const isRegistered = await registerAction({
+        email: email.value,
+        lastname: nom.value,
+        username: username.value,
+        //description: description.value,
+        //avatar: photo.value,
+        //hobbies: hobbies.value,
+        password: motdepasse.value,
+    }) 
+
+    const json = await isRegistered.json()
+    if (isRegistered.ok) {
+        router.push("/login"); 
+        return;
+    }
+    
+    if(json.error.code === "ALREADY_USED_FIELD"){
+        json.error.fields.map( (e) => {
+            errors.value[e.key] = e.message
+        } )
+    }
 }
 </script>

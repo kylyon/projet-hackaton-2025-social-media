@@ -1,4 +1,4 @@
-const { AuthToken } = require("../models/Token");
+const AuthToken  = require("../models/Token");
 
 const authMiddleware = async (req, res, next) =>
 {

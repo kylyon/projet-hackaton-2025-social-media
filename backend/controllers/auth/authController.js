@@ -1,8 +1,9 @@
-const { AuthToken } = require("../../models/Token");
-const { User } = require("../../models/Users");
-const { UsersFactory } = require("../UsersFactory");
+const AuthToken = require("../../models/Token");
+const User = require("../../models/Users");
+const UsersFactory  = require("../UsersFactory");
 
 const userLogin = async (req, res) => {
+    //
     const {usernameInput, hashedPassword} = req.body
 
     try {
@@ -14,9 +15,9 @@ const userLogin = async (req, res) => {
         )
 
         if(!userFind) return res.status(401).json({message: "User not find", status: 401});
-
+        
         const user = userFind[0]
-
+        
         const token = await AuthToken.createAuthToken(user.uuid, req.get("User-Agent"))
         user.token = token;
 
@@ -45,12 +46,14 @@ const userLogout = async (req, res) => {
 
 const userRegister = async (req, res) => 
 {
-    const { email, fisrtname, lastname, username, avatar, adressesList, password } = req.body
+    const { email, firstname, lastname, username, avatar, hobbies, password } = req.body
 
     try {
-        const user = await UsersFactory.createUser("user", email, fisrtname, lastname, username, avatar, adressesList, password )
+        const user = await UsersFactory.createUser("user", email, firstname, lastname, username, avatar, hobbies, password )
 
-        if(!user) throw new Error("Erreur lors de la création de l'utilisateur")
+        if(!user) throw new Error("Erreur aucun utilisateur créé");
+
+        if(user.status === 500) res.status(500).json({error : user.error, message: user.message})
 
         return res.status(200).json({user , message: "Utilisateur créé"})
     } catch (error) {

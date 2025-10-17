@@ -1,29 +1,34 @@
-import mongoose from "mongoose";
-import crypto from "crypto"
+const mongoose= require("mongoose"); 
+const crypto = require ("node:crypto"); 
+const UserError = require ("../errors/users/userError.js")
 
+
+//Modele de schema MongoDB pour les tokens d'authentification
 const tokenSchema = new mongoose.Schema(
     {
-        tokenId: { type: String, required: true, unique: true },
+        tokenId: { type: String, required: true },
         userId: { type: String, required: true },
         expiresAt: String
     }
 );
 
+//Modele de schema MongoDB pour les utilisateurs
 const userSchema = new mongoose.Schema(
     {
         uuid: { type: String, required: true, unique: true },
         email : { type: String, required: true, unique: true },
-        fisrtname: String,
+        firstname: String,
         lastname: String,
         username: { type: String, required: true, unique: true },
         avatar: String,
-        adressesList: Array,
+        hobbies: Array,
         password: String,
         role: String,
         token : tokenSchema
     }
 );
 
+//Modification de la fonction toJSON sur le schema de user pour retirer les MDP dans la reponse
 userSchema.set('toJSON', 
     { 
         transform: (document, returnedObject) => { delete returnedObject.password; } 
@@ -32,7 +37,31 @@ userSchema.set('toJSON',
 
 const UserModel = mongoose.model("User", userSchema);
 
-export default class User
+const checkMailValidity = (email) =>
+{
+    return email.includes("@") && email.includes(".")
+}
+
+const checkUniqueFields = async (email, username) =>
+{
+    const errors = []
+
+    try {
+        const emailInDB = await UserModel.exists({email})
+
+        if(emailInDB) errors.push({key : "email", value: email, message: "Cet email est déjà utilisé"})
+
+        const usernameInDB = await UserModel.exists({username})
+
+        if(usernameInDB) errors.push({key : "username", value: username, message: "Ce nom d'utilisateur est déjà utilisé"})
+
+        return errors;
+    } catch (error) {
+        return {error, message: "Erreur lors de la requête"}
+    }
+}
+
+class User
 {
     #_uuid
     #_email;
@@ -40,18 +69,18 @@ export default class User
     #_lastname;
     #_username;
     #_avatar;
-    #_adressesList;
+    #_hobbies;
     #_password;
     #_role;
 
-    constructor(email, fisrtname, lastname, username, avatar, adressesList, password)
+    constructor(email, fisrtname, lastname, username, avatar, hobbies, password)
     {
         this.#_email = email;
         this.#_firstname = fisrtname;
         this.#_lastname = lastname;
         this.#_username = username;
         this.#_avatar = avatar;
-        this.#_adressesList = adressesList;
+        this.#_hobbies = hobbies;
         this.#_password = password;
         this.#_role = "user";
 
@@ -92,9 +121,9 @@ export default class User
         return this.#_avatar;
     }
 
-    get adressesList()
+    get hobbies()
     {
-        return this.#_adressesList;
+        return this.#_hobbies;
     }
 
     get password()
@@ -109,18 +138,61 @@ export default class User
 
     //Static methods
 
+    /**
+     * Insert the user in the database
+     * @returns the user JSON object from MongoDB or false
+     */
+    static async createUser(userInfo, role="user")
+    {   
+        const { email, username, password, uuid } = userInfo
+
+        try {
+            if(!email | !username | !password | !uuid) throw new UserError("Champs obligatoire manquant", "MISSING_REQUIRED_FIELD");
+
+            const uniqueFiledsError = await checkUniqueFields(email, username);
+
+            if(uniqueFiledsError.length) throw new UserError("Champs dupliqué, impossible de créer l'utilisateur", "ALREADY_USED_FIELD", uniqueFiledsError)
+
+            if(!checkMailValidity(email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
+
+            userInfo.role = role
+
+            const userDB = await UserModel.create(userInfo)
+
+            const user = userDB.toJSON()
+            return user;
+        } catch (error) {
+            console.log(error.message)
+            return {status:500, message : error.message, error}
+        }
+    }
+
+    /**
+     * Find users
+     * @param {Object} userInfo - The JSON object filter fields
+     * @returns an array of Users
+     */
     static async findUser(userInfo)
     {
         try {
             const userDB = await UserModel.find(userInfo)
             return userDB.length > 0 ? userDB : null
         } catch (error) {
-            console.log("[Error user]",error)
+            console.log(error)
+            return {status:500, message : "Erreur lors de la recherche d'utilisateurs", error}
         }
     }
 
+    /**
+     * Update an user
+     * @param {string} userId - The user unique ID of the user to update
+     * @param {Object} updatedFields - The JSON object with the fields to update
+     * @returns 
+     */
     static async updateUser(userId, updatedFields)
     {
+        if(updatedFields.email && !checkMailValidity(updatedFields.email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
+
         try {
             
             await UserModel.findOneAndUpdate({uuid:userId}, 
@@ -129,7 +201,7 @@ export default class User
             const userDB= await UserModel.findOne({uuid:userId})
             return userDB ?? null
         } catch (error) {
-            console.log("[Error user]",error)
+            return {status:500, message : "Erreur lors de la mise à jour d'utilisateurs", error}
         }
     }
 
@@ -142,7 +214,7 @@ export default class User
             const userDB= await UserModel.findOneAndDelete({uuid:userId}); 
             return userDB ?? null
         } catch (error) {
-            console.log("[Error user]",error)
+            return {status:500, message : "Erreur lors de la suppression d'utilisateurs", error}
         }
     }
 
@@ -158,7 +230,7 @@ export default class User
                 lastname : this.#_lastname, 
                 username : this.#_username, 
                 avatar : this.#_avatar, 
-                adressesList : this.#_adressesList, 
+                hobbies : this.#_hobbies, 
                 password : this.#_password, 
                 role : this.#_role 
             })
@@ -174,3 +246,6 @@ export default class User
 
 
 }
+
+
+module.exports = User;

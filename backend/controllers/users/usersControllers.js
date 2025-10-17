@@ -1,5 +1,5 @@
-const { default:UsersFactory } = require("../UsersFactory.js");
-const {default:User} = require ("../../models/Users");
+const UsersFactory = require("../UsersFactory.js");
+const User = require ("../../models/Users");
 
 
 
@@ -22,7 +22,7 @@ const createUsers = async (req, res) => {
  
   const user = req.body;
   // Check if all required fields are present
-  const {email, firstname, lastname, username, avatar, addressesList, password } = user
+  const {email, firstname, lastname, username, avatar, hobbies, password } = user
 
   try {
 
@@ -31,7 +31,7 @@ const createUsers = async (req, res) => {
     }
     // Create new user
 
-    const newUser = await UsersFactory.createUser("user", email, firstname, lastname, username, avatar, addressesList, password);
+    const newUser = await UsersFactory.createUser("user", email, firstname, lastname, username, avatar, hobbies, password);
 
     // Check if user creation was successful
     if(!newUser) return res.status(400).json({ message: "Error creating user", status: "400" });
@@ -57,7 +57,7 @@ const getUsersById = async (req, res) => {
 
       const userID = await User.findUser(
             {
-                username: usernameInput,
+                uuid: usernameInput,
             }
         )
 
