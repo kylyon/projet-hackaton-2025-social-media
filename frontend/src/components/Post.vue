@@ -12,8 +12,9 @@
           <h2 class="text-sm font-semibold">{{ user.nom }}</h2>
           <p class="text-sm text-gray-500">@{{ user.username }}</p>
         </div>
-        <p class="text-gray-400 text-sm italic">Hobbies à venir...</p>
-      </div>
+<p v-if="user.hobby" class="text-sm text-gray-400 italic">
+  Hobby : {{ user.hobby }}
+</p>      </div>
     </div>
 
     <!-- Contenu du post -->
