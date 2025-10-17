@@ -46,12 +46,12 @@ const userLogout = async (req, res) => {
 
 const userRegister = async (req, res) => 
 {
-    const { email, firstname, lastname, username, avatar, hobbies, password } = req.body
+    const { email, firstname, lastname, username, avatar, hobbies, password, description } = req.body
 
     const avatarPath = req.file ? `/uploads/${req.file.filename}` : null
 
     try {
-        const user = await UsersFactory.createUser("user", email, firstname, lastname, username, avatarPath, hobbies, password )
+        const user = await UsersFactory.createUser("user", email, firstname, lastname, username, avatarPath, hobbies, password, description )
 
         if(!user) throw new Error("Erreur aucun utilisateur créé");
 

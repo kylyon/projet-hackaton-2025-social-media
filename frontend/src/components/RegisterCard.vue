@@ -144,6 +144,7 @@ async function register() {
     formData.append("firstname", nom.value)
     formData.append("username", username.value)
     formData.append("avatar", avatar.value)
+    formData.append("description", description.value)
     formData.append("hobbies", hobbies.value)
     formData.append("password", password.value)
 

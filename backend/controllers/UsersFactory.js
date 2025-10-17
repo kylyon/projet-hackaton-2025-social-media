@@ -5,13 +5,13 @@ const Admin = require("../models/Admins.js")
 
 class UsersFactory
 {
-    static async createUser(role, email, firstname, lastname, username, avatar, hobbies, password)
+    static async createUser(role, email, firstname, lastname, username, avatar, hobbies, password, description)
     {
         //Generate UUID
         const salt = crypto.randomBytes(16)
         const uuid = crypto.createHmac("sha512", salt).update(email + firstname + lastname + username).digest("hex")
 
-        const userInfo = {uuid, email, firstname, lastname, username, avatar, hobbies, password}
+        const userInfo = {uuid, email, firstname, lastname, username, avatar, hobbies, password, description}
 
         try {
             switch(role.toLowerCase())

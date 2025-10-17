@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
         lastname: String,
         username: { type: String, required: true, unique: true },
         avatar: String,
+        description: String,
         hobbies: Array,
         password: String,
         role: String,
@@ -69,17 +70,19 @@ class User
     #_lastname;
     #_username;
     #_avatar;
+    #_description;
     #_hobbies;
     #_password;
     #_role;
 
-    constructor(email, fisrtname, lastname, username, avatar, hobbies, password)
+    constructor(email, fisrtname, lastname, username, avatar, hobbies, password, description)
     {
         this.#_email = email;
         this.#_firstname = fisrtname;
         this.#_lastname = lastname;
         this.#_username = username;
         this.#_avatar = avatar;
+        this.#_description = description;
         this.#_hobbies = hobbies;
         this.#_password = password;
         this.#_role = "user";
@@ -119,6 +122,11 @@ class User
     get avatar()
     {
         return this.#_avatar;
+    }
+
+    get description()
+    {
+        return this.#_description;
     }
 
     get hobbies()
@@ -230,6 +238,7 @@ class User
                 lastname : this.#_lastname, 
                 username : this.#_username, 
                 avatar : this.#_avatar, 
+                description : this.#_description, 
                 hobbies : this.#_hobbies, 
                 password : this.#_password, 
                 role : this.#_role 

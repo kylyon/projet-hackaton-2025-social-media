@@ -18,7 +18,7 @@
         <!-- Ligne 1 : nom + username côte à côte -->
         <div class="flex items-center gap-2">
           <h2 class="text-gray-800 font-semibold text-lg">
-            {{ user.lastname || user.nom || 'Utilisateur' }}
+            {{ user.lastname || user.firstname || 'Utilisateur' }}
           </h2>
           <p class="text-gray-600 text-sm">| @{{ user.username }}</p>
         </div>
