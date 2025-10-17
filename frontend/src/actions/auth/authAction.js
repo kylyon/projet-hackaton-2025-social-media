@@ -1,4 +1,4 @@
-import { hashPassword } from "@/utils/getCrypto.js"
+import { hashPassword } from "../../../utils/getCrypto.js"
 
 const loginAction = async (usernameInput, password) => 
 {

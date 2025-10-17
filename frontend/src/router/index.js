@@ -87,15 +87,6 @@ const router = createRouter({
 
 router.beforeEach( async (to, from, next) => {
 
-  console.log(to, from)
-
-  /*router.onError((e) => {
-    if(e instanceof AuthError)
-    {
-      console.log("[AuthError]" , e.message)
-    }
-  })*/
-
   const { cookies } = useCookies()
 
   if(to.meta.requiredAuth)
