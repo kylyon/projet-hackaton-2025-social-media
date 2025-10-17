@@ -11,6 +11,8 @@ import DefaultLayout from '@/layouts/defaulLayout.vue'
 import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
+import Home from '@/pages/Home.vue'
+
 
 //Import des middelware
 import {authMiddleware, loggedMiddleware} from '@/middleware/authMiddleware'
@@ -46,9 +48,9 @@ const routes = [
     component: DefaultLayout,
     children: [
       {
-        path: '',
+        path: '/',
         name: 'home',
-        component: Profile
+        component: Home,
       },
       {
         path: 'profil',
