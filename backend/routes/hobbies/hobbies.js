@@ -2,7 +2,8 @@ const { Router } = require('express');
 const router = Router();
 
 const {
-  getHobbies,
+   getHobbies,
+   getHobbiesById,
     createHobby,
     updateHobby,
     deleteHobby } = require("../../controllers/hobbies/hobbiesControllers");
@@ -18,6 +19,19 @@ const {
  *         description: Liste des hobbies
  */
 router.get('/', getHobbies);
+
+/**
+ * @swagger
+ * /hobbies/id:
+ *   get:
+ *     summary: Récupère un Hobby par son ID
+ *     tags: [Hobbies]
+ *     responses:
+ *       200:
+ *         description: Récupère un Hobby par son ID
+ */
+
+router.get('/:id', getHobbiesById);
 
 /**
  * @swagger

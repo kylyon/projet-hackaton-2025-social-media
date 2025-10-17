@@ -1,22 +1,20 @@
 <template>
   <div class="">
-    <div class="max-w-7xl mx-auto">
-      <h1 class="text-3xl font-bold text-gray-900 mb-8">Tableau de bord - Profils Utilisateurs</h1>
-      
+    <div class="max-w-7xl mx-auto"> 
       <!-- Loading State -->
       <div v-if="loading" class="flex items-center justify-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <Loading/>
       </div>
 
       <!-- Error State -->
-      <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-4 mb-8">
+      <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-4 mb-3">
         <p class="text-red-800">{{ error }}</p>
       </div>
 
       <!-- Dashboard Content -->
       <template v-else>
         <!-- KPI Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-3">
           <KpiCard 
             title="Total Utilisateurs" 
             :value="stats.totalUsers" 
@@ -67,6 +65,7 @@ import KpiCard from './KpiCard.vue'
 import BarChart from './BarChart.vue'
 import PieChart from './PieChart.vue'
 import UserTable from './UserTable.vue'
+import Loading from '../admin/Loading.vue'
 
 // État réactif
 const users = ref([])

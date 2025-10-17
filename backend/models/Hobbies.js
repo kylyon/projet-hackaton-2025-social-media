@@ -12,6 +12,7 @@ const HobbyModel = mongoose.model("Hobby", hobbySchema);
 class Hobby
 {
     //Static methods
+
     
     static async createHobby(hobbyInfo)
     {
@@ -22,6 +23,19 @@ class Hobby
             return {status:500, message : "Erreur lors de la création de hobby", error}
         }
     }
+
+    // Get Hobbies by id
+     static async findHobbyId(hobbyInfo = {})
+    {
+        try {
+            const hobbyDB = await HobbyModel.find(hobbyInfo);
+            return hobbyDB.length ?  hobbyDB : null
+        } catch (error) {
+            return new Error("Erreur lors de la recherche de hobby")
+        }
+    }
+
+    //
 
     static async findHobby(hobbyInfo = {})
     {
