@@ -3,6 +3,7 @@ const router = Router();
 
 const {
   getRoles,
+  getRoleById,
   createRoles,
   updateRoles,
   deleteRoles } = require("../../controllers/roles/rolesControllers");
@@ -18,6 +19,18 @@ const {
  *         description: Liste des rôles
  */
 router.get('/', getRoles);
+
+/**
+ * @swagger
+ * /roles/id:
+ *   get:
+ *     summary: Récupère un role par son ID
+ *     tags: [Roles]
+ *     responses:
+ *       200:
+ *         description: Récupère un role par son ID
+ */
+router.get('/:id', getRoleById);
 
 /**
  * @swagger

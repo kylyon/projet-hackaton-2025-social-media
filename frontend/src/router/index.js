@@ -5,6 +5,8 @@ import { useCookies } from "vue3-cookies"
 import adminHome from '@/pages/admin/Admin.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import adminSetting from '@/pages/admin/Setting.vue'
+import AdminUsersView from '@/pages/admin/UsersView.vue'
+import AdminHobbiesView from "@/pages/admin/HobbiesView.vue"
 
 // Default Path
 import DefaultLayout from '@/layouts/defaulLayout.vue'
@@ -38,7 +40,27 @@ const routes = [
         path: 'setting',
         name: "admin-setting",
         component: adminSetting,
+        meta: {
+          requiredAuth: false
+        }
+      },
+      {
+        path: 'users',
+        name: "users",
+        component: AdminUsersView,
+        meta: {
+          requiredAuth: false
+        }
+      },
+      {
+        path: 'hobbies',
+        name: "hobbies",
+        component: AdminHobbiesView,
+        meta: {
+          requiredAuth: false
+        }
       }
+
     ]
   },
   {
