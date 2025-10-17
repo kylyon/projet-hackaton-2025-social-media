@@ -19,6 +19,7 @@ import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
 
+
 //Import des middelware
 import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
 
