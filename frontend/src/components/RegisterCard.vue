@@ -143,8 +143,18 @@ async function register() {
         //avatar: photo.value,
         //hobbies: hobbies.value,
         password: motdepasse.value,
-    })
+    }) 
 
-    if(isRegistered) router.push("/login"); return;
+    const json = await isRegistered.json()
+    if (isRegistered.ok) {
+        router.push("/login"); 
+        return;
+    }
+    
+    if(json.error.code === "ALREADY_USED_FIELD"){
+        json.error.fields.map( (e) => {
+            errors.value[e.key] = e.message
+        } )
+    }
 }
 </script>

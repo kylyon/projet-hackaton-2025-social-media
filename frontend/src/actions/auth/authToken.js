@@ -21,7 +21,7 @@ export const createAuthToken = async (userId, userAgent, ttl = 3600) =>
     
 }*/
 
-export const getAuthToken = async (token) => 
+export const getAuthToken = async () => 
 {
     const res = await fetch("http://localhost:3000/auth/get_token", {
         method: "post",

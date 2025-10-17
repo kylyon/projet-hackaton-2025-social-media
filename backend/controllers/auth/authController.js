@@ -18,7 +18,7 @@ const userLogin = async (req, res) => {
         
         const user = userFind[0]
         
-        const token = await AuthToken.createAuthToken(user.uuid, req.get("User-Agent"))
+        const token = await AuthToken.createAuthToken(user.uuid, req.get("User-Agent"),10)
         user.token = token;
 
         res.cookie("auth_token", token.tokenId, {
@@ -46,10 +46,10 @@ const userLogout = async (req, res) => {
 
 const userRegister = async (req, res) => 
 {
-    const { email, firstname, lastname, username, avatar, adressesList, password } = req.body
+    const { email, firstname, lastname, username, avatar, hobbies, password } = req.body
 
     try {
-        const user = await UsersFactory.createUser("user", email, firstname, lastname, username, avatar, adressesList, password )
+        const user = await UsersFactory.createUser("user", email, firstname, lastname, username, avatar, hobbies, password )
 
         if(!user) throw new Error("Erreur aucun utilisateur créé");
 

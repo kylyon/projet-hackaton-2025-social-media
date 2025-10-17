@@ -5,13 +5,13 @@ import crypto from "crypto"
 
 export default class UsersFactory
 {
-    static async createUser(role, email, firstname, lastname, username, avatar, adressesList, password)
+    static async createUser(role, email, firstname, lastname, username, avatar, hobbies, password)
     {
         //Generate UUID
         const salt = crypto.randomBytes(16)
         const uuid = crypto.createHmac("sha512", salt).update(email + firstname + lastname + username).digest("hex")
 
-        const userInfo = {uuid, email, firstname, lastname, username, avatar, adressesList, password}
+        const userInfo = {uuid, email, firstname, lastname, username, avatar, hobbies, password}
 
         try {
             switch(role.toLowerCase())
