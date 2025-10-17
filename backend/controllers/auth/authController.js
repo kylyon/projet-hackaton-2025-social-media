@@ -1,6 +1,6 @@
-const AuthToken = require("../../models/Token");
+const AuthToken  = require("../../models/Token");
 const User = require("../../models/Users");
-const UsersFactory  = require("../UsersFactory");
+const UsersFactory = require("../UsersFactory");
 
 const userLogin = async (req, res) => {
     //
