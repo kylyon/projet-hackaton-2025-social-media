@@ -1,24 +1,29 @@
 import { getAuthToken } from "@/actions/auth/authToken"
+import { logoutAction } from "@/actions/auth/authAction"
+import { AuthError } from "@/errors/auth/authError"
 
 export const authMiddleware = async (to, from, next, cookies) =>
 {
-    
     const token = cookies.get("auth_token")
 
     if(!token)
     {
         console.log({message: "Token manquant"})
         
+        to.params.error = "Token manquant"
         return next({
             name: "login"
         })
     }
 
-    const entry = await getAuthToken();
+    const res = await getAuthToken();
+    const entry = res.token
+    
     if(!entry)
     { 
         console.log({message: "Token invalide"})
 
+        to.params.error = "Token invalide"
         return next({
             name: "login"
         })
@@ -28,6 +33,7 @@ export const authMiddleware = async (to, from, next, cookies) =>
     {
         console.log({message: "Token expiré"})
         
+        to.error = {message: "Token expiré"}
         await logoutAction();
 
         return next({
@@ -35,7 +41,7 @@ export const authMiddleware = async (to, from, next, cookies) =>
         })
     }
 
-    to.user = entry.token.user
+    to.user = entry.user
 
     if(to.meta.requiredAdmin && to.user.role !== "admin")
     {

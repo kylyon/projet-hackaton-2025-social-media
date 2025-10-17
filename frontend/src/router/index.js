@@ -14,6 +14,7 @@ import Register from '@/pages/Register.vue'
 
 //Import des middelware
 import {authMiddleware, loggedMiddleware} from '@/middleware/authMiddleware'
+import { AuthError } from '@/errors/auth/authError'
 
 const routes = [
   {
@@ -83,6 +84,15 @@ const router = createRouter({
 })
 
 router.beforeEach( async (to, from, next) => {
+
+  console.log(to, from)
+
+  /*router.onError((e) => {
+    if(e instanceof AuthError)
+    {
+      console.log("[AuthError]" , e.message)
+    }
+  })*/
 
   const { cookies } = useCookies()
 
