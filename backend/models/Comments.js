@@ -51,6 +51,17 @@ class Comment
         }
     }
 
+    // Get Comment by id
+     static async findCommentId(CommentInfo = {})
+    {
+        try {
+            const CommentDB = await CommentModel.find(CommentInfo);
+            return CommentDB.length ? CommentDB : null
+        } catch (error) {
+            return new Error("Erreur lors de la recherche de Commentaire")
+        }
+    }
+
     //Add comment 
 
     static async addComment(data)

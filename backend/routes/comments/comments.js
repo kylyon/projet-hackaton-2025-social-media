@@ -3,6 +3,7 @@ const router = Router();
 
 const {
   getComments,
+  getCommentById,
     createComment,
     updateComment,
     deleteComment } = require("../../controllers/comments/commentsControllers");
@@ -18,6 +19,18 @@ const {
  *         description: Liste des commentaires
  */
 router.get('/', getComments);
+
+/**
+ * @swagger
+ * /comments:
+ *   get:
+ *     summary: Récupère un commentaire par son ID
+ *     tags: [Comments]
+ *     responses:
+ *       200:
+ *         description: Récupère un commentaire par son ID
+ */
+router.get('/:id', getCommentById);
 
 /**
  * @swagger

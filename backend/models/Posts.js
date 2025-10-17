@@ -63,6 +63,17 @@ class Post
         }
     }
 
+     // Get Post by id
+     static async findPostId(PostInfo = {})
+    {
+        try {
+            const PostDB = await PostModel.find(PostInfo);
+            return PostDB.length ?  PostDB : null
+        } catch (error) {
+            return new Error("Erreur lors de la recherche de Post")
+        }
+    }
+
     //Add Post 
 
     static async addPost(data)

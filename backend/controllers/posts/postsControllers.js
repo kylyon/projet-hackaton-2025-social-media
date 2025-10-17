@@ -13,6 +13,34 @@ const getPosts = async (req, res) => {
     }
 };
 
+
+
+// Get Post by ID
+const getPostById = async (req, res) => {
+ 
+  const PostInput = req.params.id;
+
+  try {
+
+      const PostID = await Hobby.findPostId(
+            {
+                _id: PostInput,
+            }
+        )
+
+      if(!PostID) return res.status(401).json({message: "Post not find", status: 401});
+
+      const data = PostID[0]; 
+      
+      res.status(200).json({ message: `Request success`, data: data });
+  }
+  catch(error){
+      console.error("Error when get Post by id:", error);
+      return res.status(500).json({ message: "Internal server error", status: "500" });
+  }
+
+};
+
 // Create a new Post
 const createPost = async (req, res) => {
 
@@ -84,5 +112,6 @@ module.exports = {
     getPosts,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    getPostById
 };
