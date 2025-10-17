@@ -15,6 +15,9 @@ import Register from '@/pages/Register.vue'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 27eeedd (evol frontend : admin / profile)
 
 =======
 >>>>>>> daed2bc (evol frontend : admin / profile)
@@ -23,11 +26,18 @@ import { authMiddleware } from '@/middleware/authMiddleware'
 =======
 //Import des middelware
 import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
+<<<<<<< HEAD
 >>>>>>> bbf7e7d (Register errors and logic done + User model updated)
 =======
 //Import des middelware
 import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
 >>>>>>> 45eee38 (Auth update backend + Route secure by middleware)
+=======
+=======
+// Import des middleware
+import { authMiddleware } from '@/middleware/authMiddleware'
+>>>>>>> fa99354 (evol frontend : admin / profile)
+>>>>>>> 27eeedd (evol frontend : admin / profile)
 
 const routes = [
 <<<<<<< HEAD
@@ -104,6 +114,7 @@ const routes = [
         meta: {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           requiredAuth: true
 =======
           requiredAuth: false
@@ -111,6 +122,12 @@ const routes = [
 =======
           requiredAuth: true
 >>>>>>> 45eee38 (Auth update backend + Route secure by middleware)
+=======
+          requiredAuth: true
+=======
+          requiredAuth: false
+>>>>>>> fa99354 (evol frontend : admin / profile)
+>>>>>>> 27eeedd (evol frontend : admin / profile)
         }
       },
       {
@@ -132,19 +149,28 @@ const router = createRouter({
   routes
 })
 
+<<<<<<< HEAD
 router.beforeEach( async (to, from, next) => {
 
   if(to.meta.requiredAuth)
   {
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> bbf7e7d (Register errors and logic done + User model updated)
 =======
 >>>>>>> 45eee38 (Auth update backend + Route secure by middleware)
+=======
+=======
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiredAuth) {
+>>>>>>> fa99354 (evol frontend : admin / profile)
+>>>>>>> 27eeedd (evol frontend : admin / profile)
     const { cookies } = useCookies()
     return authMiddleware(to, from, next, cookies)
   } else {
     next()
   }
+<<<<<<< HEAD
 
   /*if((to.name === "register" || to.name === "login"))
   {
@@ -156,8 +182,14 @@ router.beforeEach( async (to, from, next) => {
   next()
 } )
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> bbf7e7d (Register errors and logic done + User model updated)
 =======
 >>>>>>> 45eee38 (Auth update backend + Route secure by middleware)
+=======
+=======
+})
+>>>>>>> fa99354 (evol frontend : admin / profile)
+>>>>>>> 27eeedd (evol frontend : admin / profile)
 
 export default router
