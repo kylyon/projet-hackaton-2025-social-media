@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
 <<<<<<< HEAD
   <main class="min-h-screen flex justify-center items-center">
@@ -32,3 +33,5 @@ import PostCard from '@/components/PostCard.vue'
 import UserKpiView from '@/components/userKPIs/UserKpiView.vue'
 </script>
 >>>>>>> be6e9e1 (evol (frontend) intégration Kpis User)
+=======
+>>>>>>> daed2bc (evol frontend : admin / profile)

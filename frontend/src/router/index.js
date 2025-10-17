@@ -11,21 +11,17 @@ import DefaultLayout from '@/layouts/defaulLayout.vue'
 import Login from '@/pages/Login.vue'
 import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
-import Home from '@/pages/Home.vue'
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> daed2bc (evol frontend : admin / profile)
 // Import des middleware
 import { authMiddleware } from '@/middleware/authMiddleware'
 
 const routes = [
 <<<<<<< HEAD
 =======
-  {
-    path: '/',
-    name: 'dashboard',
-    component: Home
-  },
->>>>>>> be6e9e1 (evol (frontend) intégration Kpis User)
   {
     path: '/test',
     component: { template: '<div>Test OK</div>' }
@@ -52,7 +48,37 @@ const routes = [
       }
     ]
   },
+>>>>>>> be6e9e1 (evol (frontend) intégration Kpis User)
   {
+<<<<<<< HEAD
+    path: '/test',
+    component: { template: '<div>Test OK</div>' }
+  }, 
+  {
+    path: "/admin",
+    component: AdminLayout,
+    children: [
+      {
+        path: '',
+        name: "dashboard",
+        component: adminHome,
+        meta: {
+          requiredAuth: false
+        }
+      },
+      {
+        path: 'setting',
+        name: "admin-setting",
+        component: adminSetting,
+        meta: {
+          requiredAuth: false
+        }
+      }
+    ]
+  },
+  {
+=======
+>>>>>>> daed2bc (evol frontend : admin / profile)
     path: "/",
     component: DefaultLayout,
     children: [
@@ -66,7 +92,11 @@ const routes = [
         name: 'profile',
         component: Profile,
         meta: {
+<<<<<<< HEAD
           requiredAuth: true
+=======
+          requiredAuth: false
+>>>>>>> daed2bc (evol frontend : admin / profile)
         }
       },
       {
