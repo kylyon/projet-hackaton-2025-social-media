@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 const AuthToken  = require("../../models/Token");
 const User = require("../../models/Users");
 const UsersFactory = require("../UsersFactory");
+=======
+const AuthToken = require("../../models/Token");
+const User = require("../../models/Users");
+const UsersFactory  = require("../UsersFactory");
+>>>>>>> 45eee38 (Auth update backend + Route secure by middleware)
 
 const userLogin = async (req, res) => {
     //
@@ -18,7 +24,7 @@ const userLogin = async (req, res) => {
         
         const user = userFind[0]
         
-        const token = await AuthToken.createAuthToken(user.uuid, req.get("User-Agent"),10)
+        const token = await AuthToken.createAuthToken(user.uuid, req.get("User-Agent"))
         user.token = token;
 
         res.cookie("auth_token", token.tokenId, {
