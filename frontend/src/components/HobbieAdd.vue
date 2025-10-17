@@ -8,15 +8,13 @@
       class="rounded-full w-6 h-6 flex items-center justify-center hover:bg-sky-700 transition"
       title="Ajouter ce hobby"
     >
-      <!-- Icon Lucide en blanc -->
       <CirclePlus class="w-4 h-4 text-white" />
     </button>
   </div>
 </template>
 
 <script setup>
-import { CirclePlus } from 'lucide-vue-next' // Import du composant Lucide
-
+import { CirclePlus } from 'lucide-vue-next'                                                                                                                                                                        
 defineProps({
   name: String
 })
