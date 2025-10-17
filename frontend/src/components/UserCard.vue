@@ -23,17 +23,14 @@
                 </div>
             </div>
             <div class="user-components w-full space-y-4">
-                <button class="w-full bg-sky-800 text-white py-2 rounded-lg hover:bg-sky-800 transition-colors">
-                    Modifier mon profil
-                </button>
-                 <button class="w-full bg-sky-800 text-white py-2 rounded-lg hover:bg-sky-800 transition-colors">
-                    Modifier mes hobbies
-                </button>
+                <AppButton label="Modifier mon profil" icon="UserIcon" variant="text" />
+                 <AppButton label="Modifier mes hobbies" icon="UserIcon" variant="text" />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import AppButton from '@/components/Button.vue'
 
 </script>
