@@ -8,6 +8,7 @@ import crypto from "crypto"
 const tokenSchema = new mongoose.Schema(
     {
         tokenId: { type: String, required: true },
+        tokenId: { type: String, required: true },
         userId: { type: String, required: true },
         expiresAt: String
     }
@@ -22,6 +23,7 @@ const userSchema = new mongoose.Schema(
         lastname: String,
         username: { type: String, required: true, unique: true },
         avatar: String,
+        hobbies: Array,
         hobbies: Array,
         password: String,
         role: String,
@@ -62,12 +64,6 @@ const checkUniqueFields = async (email, username) =>
     }
 }
 
-<<<<<<< HEAD
-export default class User
-=======
-<<<<<<< HEAD
-class User
-=======
 export default class User
 >>>>>>> ce725cb (Register errors and logic done + User model updated)
 >>>>>>> 50173a9 (Register errors and logic done + User model updated)
@@ -79,9 +75,11 @@ export default class User
     #_username;
     #_avatar;
     #_hobbies;
+    #_hobbies;
     #_password;
     #_role;
 
+    constructor(email, fisrtname, lastname, username, avatar, hobbies, password)
     constructor(email, fisrtname, lastname, username, avatar, hobbies, password)
     {
         this.#_email = email;
@@ -89,6 +87,7 @@ export default class User
         this.#_lastname = lastname;
         this.#_username = username;
         this.#_avatar = avatar;
+        this.#_hobbies = hobbies;
         this.#_hobbies = hobbies;
         this.#_password = password;
         this.#_role = "user";
@@ -131,7 +130,9 @@ export default class User
     }
 
     get hobbies()
+    get hobbies()
     {
+        return this.#_hobbies;
         return this.#_hobbies;
     }
 
@@ -146,6 +147,35 @@ export default class User
     }
 
     //Static methods
+
+    /**
+     * Insert the user in the database
+     * @returns the user JSON object from MongoDB or false
+     */
+    static async createUser(userInfo, role="user")
+    {   
+        const { email, username, password, uuid } = userInfo
+
+        try {
+            if(!email | !username | !password | !uuid) throw new UserError("Champs obligatoire manquant", "MISSING_REQUIRED_FIELD");
+
+            const uniqueFiledsError = await checkUniqueFields(email, username);
+
+            if(uniqueFiledsError.length) throw new UserError("Champs dupliqué, impossible de créer l'utilisateur", "ALREADY_USED_FIELD", uniqueFiledsError)
+
+            if(!checkMailValidity(email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
+
+            userInfo.role = role
+
+            const userDB = await UserModel.create(userInfo)
+
+            const user = userDB.toJSON()
+            return user;
+        } catch (error) {
+            console.log(error.message)
+            return {status:500, message : error.message, error}
+        }
+    }
 
     /**
      * Find users
@@ -218,6 +248,7 @@ export default class User
                 lastname : this.#_lastname, 
                 username : this.#_username, 
                 avatar : this.#_avatar, 
+                hobbies : this.#_hobbies, 
                 hobbies : this.#_hobbies, 
                 password : this.#_password, 
                 role : this.#_role 
