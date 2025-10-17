@@ -43,7 +43,15 @@ import { authMiddleware } from '@/middleware/authMiddleware'
 
 const routes = [
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+  {
+    path: '/',
+    name: 'dashboard',
+    component: Home
+  },
+>>>>>>> be6e9e1 (evol (frontend) intégration Kpis User)
   {
     path: '/test',
     component: { template: '<div>Test OK</div>' }

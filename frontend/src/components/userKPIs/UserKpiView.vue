@@ -1,20 +1,5 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 <template>
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <div class="">
-=======
   <div class="min-h-screen bg-gray-100 p-8">
->>>>>>> be6e9e1 (evol (frontend) intégration Kpis User)
-=======
-  <div class="">
->>>>>>> daed2bc (evol frontend : admin / profile)
-=======
-=======
-<template>
-  <div class="">
->>>>>>> 27eeedd (evol frontend : admin / profile)
     <div class="max-w-7xl mx-auto">
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Tableau de bord - Profils Utilisateurs</h1>
       
@@ -328,9 +313,3 @@ onMounted(() => {
   fetchAllData()
 })
 </script>
-<<<<<<< HEAD
-=======
->>>>>>> 21dc09c (evol (frontend) intégration Kpis User)
-=======
->>>>>>> fa99354 (evol frontend : admin / profile)
->>>>>>> 27eeedd (evol frontend : admin / profile)
