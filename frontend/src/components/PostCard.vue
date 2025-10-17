@@ -1,8 +1,10 @@
 <template>
   <main class="min-h-screen flex justify-center">
-    <div class="bg-sky-100 border border-gray-300 rounded-lg shadow p-6 max-w-3xl w-full space-y-6">
+    <div class="bg-sky-100 border border-gray-300 rounded-lg shadow p-6 max-w-2xl w-full h-[90vh] overflow-hidden space-y-6">
       <User :userId="userId" />
-      <PostSection />
+      <div class="overflow-y-auto h-full pr-2">
+        <PostSection />
+      </div>
     </div>
   </main>
 </template>

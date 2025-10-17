@@ -21,7 +21,7 @@ const routes = [
     name: 'profil',
     component: Profile,
     meta: {
-      requiredAuth : true
+      requiredAuth : false
     }
   },
   {

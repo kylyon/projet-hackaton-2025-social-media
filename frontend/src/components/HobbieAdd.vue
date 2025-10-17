@@ -5,15 +5,18 @@
     <span class="font-medium text-sm">{{ name }}</span>
     <button
       @click.stop="$emit('add')"
-      class="bg-white text-sky-800 rounded-full w-6 h-6 flex items-center justify-center hover:bg-sky-200 transition"
+      class="rounded-full w-6 h-6 flex items-center justify-center hover:bg-sky-700 transition"
       title="Ajouter ce hobby"
     >
-      <span class="text-lg font-bold leading-none">+</span>
+      <!-- Icon Lucide en blanc -->
+      <CirclePlus class="w-4 h-4 text-white" />
     </button>
   </div>
 </template>
 
 <script setup>
+import { CirclePlus } from 'lucide-vue-next' // Import du composant Lucide
+
 defineProps({
   name: String
 })

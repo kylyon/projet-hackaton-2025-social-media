@@ -1,6 +1,6 @@
 <template>
   <header
-    class="max-w-6xl mx-auto mt-4 mb-4 bg-sky-100 text-[#01588A] flex items-center justify-between px-8 py-1 rounded-2xl shadow-lg"
+    class="w-full max-w-[95%] mx-auto mt-4 mb-4 bg-sky-100 text-[#01588A] flex items-center justify-between px-4 sm:px-8 py-1 rounded-2xl shadow-lg"
   >
     <!-- Logo -->
     <div
@@ -32,6 +32,7 @@
     </nav>
   </header>
 </template>
+
 
 <script setup>
 import { useRouter } from 'vue-router'

@@ -1,6 +1,6 @@
 <template>
   <div class="relative bg-sky-100 border border-gray-300 rounded-xl shadow p-6 max-w-3xl mx-auto">
-    <h2 class="text-sky-900 font-semibold text-lg mb-4">🎯 Ajouter des Hobbies</h2>
+    <h2 class="text-sky-900 font-semibold text-lg mb-4">Ajouter des Hobbies</h2>
 
     <!-- Liste de hobbies -->
     <HobbieSection @hobbie-added="showConfirmation" />

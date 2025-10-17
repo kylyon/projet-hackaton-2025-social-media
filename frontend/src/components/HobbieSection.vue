@@ -4,7 +4,7 @@
   >
     <HobbieAdd
       v-for="hobbie in hobbies"
-      :key="hobbie.id"
+      :key="hobbie._id"
       :name="hobbie.name"
       @add="addHobbie(hobbie)"
     />
@@ -12,23 +12,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import HobbieAdd from './HobbieAdd.vue'
 
 const emit = defineEmits(['hobbie-added'])
+const apiUrl = 'https://hackaton-backend-api.vercel.app/hobbies/'
 
-const hobbies = ref([
-  { id: 1, name: 'Lecture' },
-  { id: 2, name: 'Voyage' },
-  { id: 3, name: 'Musique' },
-  { id: 4, name: 'Cuisine' },
-  { id: 5, name: 'Jeux vidéo' },
-  { id: 6, name: 'Sport' },
-  { id: 7, name: 'Randonnée' },
-  { id: 8, name: 'Photographie' }
-])
+const hobbies = ref([])
+
+async function fetchHobbies() {
+  try {
+    const res = await fetch(apiUrl)
+    if (!res.ok) throw new Error('Erreur lors du chargement des hobbies')
+    const data = await res.json()
+    hobbies.value = data.hobbies || []
+  } catch (err) {
+    console.error(err)
+    hobbies.value = []
+  }
+}
 
 function addHobbie(hobbie) {
   emit('hobbie-added', hobbie.name)
 }
+
+// On récupère les hobbies dès que le composant est monté
+onMounted(fetchHobbies)
 </script>
