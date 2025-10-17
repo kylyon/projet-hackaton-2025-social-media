@@ -45,11 +45,31 @@ ls
 
 projet-hackaton-2025-social-media
 |
-|___.github\workflows
+|---.github\workflows
 |
-|___backend
-|           
-|___frontend
+|---backend
+| |---controllers
+| |---errors
+| |---middleware
+| |---models
+| |---routes
+| |---tests
+| |---utils
+|
+|
+|---frontend
+| |---public
+| |---src
+| | |---actions
+| | |---assets
+| | |---components
+| | |---errors
+| | |---layouts
+| | |---middleware
+| | |---pages
+| | |---router
+| |---tests
+| |---utils
 |           
 |
 |.gitignore

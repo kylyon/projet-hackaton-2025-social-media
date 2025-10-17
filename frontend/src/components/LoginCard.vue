@@ -1,5 +1,6 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center">
+  <div class="min-h-screen flex flex-col items-center justify-center">
+    <p v-if="errors.login" class="text-red-600 text-sm mt-1">{{ errors.login }}</p>
     <div
       class="bg-sky-100 flex flex-col items-center justify-center border border-gray-300 rounded-lg shadow-md m-6 max-w-xs md:max-w-sm lg:max-w-md p-6 w-full">
       <h1 class="text-2xl text-center font-bold mb-6 text-sky-700">
@@ -36,12 +37,20 @@ const router = useRouter()
 
 const email = ref('')
 const password = ref('')
+const errors = ref({})
 
 async function login() {
-  console.log('Connexion avec', email.value, password.value)
-  const isLogged = await loginAction(email.value, password.value)
+  //console.log('Connexion avec', email.value, password.value)
+  const { res, json }= await loginAction(email.value, password.value)
 
-  if(isLogged) router.push("/profil")
+  if(res.ok)
+  {
+    if(json.user.role !== "admin") router.push("/profil")
+    else router.push("/admin")
+    return;
+  } 
+
+  errors.value.login = json.message
 
 }
 </script>

@@ -29,7 +29,7 @@ class AuthToken
     static async createAuthToken(userId, userAgent, ttl = 3600)
     {
         const tokenId = generateToken(userId, userAgent).hash;
-        const expiresAt = Date.now() * 1000 * ttl
+        const expiresAt = Date.now() + 1000 * ttl
 
         try
         {
@@ -66,7 +66,7 @@ class AuthToken
                 }
             )
 
-            return tokenDB.length ? { token: tokenDB[0].token.tokenId, user:tokenDB[0], expiresAt : tokenDB[0].token.expiresAt } : null
+            return tokenDB ? { token: tokenDB[0].token.tokenId, user:tokenDB[0], expiresAt : tokenDB[0].token.expiresAt } : null
         }catch(error)
         {
             console.error("[Token Error]", error)
