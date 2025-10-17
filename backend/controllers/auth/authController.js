@@ -35,7 +35,7 @@ const userLogin = async (req, res) => {
         
         const user = userFind[0]
         
-        const token = await AuthToken.createAuthToken(user.uuid, req.get("User-Agent"),10)
+        const token = await AuthToken.createAuthToken(user.uuid, req.get("User-Agent"))
         user.token = token;
 
         res.cookie("auth_token", token.tokenId, {

@@ -115,6 +115,7 @@ const routes = [
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           requiredAuth: true
 =======
           requiredAuth: false
@@ -123,11 +124,19 @@ const routes = [
           requiredAuth: true
 >>>>>>> 45eee38 (Auth update backend + Route secure by middleware)
 =======
+=======
+>>>>>>> aa6a35d (Auth update backend + Route secure by middleware)
           requiredAuth: true
 =======
           requiredAuth: false
 >>>>>>> fa99354 (evol frontend : admin / profile)
+<<<<<<< HEAD
 >>>>>>> 27eeedd (evol frontend : admin / profile)
+=======
+=======
+          requiredAuth: true
+>>>>>>> d7ef038 (Auth update backend + Route secure by middleware)
+>>>>>>> aa6a35d (Auth update backend + Route secure by middleware)
         }
       },
       {
