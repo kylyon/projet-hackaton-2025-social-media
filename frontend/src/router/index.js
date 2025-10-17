@@ -49,9 +49,9 @@ const routes = [
     component: DefaultLayout,
     children: [
       {
-        path: '',
+        path: '/',
         name: 'home',
-        component: Profile
+        component: Home,
       },
       {
         path: 'profil',

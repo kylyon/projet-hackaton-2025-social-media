@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div v-if="user">
     <!-- Composant utilisateur -->
-    <div class="flex flex-col md:flex-row rounded-lg p-2 gap-4 max-w-4xl mx-auto items-center">
+    <div
+      class="flex flex-col md:flex-row rounded-lg p-2 gap-4 max-w-4xl mx-auto items-center"
+    >
       <!-- Colonne gauche : image -->
       <div class="flex-shrink-0">
         <img
-          :src="user.photo || require('@/assets/avatar.jpg')"
+          :src="user.photo || avatar"
           :alt="user.username"
           class="w-18 h-18 object-cover rounded-lg border border-gray-300"
         />
@@ -15,13 +17,15 @@
       <div class="flex-1 flex flex-col justify-start gap-2">
         <!-- Ligne 1 : nom + username côte à côte -->
         <div class="flex items-center gap-2">
-          <h2 class="text-gray-800 font-semibold text-lg">{{ user.nom }}</h2>
+          <h2 class="text-gray-800 font-semibold text-lg">
+            {{ user.lastname || user.nom || 'Utilisateur' }}
+          </h2>
           <p class="text-gray-600 text-sm">| @{{ user.username }}</p>
         </div>
 
         <!-- Ligne 2 : hobbies -->
-        <div>
-          <HobbiesList :apiUrl="`http://localhost:3000/users/${user.id}/hobbies`" />
+        <div v-if="user._id">
+          <HobbiesList :apiUrl="`https://hackaton-backend-api.vercel.app/users/${user._id}/hobbies`" />
         </div>
       </div>
     </div>
@@ -29,31 +33,26 @@
     <!-- Ligne de séparation -->
     <div class="my-2 border-t border-gray-300 w-full max-w-4xl mx-auto"></div>
   </div>
+
+  <div v-else class="text-center text-gray-600 mt-10">
+    <p>Chargement des informations utilisateur...</p>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useUserStore } from '@/stores/userStore'
 import HobbiesList from './HobbiesList.vue'
 import avatar from '@/assets/avatar.jpg'
 
-const user = ref({
-  id: 1,
-  nom: 'Shanks Leroux',
-  username: 'onepiece.shanks',
-  photo: avatar
-})
+const userStore = useUserStore()
+const user = computed(() => userStore.user)
 
-// Exemple fictif : on pourrait fetcher plus tard
-async function fetchUser() {
-  try {
-    const res = await fetch(`http://localhost:3000/users/${user.value.id}`)
-    if (!res.ok) throw new Error('Erreur lors du chargement de l’utilisateur')
-    const data = await res.json()
-    user.value = { ...user.value, ...data }
-  } catch (err) {
-    console.error(err)
+onMounted(() => {
+  if (!user.value) {
+    console.warn('Aucun utilisateur connecté !')
+  } else {
+    console.log('Profil chargé pour', user.value.username)
   }
-}
-
-onMounted(fetchUser)
+})
 </script>
