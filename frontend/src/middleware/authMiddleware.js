@@ -1,4 +1,4 @@
-import { getAuthToken } from "@/actions/authToken"
+import { getAuthToken } from "@/actions/auth/authToken"
 
 export const authMiddleware = async (to, from, next, cookies) =>
 {
@@ -10,17 +10,17 @@ export const authMiddleware = async (to, from, next, cookies) =>
     if(!token)
     {
         console.log({message: "Token manquant"})
-        //res.status(400).json({message: "Token manquant"});
+        
         return next({
             name: "login"
         })
     }
 
-    const entry = await getAuthToken(token);
+    const entry = await getAuthToken();
     if(!entry)
     { 
         console.log({message: "Token invalide"})
-        //res.status(400).json({message: "Token invalide"});
+
         return next({
             name: "login"
         })
@@ -29,14 +29,26 @@ export const authMiddleware = async (to, from, next, cookies) =>
     if(Date.now() > entry.expiresAt)
     {
         console.log({message: "Token expiré"})
-        //await AuthToken.deleteAuthToken(token);
-        //res.status(400).json({message: "Token expiré"});
+        
+        await logoutAction();
+
         return next({
             name: "login"
         })
     }
 
+    to.user = entry.token.user
+
     //req.user = entry.user;
     return next()
+}
+
+export const isLogged = async () =>
+{
+    const token = await getAuthToken()
+
+    console.log(token)
+
+    //return token ? token.token.user : false
 }
 
