@@ -19,7 +19,7 @@ const loginAction = async (usernameInput, password) =>
   })
 
   const json = await res.json()
-  //console.log(json)
+  
   if (res.ok) {
     window.cookieStore.set({
         name: "auth_token",
@@ -29,7 +29,7 @@ const loginAction = async (usernameInput, password) =>
     })
     return json
   }
-  return false
+  return {res, json}
 }
 
 const registerAction = async (registerInfo) =>
@@ -52,32 +52,40 @@ const registerAction = async (registerInfo) =>
 }
 
 const logoutAction = async () => {
-    const res = await fetch("http://localhost:3000/auth/logout", {
-        method: "post",
-        headers: 
+    try {
+        const token = await window.cookieStore.get("auth_token")
+
+        if(!token) return;
+
+        const res = await fetch("http://localhost:3000/auth/logout", {
+            method: "post",
+            headers: 
+            {
+            "Access-Control-Allow-Origin" : "*",
+            "Authorization" : "Bearer " + token.value
+
+            }
+        })
+
+        const json = await res.json()
+        if(res.ok)
         {
-        "Access-Control-Allow-Origin" : "*",
-        "Authorization" : "Bearer " + (await window.cookieStore.get("auth_token")).value
+            //console.log(json)
 
-        }
-    })
+            if(json.user)
+            {
+                window.cookieStore.delete("auth_token")
+            }
 
-    const json = await res.json()
-    if(res.ok)
-    {
-        console.log(json)
-
-        if(json.user)
-        {
-            window.cookieStore.delete("auth_token")
+            return true;
         }
 
-        return true;
+        //console.error(json);
+
+        return false
+    } catch (error) {
+        console.error(error)
     }
-
-    console.error(json);
-
-    return false
 }
 
 export {
