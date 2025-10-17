@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -321,3 +322,5 @@ onMounted(() => {
   fetchAllData()
 })
 </script>
+=======
+>>>>>>> 21dc09c (evol (frontend) intégration Kpis User)
