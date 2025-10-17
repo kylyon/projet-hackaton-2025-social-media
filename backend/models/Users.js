@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
-import crypto from "crypto"
+const mongoose= require("mongoose"); 
+const crypto = require ("node:crypto"); 
+const UserError = require ("../errors/users/userError.js")
 
-
-//Modele de schema MongoDB pour les tokens d'authentification
 
 //Modele de schema MongoDB pour les tokens d'authentification
 const tokenSchema = new mongoose.Schema(
@@ -65,8 +64,6 @@ const checkUniqueFields = async (email, username) =>
 }
 
 export default class User
->>>>>>> ce725cb (Register errors and logic done + User model updated)
->>>>>>> 50173a9 (Register errors and logic done + User model updated)
 {
     #_uuid
     #_email;
@@ -162,9 +159,17 @@ export default class User
             const uniqueFiledsError = await checkUniqueFields(email, username);
 
             if(uniqueFiledsError.length) throw new UserError("Champs dupliqué, impossible de créer l'utilisateur", "ALREADY_USED_FIELD", uniqueFiledsError)
+        try {
+            if(!email | !username | !password | !uuid) throw new UserError("Champs obligatoire manquant", "MISSING_REQUIRED_FIELD");
+
+            const uniqueFiledsError = await checkUniqueFields(email, username);
+
+            if(uniqueFiledsError.length) throw new UserError("Champs dupliqué, impossible de créer l'utilisateur", "ALREADY_USED_FIELD", uniqueFiledsError)
 
             if(!checkMailValidity(email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
+            if(!checkMailValidity(email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
 
+            userInfo.role = role
             userInfo.role = role
 
             const userDB = await UserModel.create(userInfo)
@@ -172,6 +177,8 @@ export default class User
             const user = userDB.toJSON()
             return user;
         } catch (error) {
+            console.log(error.message)
+            return {status:500, message : error.message, error}
             console.log(error.message)
             return {status:500, message : error.message, error}
         }
@@ -230,10 +237,6 @@ export default class User
 
     //Instance methods
 
-    /**
-     * Insert the user in the database
-     * @returns the user JSON object from MongoDB or false
-     */
     /**
      * Insert the user in the database
      * @returns the user JSON object from MongoDB or false
