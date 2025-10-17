@@ -15,7 +15,7 @@
 
       <div class="">
         <!-- composant des posts -->
-        droite bas
+        <RecentPostCard />
       </div>
     </div>
   </div>
@@ -23,13 +23,15 @@
 
 <script>
 import NewPostCard from '@/components/NewPostCard.vue';
+import RecentPostCard from '@/components/RecentPostCard.vue';
 import UserCard from '@/components/UserCard.vue';
 
 export default {
   name: "Profile",
   components: {
     UserCard,
-    NewPostCard
+    NewPostCard,
+    RecentPostCard
   }
 }
 
