@@ -4,8 +4,6 @@ const loginAction = async (usernameInput, password) =>
 {
     const hashedPassword = await hashPassword(password)
 
-    console.log(hashedPassword)
-
     const res = await fetch("http://localhost:3000/auth/login", {
     method: "post",
     body: JSON.stringify({
@@ -21,11 +19,16 @@ const loginAction = async (usernameInput, password) =>
   })
 
   const json = await res.json()
+  //console.log(json)
   if (res.ok) {
-    window.cookieStore.set("auth_token", json.user.token.tokenId)
+    window.cookieStore.set({
+        name: "auth_token",
+        value: json.user.token.tokenId,
+        expires: Date.now() + 3600 * 1000
+
+    })
     return true
   }
-  console.log(json)
   return false
 }
 
@@ -45,16 +48,40 @@ const registerAction = async (registerInfo) =>
         }
     })
 
+    return res
+}
+
+const logoutAction = async () => {
+    const res = await fetch("http://localhost:3000/auth/logout", {
+        method: "post",
+        headers: 
+        {
+        "Access-Control-Allow-Origin" : "*",
+        "Authorization" : "Bearer " + (await window.cookieStore.get("auth_token")).value
+
+        }
+    })
+
     const json = await res.json()
-    if (res.ok) {
-        return true
+    if(res.ok)
+    {
+        console.log(json)
+
+        if(json.user)
+        {
+            window.cookieStore.delete("auth_token")
+        }
+
+        return true;
     }
-    console.log(json)
-    console.log(res)
+
+    console.error(json);
+
     return false
 }
 
 export {
     loginAction, 
-    registerAction
+    registerAction,
+    logoutAction
 }

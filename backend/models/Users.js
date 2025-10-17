@@ -6,7 +6,7 @@ const UserError = require ("../errors/users/userError.js")
 //Modele de schema MongoDB pour les tokens d'authentification
 const tokenSchema = new mongoose.Schema(
     {
-        tokenId: { type: String, required: true, unique: true },
+        tokenId: { type: String, required: true },
         userId: { type: String, required: true },
         expiresAt: String
     }
@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
         lastname: String,
         username: { type: String, required: true, unique: true },
         avatar: String,
-        adressesList: Array,
+        hobbies: Array,
         password: String,
         role: String,
         token : tokenSchema
@@ -42,6 +42,25 @@ const checkMailValidity = (email) =>
     return email.includes("@") && email.includes(".")
 }
 
+const checkUniqueFields = async (email, username) =>
+{
+    const errors = []
+
+    try {
+        const emailInDB = await UserModel.exists({email})
+
+        if(emailInDB) errors.push({key : "email", value: email, message: "Cet email est déjà utilisé"})
+
+        const usernameInDB = await UserModel.exists({username})
+
+        if(usernameInDB) errors.push({key : "username", value: username, message: "Ce nom d'utilisateur est déjà utilisé"})
+
+        return errors;
+    } catch (error) {
+        return {error, message: "Erreur lors de la requête"}
+    }
+}
+
 class User
 {
     #_uuid
@@ -50,18 +69,18 @@ class User
     #_lastname;
     #_username;
     #_avatar;
-    #_adressesList;
+    #_hobbies;
     #_password;
     #_role;
 
-    constructor(email, fisrtname, lastname, username, avatar, adressesList, password)
+    constructor(email, fisrtname, lastname, username, avatar, hobbies, password)
     {
         this.#_email = email;
         this.#_firstname = fisrtname;
         this.#_lastname = lastname;
         this.#_username = username;
         this.#_avatar = avatar;
-        this.#_adressesList = adressesList;
+        this.#_hobbies = hobbies;
         this.#_password = password;
         this.#_role = "user";
 
@@ -102,9 +121,9 @@ class User
         return this.#_avatar;
     }
 
-    get adressesList()
+    get hobbies()
     {
-        return this.#_adressesList;
+        return this.#_hobbies;
     }
 
     get password()
@@ -127,19 +146,24 @@ class User
     {   
         const { email, username, password, uuid } = userInfo
 
-        if(!email | !username | !password | !uuid) throw new UserError("Champs obligatoire manquant", "MISSING_REQUIRED_FIELD");
-
-        if(!checkMailValidity(email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
-
-        userInfo.role = role
-
         try {
+            if(!email | !username | !password | !uuid) throw new UserError("Champs obligatoire manquant", "MISSING_REQUIRED_FIELD");
+
+            const uniqueFiledsError = await checkUniqueFields(email, username);
+
+            if(uniqueFiledsError.length) throw new UserError("Champs dupliqué, impossible de créer l'utilisateur", "ALREADY_USED_FIELD", uniqueFiledsError)
+
+            if(!checkMailValidity(email)) throw new UserError("L'adresse mail n'est pas valide", "INVALID_MAIL");
+
+            userInfo.role = role
+
             const userDB = await UserModel.create(userInfo)
 
             const user = userDB.toJSON()
             return user;
         } catch (error) {
-            return {status:500, message : "Erreur lors de la création de l'utilisateur", error}
+            console.log(error.message)
+            return {status:500, message : error.message, error}
         }
     }
 
@@ -206,7 +230,7 @@ class User
                 lastname : this.#_lastname, 
                 username : this.#_username, 
                 avatar : this.#_avatar, 
-                adressesList : this.#_adressesList, 
+                hobbies : this.#_hobbies, 
                 password : this.#_password, 
                 role : this.#_role 
             })
