@@ -62,7 +62,15 @@ const checkUniqueFields = async (email, username) =>
     }
 }
 
+<<<<<<< HEAD
 export default class User
+=======
+<<<<<<< HEAD
+class User
+=======
+export default class User
+>>>>>>> ce725cb (Register errors and logic done + User model updated)
+>>>>>>> 50173a9 (Register errors and logic done + User model updated)
 {
     #_uuid
     #_email;
@@ -142,6 +150,10 @@ export default class User
     /**
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 50173a9 (Register errors and logic done + User model updated)
      * Insert the user in the database
      * @returns the user JSON object from MongoDB or false
      */
@@ -171,10 +183,14 @@ export default class User
     }
 
     /**
+<<<<<<< HEAD
 =======
 >>>>>>> 9d66de0 (Add comments to code + Hobbies models and controllers)
 =======
 >>>>>>> 52da464 (Add comments to code + Hobbies models and controllers)
+=======
+>>>>>>> ce725cb (Register errors and logic done + User model updated)
+>>>>>>> 50173a9 (Register errors and logic done + User model updated)
      * Find users
      * @param {Object} userInfo - The JSON object filter fields
      * @returns an array of Users
