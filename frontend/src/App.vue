@@ -1,14 +1,11 @@
 <template>
-  <main>
-    <Header />
-    <router-view />
-    <Footer />
-  </main>
+  <router-view />
 </template>
 
-
 <script setup>
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
-
+// Pas besoin d'importer useRouter si vous ne l'utilisez pas
 </script>
+
+<style>
+/* Ajoutez vos styles globaux ici si nécessaire */
+</style>
