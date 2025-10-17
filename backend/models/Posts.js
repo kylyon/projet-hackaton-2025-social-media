@@ -122,7 +122,7 @@ class Post
             const PostDB = await PostModel.create({
                 description: this.#_description, 
                 comment_id : this.#_comment_id ,
-                user_id : this.#_user_id
+                user_id : this.#_user_id,
                 hobby_id : this.#_hobby_id
             });
 

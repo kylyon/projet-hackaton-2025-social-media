@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center">
-    <p v-if="errors.login" class="text-red-600 text-sm mt-1">{{ errors.login }}</p>
     <div
       class="bg-sky-100 flex flex-col items-center justify-center border border-gray-300 rounded-lg shadow-md m-6 max-w-xs md:max-w-sm lg:max-w-md p-6 w-full"
     >
