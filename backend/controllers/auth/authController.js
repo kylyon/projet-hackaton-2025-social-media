@@ -1,6 +1,6 @@
-const { default : AuthToken } = require("../../models/Token");
-const { default : User } = require("../../models/Users");
-const { default : UsersFactory } = require("../UsersFactory");
+const AuthToken  = require("../../models/Token");
+const User = require("../../models/Users");
+const UsersFactory = require("../UsersFactory");
 
 const userLogin = async (req, res) => {
     //
