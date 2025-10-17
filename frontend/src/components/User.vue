@@ -7,7 +7,7 @@
       <!-- Colonne gauche : image -->
       <div class="flex-shrink-0">
         <img
-          :src="user.photo || avatar"
+          :src="user.avatar || avatar"
           :alt="user.username"
           class="w-18 h-18 object-cover rounded-lg border border-gray-300"
         />
@@ -54,6 +54,8 @@ onMounted(() => {
     console.log('Utilisateur non connecté, redirection vers /login')
     router.push('/login')
   } else {
+    user.value.avatar = "http://localhost:3000" + user.value.avatar
+    console.log(user.value)
     console.log('Profil chargé pour', user.value.username)
   }
 })
