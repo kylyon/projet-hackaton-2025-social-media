@@ -5,6 +5,7 @@ const PostSchema = new mongoose.Schema(
         description: { type: String, required: true, unique: false },
         comment_id : { type: String, required: false, unique: false },
         user_id : { type: String, required: true, unique: false },
+        hobby_id : { type: String, required: true, unique: false }
     }
 );
 
@@ -17,15 +18,17 @@ class Post
     #_comment_id;
     #_description;
     #_user_id;
+    #_hobby_id
 
   
 
-    constructor(comment_id,description,user_id)
+    constructor(comment_id,description,user_id,hobby_id)
     {
         
         this.#_comment_id = comment_id;
         this.#_description = description;
-        this.#_user_id = user_id; 
+        this.#_user_id = user_id;
+        this.#_hobby_id = hobby_id;
     }
 
 
@@ -42,6 +45,11 @@ class Post
     get UserId()
     {
         return this.#_user_id;
+    }
+
+    get HobbyId()
+    {
+        return this.#_hobby_id
     }
 
     
@@ -115,6 +123,7 @@ class Post
                 description: this.#_description, 
                 comment_id : this.#_comment_id ,
                 user_id : this.#_user_id
+                hobby_id : this.#_hobby_id
             });
 
             const Post = PostDB.toJSON()
