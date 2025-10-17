@@ -56,7 +56,7 @@ const routes = [
         name: 'profile',
         component: Profile,
         meta: {
-          requiredAuth: false
+          requiredAuth: true
         }
       },
       {
