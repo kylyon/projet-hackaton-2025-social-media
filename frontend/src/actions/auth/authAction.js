@@ -27,7 +27,7 @@ const loginAction = async (usernameInput, password) =>
         expires: Date.now() + 3600 * 1000
 
     })
-    return true
+    return json
   }
   return false
 }
@@ -65,7 +65,7 @@ const logoutAction = async () => {
     const json = await res.json()
     if(res.ok)
     {
-        console.log(json)
+        //console.log(json)
 
         if(json.user)
         {
@@ -75,7 +75,7 @@ const logoutAction = async () => {
         return true;
     }
 
-    console.error(json);
+    //console.error(json);
 
     return false
 }

@@ -13,7 +13,7 @@ import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
 
 //Import des middelware
-import {authMiddleware, isLogged} from '@/middleware/authMiddleware'
+import {authMiddleware, loggedMiddleware} from '@/middleware/authMiddleware'
 
 const routes = [
   {
@@ -23,22 +23,20 @@ const routes = [
   {
     path: "/admin",
     component: AdminLayout,
+    meta: {
+      requiredAuth: true,
+      requiredAdmin: true
+    },
     children: [
       {
         path: '',
         name: "dashboard",
         component: adminHome,
-        meta: {
-          requiredAuth: false
-        }
       },
       {
         path: 'setting',
         name: "admin-setting",
         component: adminSetting,
-        meta: {
-          requiredAuth: false
-        }
       }
     ]
   },
@@ -62,12 +60,18 @@ const routes = [
       {
         path: 'login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta: {
+          requiredNonAuth: true
+        }
       },
       {
         path: 'register',
         name: 'register',
-        component: Register
+        component: Register,
+        meta: {
+          requiredNonAuth: true
+        }
       }
     ]
   }
@@ -80,20 +84,17 @@ const router = createRouter({
 
 router.beforeEach( async (to, from, next) => {
 
+  const { cookies } = useCookies()
+
   if(to.meta.requiredAuth)
   {
-    const { cookies } = useCookies()
     return authMiddleware(to, from, next, cookies)
-  } else {
-    next()
   }
 
-  /*if((to.name === "register" || to.name === "login"))
+  if(to.meta.requiredNonAuth)
   {
-    return next({
-      name: "profil"
-    })
-  }*/
+    return loggedMiddleware(to, from, next, cookies)
+  }
 
   next()
 } )

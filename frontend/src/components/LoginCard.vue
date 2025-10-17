@@ -41,7 +41,12 @@ async function login() {
   console.log('Connexion avec', email.value, password.value)
   const isLogged = await loginAction(email.value, password.value)
 
-  if(isLogged) router.push("/profil")
+  if(isLogged)
+  {
+    if(isLogged.user.role !== "admin") router.push("/profil")
+    else router.push("/admin")
+  } 
+    
 
 }
 </script>
