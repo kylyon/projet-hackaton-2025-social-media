@@ -1,5 +1,31 @@
 const Hobby  = require("../../models/Hobbies");
 
+// Get Hobbies by ID
+const getHobbiesById = async (req, res) => {
+ 
+  const HobbiesInput = req.params.id;
+
+  try {
+
+      const HobbiesID = await Hobby.findHobbyId(
+            {
+                _id: HobbiesInput,
+            }
+        )
+
+      if(!HobbiesID) return res.status(401).json({message: "Hobbies not find", status: 401});
+
+      const data = HobbiesID[0]; 
+      
+      res.status(200).json({ message: `Request success`, data: data });
+  }
+  catch(error){
+      console.error("Error when get Hobbies by id:", error);
+      return res.status(500).json({ message: "Internal server error", status: "500" });
+  }
+
+};
+
 // Get all hobbies
 const getHobbies = async (req, res) => {
   try {
@@ -69,5 +95,6 @@ module.exports = {
     getHobbies,
     createHobby,
     updateHobby,
-    deleteHobby
+    deleteHobby,
+    getHobbiesById
 };

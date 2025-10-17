@@ -51,6 +51,17 @@ class Role
         }
     }
 
+    // Get Role by id
+    static async findRoleId(RoleInfo = {})
+    {
+        try {
+            const RoleDB = await RolesModel.find(RoleInfo);
+            return RoleDB.length ? RoleDB : null
+        } catch (error) {
+            return new Error("Erreur lors de la recherche du Role")
+        }
+    }
+
     //Add Role 
 
     static async addRole(data)

@@ -4,6 +4,7 @@ const router = Router();
 const {
     getPosts,
     createPost,
+    getPostById,
     updatePost,
     deletePost } = require("../../controllers/posts/postsControllers");
 
@@ -19,6 +20,20 @@ const {
  */
 router.get('/', getPosts);
 
+
+/**
+ * @swagger
+ * /posts/id:
+ *   get:
+ *     summary: Récupère un post par son ID
+ *     tags: [Posts]
+ *     responses:
+ *       200:
+ *         description: Récupère un post par son ID
+ */
+
+router.get('/:id',getPostById);
+
 /**
  * @swagger
  * /posts/add:
@@ -29,6 +44,7 @@ router.get('/', getPosts);
  *       200:
  *         description: création du post
  */
+
 router.post('/add', createPost);
 
 /**

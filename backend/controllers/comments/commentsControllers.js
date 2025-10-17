@@ -13,6 +13,32 @@ const getComments = async (req, res) => {
     }
 };
 
+// Get Comment by ID
+const getCommentById = async (req, res) => {
+ 
+  const CommentInput = req.params.id;
+
+  try {
+
+      const CommentID = await Comment.findCommentId(
+            {
+                _id: CommentInput,
+            }
+        )
+
+      if(!CommentID) return res.status(401).json({message: "Comment not find", status: 401});
+
+      const data = CommentID[0]; 
+      
+      res.status(200).json({ message: `Request success`, data: data });
+  }
+  catch(error){
+      console.error("Error when get Comment by id:", error);
+      return res.status(500).json({ message: "Internal server error", status: "500" });
+  }
+
+};
+
 // Create a new comment
 const createComment = async (req, res) => {
       
@@ -84,6 +110,7 @@ const deleteComment = async (req, res) => {
 
 module.exports = {
     getComments,
+    getCommentById,
     createComment,
     updateComment,
     deleteComment

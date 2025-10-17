@@ -49,6 +49,7 @@ import InputField from './InputField.vue'
 import AppButton from './Button.vue'
 import { loginAction } from '@/actions/auth/authAction.js'
 import { useUserStore } from '@/stores/userStore.js'
+import { hashPassword } from '../../utils/getCrypto'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -69,6 +70,8 @@ async function login() {
 
   try {
     console.log('Tentative de connexion avec:', identifier.value, password.value)
+
+
     const res = await loginAction(identifier.value, password.value)
     console.log('Réponse API:', res)
 
