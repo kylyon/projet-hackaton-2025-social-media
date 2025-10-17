@@ -27,7 +27,7 @@ const loginAction = async (usernameInput, password) =>
         expires: Date.now() + 3600 * 1000
 
     })
-    return true
+    return json
   }
   return false
 }

@@ -17,42 +17,67 @@
 
     <!-- Menu utilisateur -->
     <nav class="flex items-center space-x-4">
-      <AppButton
-        label="Mon compte"
-        icon="UserIcon"
-        variant="text"
-        @click="goToProfile"
-      />
-      <AppButton
-        label="Déconnexion"
-        icon="LogoutIcon"
-        variant="solid"
-        @click="logout"
-      />
+      <!-- Si connecté -->
+      <template v-if="isLoggedIn">
+        <AppButton
+          label="Mon compte"
+          icon="UserIcon"
+          variant="text"
+          @click="goToProfile"
+        />
+        <AppButton
+          label="Déconnexion"
+          icon="LogoutIcon"
+          variant="solid"
+          @click="logout"
+        />
+      </template>
+
+      <!-- Si non connecté -->
+      <template v-else>
+        <AppButton
+          label="Connexion"
+          icon="LoginIcon"
+          variant="solid"
+          @click="goToLogin"
+        />
+      </template>
     </nav>
   </header>
 </template>
 
-
 <script setup>
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
 import AppButton from '@/components/Button.vue'
 import { logoutAction } from '@/actions/auth/authAction'
 
 const router = useRouter()
+const userStore = useUserStore()
 
-const goHome = () => {
-  router.push('/')
-}
+// ✅ état réactif
+const isLoggedIn = computed(() => userStore.isLoggedIn)
 
-const goToProfile = () => {
-  router.push('/profil')
-}
+// ✅ Vérifie le localStorage à chaque montage
+onMounted(() => {
+  const savedUser = localStorage.getItem('user')
+  const savedToken = localStorage.getItem('token')
 
+  if (savedUser && savedToken) {
+    userStore.setUser(JSON.parse(savedUser), savedToken)
+  }
+})
+
+// Navigation
+const goHome = () => router.push('/')
+const goToProfile = () => router.push('/profil')
+const goToLogin = () => router.push('/login')
+
+// Déconnexion
 const logout = async () => {
-  const res = await logoutAction();
-
-  if(res) router.push('/login')
-  
+  await logoutAction()
+  userStore.logout()
+  router.push('/login')
 }
 </script>

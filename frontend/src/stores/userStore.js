@@ -5,16 +5,27 @@ export const useUserStore = defineStore('user', {
     user: JSON.parse(localStorage.getItem('user')) || null,
     token: localStorage.getItem('token') || null
   }),
+
   getters: {
+    // Renvoie true si l'utilisateur est connecté
     isLoggedIn: (state) => !!state.user && !!state.token
   },
+
   actions: {
     setUser(user, token = null) {
       this.user = user
-      if (token) this.token = token
+
+      // Récupération du token (si renvoyé dans user.token.tokenId)
+      const tokenValue = token || user?.token?.tokenId || null
+      this.token = tokenValue
+
+      // Sauvegarde dans le localStorage
       localStorage.setItem('user', JSON.stringify(user))
-      if (token) localStorage.setItem('token', token)
+      if (tokenValue) {
+        localStorage.setItem('token', tokenValue)
+      }
     },
+
     logout() {
       this.user = null
       this.token = null
