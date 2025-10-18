@@ -4,9 +4,7 @@ const loginAction = async (usernameInput, password) =>
 {
     const hashedPassword = await hashPassword(password)
 
-    console.log(hashedPassword)
-
-    const res = await fetch("http://localhost:3000/auth/login", {
+    const res = await fetch("https://hackaton-backend-api.vercel.app/auth/login", {
     method: "post",
     body: JSON.stringify({
       usernameInput,
@@ -40,7 +38,7 @@ const registerAction = async (registerInfo) =>
     const password = await hashPassword(registerInfo.get("password"))
     registerInfo.set("password",password)
 
-    const res = await fetch("http://localhost:3000/auth/register", {
+    const res = await fetch("https://hackaton-backend-api.vercel.app/auth/register", {
         method: "post",
         body: registerInfo,
         headers:
@@ -59,7 +57,7 @@ const logoutAction = async () => {
 
         if(!token) return;
 
-        const res = await fetch("http://localhost:3000/auth/logout", {
+        const res = await fetch("https://hackaton-backend-api.vercel.app/auth/logout", {
             method: "post",
             headers: 
             {
