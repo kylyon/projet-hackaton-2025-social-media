@@ -49,6 +49,7 @@ const props = defineProps({
   hobby: String
 })
 
+const API_ROUTE = "https://hackaton-backend-api.vercel.app"
 const comment = ref('')
 const showComments = ref(false)
 const comments = ref([])
@@ -138,9 +139,10 @@ async function sendComment() {
     console.error('Erreur ajout commentaire:', err)
   }
 }
-function formatAvatarUrl(avatar) {
-  if (!avatar) return '/avatar-default.jpg'
-  if (avatar.startsWith('http')) return avatar
-  return `http://localhost:3000${avatar.startsWith('/') ? '' : '/'}${avatar}`
+
+function formatAvatarUrl(avatarUrl) {
+  if (!avatarUrl) return '/avatar-default.jpg'
+  if (avatarUrl.startsWith('http')) return avatarUrl
+  return `${API_ROUTE}${avatarUrl}`
 }
 </script>

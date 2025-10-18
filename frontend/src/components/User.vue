@@ -40,6 +40,8 @@ import { useUserStore } from '@/stores/userStore.js'
 import HobbiesList from './HobbiesList.vue'
 import avatar from '@/assets/avatar.jpg'
 
+const API_ROUTE = "https://hackaton-backend-api.vercel.app"
+
 const router = useRouter()
 const userStore = useUserStore()
 
@@ -47,11 +49,11 @@ const userStore = useUserStore()
 const user = computed(() => userStore.user)
 const isLoggedIn = computed(() => userStore.isLoggedIn)
 
-// 🔧 Fonction utilitaire réutilisable
+
 function formatAvatarUrl(avatarUrl) {
   if (!avatarUrl) return '/avatar-default.jpg'
   if (avatarUrl.startsWith('http')) return avatarUrl
-  return `http://localhost:3000${avatarUrl.startsWith('/') ? '' : '/'}${avatarUrl}`
+  return `${API_ROUTE}${avatarUrl}`
 }
 
 onMounted(() => {
