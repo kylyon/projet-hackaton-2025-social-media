@@ -1,18 +1,22 @@
 <template>
     <!--Second breadcrumb-->
-<nav class="w-full rounded-md">
+<nav class="w-full rounded-md text-sm">
   <ol class="list-reset flex">
     <li>
-      <a
-        href="#"
-        class="text-primary transition duration-150 ease-in-out hover:text-primary-accent-300 focus:text-primary-accent-300 active:text-primary-accent-300 motion-reduce:transition-none dark:text-primary-400"
-        >Home</a
-      >
+      <router-link to="/admin">Admin</router-link>
     </li>
     <li>
       <span class="mx-2 text-neutral-400">/</span>
     </li>
-    <li class="text-neutral-400">Library</li>
+     <li>
+      <router-link :to="route.path" class="text-neutral-400">{{route.name}}</router-link>
+    </li>
   </ol>
 </nav>
 </template>
+
+<script setup>
+
+import { useRoute, RouterLink } from 'vue-router';
+const route = useRoute();
+</script>

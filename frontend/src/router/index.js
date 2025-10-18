@@ -18,7 +18,7 @@ import Home from '@/pages/Home.vue'
 
 //Import des middelware
 import {authMiddleware, loggedMiddleware} from '@/middleware/authMiddleware'
-import { AuthError } from '@/errors/auth/authError'
+
 
 const routes = [
   {
@@ -34,7 +34,7 @@ const routes = [
     },
     children: [
       {
-        path: '',
+        path: '/admin',
         name: "dashboard",
         component: adminHome,
       },
@@ -43,7 +43,8 @@ const routes = [
         name: "admin-setting",
         component: adminSetting,
         meta: {
-          requiredAuth: false
+          requiredAuth: true,
+          requiredAdmin: true
         }
       },
       {
@@ -51,7 +52,8 @@ const routes = [
         name: "users",
         component: AdminUsersView,
         meta: {
-          requiredAuth: false
+          requiredAuth: true,
+          requiredAdmin: true
         }
       },
       {
@@ -59,7 +61,8 @@ const routes = [
         name: "hobbies",
         component: AdminHobbiesView,
         meta: {
-          requiredAuth: false
+          requiredAuth: true,
+          requiredAdmin: true
         }
       }
 
@@ -108,6 +111,8 @@ const router = createRouter({
 })
 
 router.beforeEach( async (to, from, next) => {
+
+  console.log(to, from)
 
   const { cookies } = useCookies()
 

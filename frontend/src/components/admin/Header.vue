@@ -6,12 +6,7 @@
             <!-- Hamburger button for mobile view -->
             <button
             class="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
-            type="button"
-            data-twe-collapse-init
-            data-twe-target="#navbarSupportedContent1"
-            aria-controls="navbarSupportedContent1"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
+            type="button">
             <!-- Hamburger icon -->
             <span
                 class="[&>svg]:w-7 [&>svg]:stroke-black/50 dark:[&>svg]:stroke-neutral-200">
@@ -33,15 +28,13 @@
                 id="navbarSupportedContent1"
                 >
                 <!-- Logo -->
-                <a
-                    class="mb-4 me-5 ms-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-                    href="#">
-                    <img
-                    src="@/assets/logo.svg"
-                    style="height:45px"
-                    alt="Hackaton projet"
-                    loading="lazy" />
-                </a>
+                 <RouterLink to="/"  class="mb-4 me-5 ms-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0" >
+                        <img
+                            src="@/assets/logo.svg"
+                            style="height:45px"
+                            alt="Hackaton projet"
+                            loading="lazy" />
+                 </RouterLink>
                 <!-- Left navigation links -->
                 <ul
                     class="list-style-none me-auto flex flex-col ps-0 lg:flex-row">
@@ -57,21 +50,12 @@
                 <!-- Second dropdown container -->
                 <div
                     class="relative">
-                    <a
-                        class="flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
-                        href="#"
-                        id="dropdownMenuButton2"
-                        role="button"
-                        data-twe-dropdown-toggle-ref
-                        aria-expanded="false">
-                        <!-- User avatar -->
-                        <img
+                    <img
                             src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
                             class="rounded-full"
                             style="height: 45px; width: 45px"
                             alt=""
                             loading="lazy" />
-                    </a>
                 </div>
             </div>
             <!-- Right elements -->
@@ -81,13 +65,13 @@
 
 <script setup>
 
-import { useRoute } from 'vue-router'
+import { useRoute, RouterLink } from 'vue-router'
 const route = useRoute();
 
 const NavItems=[
     {
         to:"/admin",
-        name:"Admin"
+        name:"Dashboard"
     },
     {
         to:"/admin/setting",
