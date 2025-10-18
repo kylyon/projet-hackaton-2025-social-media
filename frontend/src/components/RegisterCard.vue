@@ -176,7 +176,7 @@ async function register() {
   formData.append("email", email.value)
   formData.append("firstname", nom.value)
   formData.append("username", username.value)
-  formData.append("avatar", avatar.value)
+  //formData.append("avatar", avatar.value)
   formData.append("description", description.value)
   formData.append("password", password.value)
 
@@ -184,19 +184,22 @@ async function register() {
     formData.append("hobbies", hobbyId)
   })
 
-  const isRegistered = await registerAction(formData)
-  const json = await isRegistered.json()
 
-  if (isRegistered.ok) {
-    router.push("/login")
-    return
-  }
+    // Appel API ici
+    const isRegistered = await registerAction(formData) 
 
-  if (json.error?.code === "ALREADY_USED_FIELD") {
-    json.error.fields.map((e) => {
-      errors.value[e.key] = e.message
-    })
-  }
+    const json = await isRegistered.json()
+    if (isRegistered.ok) {
+        router.push("/login"); 
+        return;
+    }
+
+    if(json.error.code === "ALREADY_USED_FIELD"){
+        json.error.fields.map( (e) => {
+            errors.value[e.key] = e.message
+        } )
+    }
 }
+
 </script>
 
