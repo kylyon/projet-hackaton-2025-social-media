@@ -18,15 +18,14 @@ const props = defineProps({
 
 const emit = defineEmits(['postsLoaded'])
 const posts = ref([])
-const BASE_URL = 'http://localhost:3000'
 
-// formatage d’avatar
+const API_ROUTE = "https://hackaton-backend-api.vercel.app"
+
 function formatAvatarUrl(avatarUrl) {
   if (!avatarUrl) return '/avatar-default.jpg'
   if (avatarUrl.startsWith('http')) return avatarUrl
-  return `${BASE_URL}${avatarUrl.startsWith('/') ? '' : '/'}${avatarUrl}`
+  return `${API_ROUTE}${avatarUrl}`
 }
-
 // Récupération des posts
 onMounted(async () => {
   try {
