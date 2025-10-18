@@ -6,9 +6,16 @@
       </div>
       <div class="flex items-center space-x-5 mt-4 md:mt-0">
         <a href="#" class="text-sky-800 hover:underline">A propos</a>
-        <RouterLink to="/admin" class="text-sky-800 hover:underline">
-            Administrateur
+        
+        <!-- Affichage conditionnel pour admin -->
+        <RouterLink
+          v-if="isAdmin"
+          to="/admin"
+          class="text-sky-800 hover:underline"
+        >
+          Administrateur
         </RouterLink>
+        
         <a href="#" class="text-sky-800 hover:underline">Contact</a>
       </div>
     </div>
@@ -19,11 +26,13 @@
 </template>
 
 <script setup>
-import { useRouter, RouterLink } from 'vue-router'
+import { computed } from 'vue'
+import { useUserStore } from '@/stores/userStore.js'
+import { RouterLink } from 'vue-router'
 
-const router = useRouter()
+// Récupération du store utilisateur
+const userStore = useUserStore()
 
-const goHome = () => {
-  router.push('/')
-}
+// Computed pour vérifier le rôle
+const isAdmin = computed(() => userStore.user?.role === 'admin')
 </script>
