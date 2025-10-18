@@ -4,6 +4,8 @@ const express = require("express")
 const cors = require("cors")
 const DB = require("./utils/dbhandler");
 const cookieParser = require("cookie-parser")
+const path = require("path")
+const fileURLToPath = require('url')
 
 // Integration de Swagger pour la documentation de l'API
 const swaggerUi = require('swagger-ui-express');
@@ -41,7 +43,10 @@ app.use("/auth", authRoutes)
 app.use("/comments", commentsRoutes);
 app.use("/posts", postsRoutes);
 
-app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions)); 
+app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
+
+// Servir les fichiers statiques
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 
 app.get("/", (req, res) => {

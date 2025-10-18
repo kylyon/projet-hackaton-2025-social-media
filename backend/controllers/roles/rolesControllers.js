@@ -12,6 +12,32 @@ const getRoles = async (req, res) => {
     }
 };
 
+// Get Roles by ID
+const getRoleById = async (req, res) => {
+ 
+  const RoleInput = req.params.id;
+
+  try {
+
+      const RoleID = await Role.findRoleId(
+            {
+                _id: RoleInput,
+            }
+        )
+
+      if(!RoleID) return res.status(401).json({message: "Role not find", status: 401});
+
+      const data = RoleID[0]; 
+      
+      res.status(200).json({ message: `Request success`, data: data });
+  }
+  catch(error){
+      console.error("Error when get Role by id:", error);
+      return res.status(500).json({ message: "Internal server error", status: "500" });
+  }
+
+};
+
 // Create a new role
 const createRoles = async (req, res) => {
   
@@ -82,6 +108,7 @@ const deleteRoles = async (req, res) => {
 
 module.exports = {
   getRoles,
+  getRoleById,
   createRoles,
   updateRoles,
   deleteRoles

@@ -6,7 +6,7 @@
                 Crée ton compte
             </h1>
 
-            <form class="grid grid-cols-1 md:grid-cols-2 gap-6" @submit.prevent="register">
+            <form ref="formRef" class="grid grid-cols-1 md:grid-cols-2 gap-6" @submit.prevent="register" enctype="multipart/form-data">
                 <div class="flex flex-col gap-3">
                     <div>
                         <InputField label="Email" v-model="email" placeholder="Entrez votre email" typeField="text" />
@@ -23,10 +23,10 @@
                         typeField="textarea" />
 
                     <div>
-                        <InputField label="Mot de passe" v-model="motdepasse" placeholder="Entrez un mot de passe"
+                        <InputField label="Mot de passe" v-model="password" placeholder="Entrez un mot de passe"
                             typeField="password" />
-                        <p v-if="errors.motdepasse" class="text-red-600 text-sm mt-1">
-                            {{ errors.motdepasse }}
+                        <p v-if="errors.password" class="text-red-600 text-sm mt-1">
+                            {{ errors.password }}
                         </p>
                     </div>
                 </div>
@@ -38,8 +38,8 @@
                     </div>
 
                     <div>
-                        <InputField label="Photo de profil" v-model="photo" typeField="file" />
-                        <p v-if="errors.photo" class="text-red-600 text-sm mt-1">{{ errors.photo }}</p>
+                        <InputField label="Photo de profil" v-model="avatar" typeField="file" />
+                        <p v-if="errors.avatar" class="text-red-600 text-sm mt-1">{{ errors.avatar }}</p>
                     </div>
 
                     <div>
@@ -78,17 +78,18 @@ import InputField from "./InputField.vue"
 import AppButton from "./Button.vue"
 import { registerAction } from "@/actions/auth/authAction"
 import { useRouter } from 'vue-router'
+import { hashPassword } from "../../utils/getCrypto"
 
 const router = useRouter()
 
-
+const formRef = ref(null)
 const email = ref("")
 const nom = ref("")
 const username = ref("")
 const description = ref("")
-const photo = ref("")
+const avatar = ref("")
 const hobbies = ref("")
-const motdepasse = ref("")
+const password = ref("")
 const verifmotdepasse = ref("")
 const errors = ref({})
 
@@ -98,6 +99,7 @@ function validateEmail(email) {
 }
 
 async function register() {
+
     errors.value = {} // reset des erreurs
 
     // Vérification des champs obligatoires
@@ -106,14 +108,14 @@ async function register() {
 
     if (!username.value) errors.value.username = "Le nom d’utilisateur est obligatoire"
     if (!nom.value) errors.value.nom = "Le nom est obligatoire"
-    if (!photo.value) errors.value.photo = "La photo de profil est obligatoire"
+    if (!avatar.value) errors.value.avatar = "La photo de profil est obligatoire"
     if (!hobbies.value) errors.value.hobbies = "Veuillez sélectionner un hobby"
-    if (!motdepasse.value) errors.value.motdepasse = "Le mot de passe est obligatoire"
+    if (!password.value) errors.value.password = "Le mot de passe est obligatoire"
     if (!verifmotdepasse.value)
         errors.value.verifmotdepasse = "Veuillez confirmer votre mot de passe"
 
     // Vérification des mots de passe
-    if (motdepasse.value && verifmotdepasse.value && motdepasse.value !== verifmotdepasse.value) {
+    if (password.value && verifmotdepasse.value && password.value !== verifmotdepasse.value) {
         errors.value.verifmotdepasse = "Les mots de passe ne correspondent pas"
     }
 
@@ -129,21 +131,25 @@ async function register() {
         nom: nom.value,
         username: username.value,
         description: description.value,
-        photo: photo.value,
+        avatar: avatar.value,
         hobbies: hobbies.value,
-        motdepasse: motdepasse.value,
+        password: password.value,
     })
 
+
+    //console.log(formRef.value)
+
+    const formData = new FormData()
+    formData.append("email", email.value)
+    formData.append("firstname", nom.value)
+    formData.append("username", username.value)
+    formData.append("avatar", avatar.value)
+    formData.append("description", description.value)
+    formData.append("hobbies", hobbies.value)
+    formData.append("password", password.value)
+
     // Appel API ici
-    const isRegistered = await registerAction({
-        email: email.value,
-        lastname: nom.value,
-        username: username.value,
-        //description: description.value,
-        //avatar: photo.value,
-        //hobbies: hobbies.value,
-        password: motdepasse.value,
-    }) 
+    const isRegistered = await registerAction(formData) 
 
     const json = await isRegistered.json()
     if (isRegistered.ok) {

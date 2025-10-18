@@ -7,7 +7,7 @@
       <!-- Colonne gauche : image -->
       <div class="flex-shrink-0">
         <img
-          :src="user.photo || avatar"
+          :src="user.avatar || avatar"
           :alt="user.username"
           class="w-18 h-18 object-cover rounded-lg border border-gray-300"
         />
@@ -18,7 +18,7 @@
         <!-- Ligne 1 : nom + username côte à côte -->
         <div class="flex items-center gap-2">
           <h2 class="text-gray-800 font-semibold text-lg">
-            {{ user.lastname || user.nom || 'Utilisateur' }}
+            {{ user.lastname || user.firstname || 'Utilisateur' }}
           </h2>
           <p class="text-gray-600 text-sm">| @{{ user.username }}</p>
         </div>
@@ -54,6 +54,8 @@ onMounted(() => {
     console.log('Utilisateur non connecté, redirection vers /login')
     router.push('/login')
   } else {
+    user.value.avatar = "http://localhost:3000" + user.value.avatar
+    console.log(user.value)
     console.log('Profil chargé pour', user.value.username)
   }
 })

@@ -1,8 +1,10 @@
-import { hashPassword } from "@/utils/getCrypto.js"
+import { hashPassword } from "../../../utils/getCrypto.js"
 
 const loginAction = async (usernameInput, password) => 
 {
     const hashedPassword = await hashPassword(password)
+
+    console.log(hashedPassword)
 
     const res = await fetch("http://localhost:3000/auth/login", {
     method: "post",
@@ -35,15 +37,15 @@ const loginAction = async (usernameInput, password) =>
 const registerAction = async (registerInfo) =>
 {
 
-    registerInfo.password = await hashPassword(registerInfo.password)
+    const password = await hashPassword(registerInfo.get("password"))
+    registerInfo.set("password",password)
 
     const res = await fetch("http://localhost:3000/auth/register", {
         method: "post",
-        body: JSON.stringify(registerInfo),
+        body: registerInfo,
         headers:
         {
         "Access-Control-Allow-Origin": "*",
-        "Content-type": "application/json"
 
         }
     })
