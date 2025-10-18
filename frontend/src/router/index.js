@@ -29,7 +29,6 @@ const routes = [
     path: "/admin",
     component: AdminLayout,
     meta: {
-      requiredAuth: true,
       requiredAdmin: true
     },
     children: [
@@ -37,13 +36,15 @@ const routes = [
         path: '/admin',
         name: "dashboard",
         component: adminHome,
+        meta: {
+          requiredAdmin: true
+        }
       },
       {
         path: 'setting',
         name: "admin-setting",
         component: adminSetting,
         meta: {
-          requiredAuth: true,
           requiredAdmin: true
         }
       },
@@ -52,7 +53,6 @@ const routes = [
         name: "users",
         component: AdminUsersView,
         meta: {
-          requiredAuth: true,
           requiredAdmin: true
         }
       },
@@ -61,7 +61,6 @@ const routes = [
         name: "hobbies",
         component: AdminHobbiesView,
         meta: {
-          requiredAuth: true,
           requiredAdmin: true
         }
       }

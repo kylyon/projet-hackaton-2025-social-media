@@ -6,7 +6,9 @@
       </div>
       <div class="flex items-center space-x-5 mt-4 md:mt-0">
         <a href="#" class="text-sky-800 hover:underline">A propos</a>
-        <a href="#" class="text-sky-800 hover:underline">Gestionnaire</a>
+        <RouterLink to="/admin" class="text-sky-800 hover:underline">
+            Administrateur
+        </RouterLink>
         <a href="#" class="text-sky-800 hover:underline">Contact</a>
       </div>
     </div>
@@ -17,7 +19,7 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink } from 'vue-router'
 
 const router = useRouter()
 
