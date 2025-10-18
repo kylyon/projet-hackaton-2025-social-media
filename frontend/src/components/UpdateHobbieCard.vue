@@ -1,101 +1,149 @@
 <template>
   <div class="fixed inset-0 bg-black/30 flex justify-center items-center z-50">
-    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative">
+    <div class="bg-sky-100 flex flex-col border border-gray-300 rounded-lg shadow-md m-6 max-w-md md:max-w-lg lg:max-w-xl p-6 gap-5 w-full">
       <!-- Bouton fermer -->
-      <button
-        type="button"
-        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 cursor-pointer"
-        @click="$emit('close')"
-      >
-        ✕
+      <button type="button" class="text-black mb-4 self-end cursor-pointer" @click="closeModal">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Fermer</span>
       </button>
 
-      <h1 class="text-2xl font-bold text-center text-sky-900 mb-6">
-        Mes hobbies
+      <h1 class="text-2xl font-bold text-center text-sky-900 mb-4">
+        Modifier mes hobbies
       </h1>
 
-      <!-- Liste des hobbies -->
-      <div v-if="loading" class="text-center text-gray-500 py-4">
-        Chargement des hobbies...
-      </div>
+      <!-- Chargement -->
+      <div v-if="loading" class="text-center text-gray-500">Chargement...</div>
 
-      <div v-else>
-        <ul class="space-y-3 mb-4">
-          <li
-            v-for="(hobbie, index) in hobbies"
-            :key="index"
-            class="flex justify-between items-center bg-sky-50 px-4 py-2 rounded-md border border-sky-200"
-          >
-            <span class="text-sky-900">{{ hobbie }}</span>
-            <button
-              class="text-red-600 hover:text-red-800 text-sm"
-              @click="deleteHobbie(hobbie)"
-            >
-              Supprimer
-            </button>
-          </li>
-        </ul>
-
-        <div v-if="hobbies.length === 0" class="text-gray-600 text-center">
-          Aucun hobbie enregistré.
+      <!-- Liste de tous les hobbies -->
+      <div v-else class="flex flex-col gap-5 pl-5 max-h-64 overflow-y-auto">
+        <div v-for="hobby in allHobbies" :key="hobby._id"
+          class="flex items-center justify-between border-b border-gray-200 pb-1">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" :value="hobby._id" v-model="selectedHobbies"
+              class="w-4 h-4 text-sky-600 border-gray-300 rounded focus:ring-sky-500" />
+            <span>{{ hobby.name }}</span>
+          </label>
         </div>
       </div>
-
-      <!-- Message d’erreur -->
-      <p v-if="error" class="text-red-600 text-sm mt-2 text-center">{{ error }}</p>
+      <AppButton label="Mettre à jour" @click="updateUserHobbies" class="w-full" />
+      <p v-if="success" class="text-green-600 text-md mt-6 text-center">
+        Hobbies mis à jour avec succès !
+      </p>
+      <p v-if="error" class="text-red-600 text-md mt-6 text-center">
+        {{ error }}
+      </p>
     </div>
+
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue"
-import AppButton from "@/components/Button.vue"
+import AppButton from '@/components/Button.vue'
 
 const props = defineProps({
-  userId: {
-    type: String,
-    required: true
-  }
+  user: {
+    type: Object,
+    required: true,
+  },
 })
+
+const apiBase = "https://hackaton-backend-api.vercel.app"
+
+const allHobbies = ref([]) // Tous les hobbies de la BDD
+const selectedHobbies = ref([]) // Hobbies sélectionnés pour ce user
+const loading = ref(false)
+const error = ref(null)
+const success = ref(false)
+
 const emits = defineEmits(["close"])
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000"
+function closeModal() {
+  emits("close")
+}
 
-const hobbies = ref([])
-const loading = ref(false)
-const error = ref("")
+//Charger tous les hobbies + ceux du user
 
-// Charger les hobbies du user
-onMounted(async () => {
+async function loadHobbies() {
   loading.value = true
+  error.value = null
+
   try {
-    const res = await fetch(`${API_BASE}/users/${props.userId}`, { credentials: "include" })
-    if (!res.ok) throw new Error("Impossible de charger les hobbies")
+    // tous les hobbies
+    const res = await fetch(`${apiBase}/hobbies`)
+    if (!res.ok) throw new Error("Erreur lors du chargement des hobbies")
     const data = await res.json()
-    hobbies.value = data.hobbies || []
-  } catch (err) {
-    error.value = err.message
+    allHobbies.value = Array.isArray(data) ? data : data.hobbies ?? []
+
+    // hobbies du user
+    selectedHobbies.value = props.user.hobbies ? [...props.user.hobbies] : []
+  } catch (e) {
+    console.error(e)
+    error.value = e.message
   } finally {
     loading.value = false
   }
-})
+}
 
-// Supprimer un hobbie
-async function deleteHobbie(hobbieToRemove) {
+// Récupérer l'UUID du user
+function getUserIdFromLocalStorage() {
   try {
-    const newList = hobbies.value.filter(h => h !== hobbieToRemove)
-    const res = await fetch(`${API_BASE}/users/${props.userId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ hobbies: newList })
-    })
-
-    if (!res.ok) throw new Error("Erreur lors de la suppression")
-
-    hobbies.value = newList
-  } catch (err) {
-    error.value = err.message
+    const raw = localStorage.getItem("user")
+    if (raw) {
+      const obj = JSON.parse(raw)
+      if (obj?.uuid) return obj.uuid
+    }
+    return localStorage.getItem("uuid")
+  } catch (e) {
+    console.error("Erreur lecture localStorage", e)
+    return null
   }
 }
+
+// Mettre à jour les hobbies du user
+
+async function updateUserHobbies() {
+  error.value = null
+  success.value = false
+  const userId = getUserIdFromLocalStorage()
+  if (!userId) {
+    errors.value.general = "Utilisateur introuvable."
+    return
+  }
+
+  try {
+    const res = await fetch(`${apiBase}/users/update/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        hobbies: selectedHobbies.value, // tableau des IDs cochés
+
+      }),
+    })
+    console.log(selectedHobbies.value)
+    if (!res.ok) {
+      const txt = await res.text()
+      throw new Error(txt || "Erreur lors de la mise à jour des hobbies")
+    }
+
+    success.value = true
+    setTimeout(() => {
+      emits("close")
+      window.location.reload()
+    }, 2000)
+  } catch (e) {
+    console.error(e)
+    error.value = e.message
+  } finally {
+    loading.value = false
+    setTimeout(() => (success.value = false), 3000)
+  }
+}
+
+onMounted(() => {
+  loadHobbies()
+})
 </script>

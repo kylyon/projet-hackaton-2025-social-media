@@ -1,84 +1,79 @@
 <template>
   <div class="overflow-y-auto h-[80vh] p-4 space-y-6 rounded-lg custom-scroll">
-    <Post v-for="post in posts" :key="post.id" :user="post.user" :content="post.content" />
+    <Post v-for="post in filteredPosts" :key="post.id" :user="post.user" :content="post.content" :postId="post.id"
+      :hobby="post.hobby" />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import Post from './Post.vue'
-import avatar from '@/assets/avatar.jpg'
 
-// Données fictives pour l'UI
-const posts = ref([
-  {
-    id: 1,
-    content: "Le nouveau monde est impitoyable, mais la liberté vaut le risque ! ☠️",
-    user: {
-      id: 1,
-      nom: 'Shanks Leroux',
-      username: 'onepiece.shanks',
-      photo: avatar
-    }
-  },
-  {
-    id: 2,
-    content: "Toujours suivre son cap, peu importe la tempête ⚓",
-    user: {
-      id: 2,
-      nom: 'Monkey D. Luffy',
-      username: 'pirate_king',
-      photo: avatar
-    }
-  },
-  {
-    id: 3,
-    content: "Les rêves des hommes ne meurent jamais 🌅",
-    user: {
-      id: 3,
-      nom: 'Gol D. Roger',
-      username: 'pirate.legend',
-      photo: avatar
-    }
-  },
-  {
-    id: 4,
-    content: "Les rêves des hommes ne meurent jamais 🌅",
-    user: {
-      id: 3,
-      nom: 'Gol D. Roger',
-      username: 'pirate.legend',
-      photo: avatar
-    }
+const props = defineProps({
+  userId: {
+    type: String,
+    default: null
   }
-])
+})
+
+const emit = defineEmits(['postsLoaded'])
+const posts = ref([])
+const BASE_URL = 'http://localhost:3000'
+
+// formatage d’avatar
+function formatAvatarUrl(avatarUrl) {
+  if (!avatarUrl) return '/avatar-default.jpg'
+  if (avatarUrl.startsWith('http')) return avatarUrl
+  return `${BASE_URL}${avatarUrl.startsWith('/') ? '' : '/'}${avatarUrl}`
+}
+
+// Récupération des posts
+onMounted(async () => {
+  try {
+    // --- Récupération des données ---
+    const postRes = await fetch('https://hackaton-backend-api.vercel.app/posts')
+    const postData = await postRes.json()
+
+    const userRes = await fetch('https://hackaton-backend-api.vercel.app/users')
+    const userData = await userRes.json()
+
+    const hobbyRes = await fetch('https://hackaton-backend-api.vercel.app/hobbies')
+    const hobbyData = await hobbyRes.json()
+
+    const postsArray = postData.data || postData || []
+    const usersArray = userData.data || userData || []
+    const hobbiesArray = hobbyData.data || hobbyData.hobbies || hobbyData || []
+
+    posts.value = postsArray.map(post => {
+      const user = usersArray.find(u => String(u.uuid) === String(post.user_id))
+      const hobby = hobbiesArray.find(h => String(h._id) === String(post.hobby_id))
+
+      return {
+        id: post._id,
+        content: post.description,
+        user: {
+          id: user?.uuid || 'inconnu',
+          nom: user?.firstname || user?.lastname || 'Nom inconnu',
+          username: user?.username || 'utilisateur',
+          photo: formatAvatarUrl(user?.avatar)
+        },
+        hobby: hobby?.name || null,
+        user_id: post.user_id
+      }
+    })
+  } catch (error) {
+    console.error('Erreur lors du chargement des posts :', error)
+  }
+})
+
+// Filtrage selon userId
+const filteredPosts = computed(() => {
+  if (!props.userId) return posts.value
+  return posts.value.filter(p => String(p.user_id) === String(props.userId))
+})
+
+// 🔹 Émettre le nombre de posts filtrés à chaque changement
+watch(filteredPosts, (newVal) => {
+  emit('postsLoaded', newVal.length)
+}, { immediate: true })
 </script>
-
-<style scoped>
-/* Personnalisation du scroll */
-.custom-scroll::-webkit-scrollbar {
-  width: 8px; /* largeur */
-}
-
-.custom-scroll::-webkit-scrollbar-track {
-  background: #e2e8f000; /* gris clair (gray-200) */
-  border-radius: 10px;
-}
-
-.custom-scroll::-webkit-scrollbar-thumb {
-  background-color: #38bdf8; /* sky-400 */
-  border-radius: 10px;
-  border: 2px solid #e2e8f0; /* petit espace entre thumb et track */
-  transition: background-color 0.2s ease;
-}
-
-.custom-scroll::-webkit-scrollbar-thumb:hover {
-  background-color: #0284c7; /* sky-600 */
-}
-
-/* Firefox */
-.custom-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: #38bdf8 #ffffff00;
-}
-</style>

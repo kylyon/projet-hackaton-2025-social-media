@@ -1,13 +1,11 @@
 <template>
   <div v-if="isLoggedIn">
     <!-- Si l'utilisateur est connecté, affiche son profil -->
-    <div
-      class="flex flex-col md:flex-row rounded-lg p-2 gap-4 max-w-4xl mx-auto items-center"
-    >
+    <div class="flex flex-col md:flex-row rounded-lg p-2 gap-4 max-w-4xl mx-auto items-center">
       <!-- Colonne gauche : image -->
       <div class="flex-shrink-0">
         <img
-          :src="user.avatar || avatar"
+          :src="formatAvatarUrl(user.avatar)"
           :alt="user.username"
           class="w-18 h-18 object-cover rounded-lg border border-gray-300"
         />
@@ -49,12 +47,18 @@ const userStore = useUserStore()
 const user = computed(() => userStore.user)
 const isLoggedIn = computed(() => userStore.isLoggedIn)
 
+// 🔧 Fonction utilitaire réutilisable
+function formatAvatarUrl(avatarUrl) {
+  if (!avatarUrl) return '/avatar-default.jpg'
+  if (avatarUrl.startsWith('http')) return avatarUrl
+  return `http://localhost:3000${avatarUrl.startsWith('/') ? '' : '/'}${avatarUrl}`
+}
+
 onMounted(() => {
   if (!isLoggedIn.value) {
     console.log('Utilisateur non connecté, redirection vers /login')
     router.push('/login')
   } else {
-    user.value.avatar = "http://localhost:3000" + user.value.avatar
     console.log('Profil chargé pour', user.value.username)
   }
 })
