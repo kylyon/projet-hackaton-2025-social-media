@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const upload = require('../../middleware/multerMiddleware')
 const router = Router();
 
 const { userLogin, userLogout, userRegister, getAuthToken } = require("../../controllers/auth/authController")
@@ -37,7 +38,7 @@ router.post('/logout', userLogout);
  *       200:
  *         description: L'utilisateur est créé en base de données
  */
-router.post('/register', userRegister);
+router.post('/register', upload.single("avatar"), userRegister);
 
 
 /**

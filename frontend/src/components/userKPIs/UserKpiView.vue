@@ -61,7 +61,6 @@ import { ref, computed, onMounted } from 'vue'
 import KpiCard from './KpiCard.vue'
 import BarChart from './BarChart.vue'
 import PieChart from './PieChart.vue'
-import UserTable from './UserTable.vue'
 import Loading from '../admin/Loading.vue'
 
 // État réactif

@@ -1,19 +1,35 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center">
-    <p v-if="errors.login" class="text-red-600 text-sm mt-1">{{ errors.login }}</p>
     <div
-      class="bg-sky-100 flex flex-col items-center justify-center border border-gray-300 rounded-lg shadow-md m-6 max-w-xs md:max-w-sm lg:max-w-md p-6 w-full">
+      class="bg-sky-100 flex flex-col items-center justify-center border border-gray-300 rounded-lg shadow-md m-6 max-w-xs md:max-w-sm lg:max-w-md p-6 w-full"
+    >
       <h1 class="text-2xl text-center font-bold mb-6 text-sky-700">
         Connexion
       </h1>
 
       <form class="w-full flex flex-col gap-4" @submit.prevent="login">
-        <InputField label="Email" v-model="email" placeholder="Entrez votre email" typeField="text" />
+        <InputField
+          label="Nom d’utilisateur"
+          v-model="identifier"
+          placeholder="Entrez votre nom d’utilisateur"
+          typeField="text"
+        />
 
-        <InputField label="Mot de passe" v-model="password" placeholder="Entrez votre mot de passe"
-          typeField="password" />
+        <InputField
+          label="Mot de passe"
+          v-model="password"
+          placeholder="Entrez votre mot de passe"
+          typeField="password"
+        />
 
-        <AppButton label="Connexion" class="mt-2" />
+        <p
+          v-if="errorMessage"
+          class="text-red-600 text-center text-sm bg-red-100 py-2 rounded-md animate-fadeIn"
+        >
+          {{ errorMessage }}
+        </p>
+
+        <AppButton label="Connexion" class="mt-2" :loading="loading" />
       </form>
 
       <p class="text-center text-sm mt-4">
@@ -31,26 +47,67 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import InputField from './InputField.vue'
 import AppButton from './Button.vue'
-import { loginAction } from "@/actions/auth/authAction.js"
+import { loginAction } from '@/actions/auth/authAction.js'
+import { useUserStore } from '@/stores/userStore.js'
+import { hashPassword } from '../../utils/getCrypto'
 
 const router = useRouter()
+const userStore = useUserStore()
 
-const email = ref('')
+const identifier = ref('')
 const password = ref('')
-const errors = ref({})
+const errorMessage = ref('')
+const loading = ref(false)
 
 async function login() {
-  //console.log('Connexion avec', email.value, password.value)
-  const { res, json }= await loginAction(email.value, password.value)
+  if (!identifier.value.trim() || !password.value.trim()) {
+    errorMessage.value = 'Remplis tous les champs'
+    setTimeout(() => (errorMessage.value = ''), 3000)
+    return
+  }
 
-  if(res.ok)
-  {
-    if(json.user.role !== "admin") router.push("/profil")
-    else router.push("/admin")
-    return;
-  } 
+  loading.value = true
 
-  errors.value.login = json.message
+  try {
+    console.log('Tentative de connexion avec:', identifier.value, password.value)
 
+
+    const res = await loginAction(identifier.value, password.value)
+    console.log('Réponse API:', res)
+
+    if (res?.user?.token?.tokenId) {
+      // Stocke les données utilisateur dans le store et localStorage
+      userStore.setUser(res.user, res.user.token.tokenId)
+
+      router.push('/')
+      identifier.value = ''
+      password.value = ''
+      errorMessage.value = ''
+    } else {
+      throw new Error('Identifiants incorrects')
+    }
+  } catch (err) {
+    console.error(err)
+    errorMessage.value = '❌ Nom d’utilisateur ou mot de passe incorrect.'
+    setTimeout(() => (errorMessage.value = ''), 3000)
+  } finally {
+    loading.value = false
+  }
 }
 </script>
+
+<style>
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+</style>
