@@ -55,7 +55,6 @@ onMounted(() => {
     router.push('/login')
   } else {
     user.value.avatar = "http://localhost:3000" + user.value.avatar
-    console.log(user.value)
     console.log('Profil chargé pour', user.value.username)
   }
 })
