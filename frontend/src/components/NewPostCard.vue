@@ -156,6 +156,9 @@ async function submitPost() {
     description.value = ""
     success.value = true
     emit('posted', data)
+    setTimeout(() => {
+    window.location.reload()
+  }, 2000)
   } catch (err) {
     console.error(err)
     error.value = err.message || "Erreur"

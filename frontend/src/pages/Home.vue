@@ -1,8 +1,8 @@
 <template>
   <main class="min-h-screen flex justify-center items-center">
-    <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl h-[90vh] mx-2 md:mx-10">
+    <div class="flex flex-col md:flex-row gap-6 w-full max-w-6xl mx-2 my-16 md:mx-10">
       <!-- Colonne gauche : création d’un nouveau post -->
-      <div class="md:w-1/3 w-full">
+      <div class="md:w-1/3 w-full space-y-6">
         <NewPostCard />
         <HobbieCard />
       </div>

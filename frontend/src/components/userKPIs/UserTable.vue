@@ -21,7 +21,7 @@
             <td class="px-6 py-4 whitespace-nowrap">
               <img 
                 v-if="user.avatar" 
-                :src="user.avatar" 
+                :src="getUserPP(user)"
                 :alt="user.username"
                 class="w-10 h-10 rounded-full object-cover"
               />
@@ -72,6 +72,11 @@ defineProps({
     required: true
   }
 })
+
+const getUserPP = (user) => 
+{
+  return "https://hackaton-backend-api.vercel.app" + user.avatar
+}
 
 const getUserInitials = (user) => {
   if (user.lastname) {

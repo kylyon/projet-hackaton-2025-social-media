@@ -2,12 +2,12 @@
   <Transition name="modal">
     <div
       v-if="isOpen"
-      class="fixed inset-0 z-[1055] flex items-center justify-center bg-opacity-50 cursor-pointer"
+      class="fixed inset-0 z-[1055] flex items-center justify-center backdrop-blur-sm bg-opacity-50 cursor-pointer"
       @click="$emit('close')">
       <div
-        class="relative w-full max-w-[600px] transform rounded-lg bg-white p-4 shadow-xl transition-all"
+        class="relative w-full max-w-[600px] transform rounded-lg bg-white p-4 shadow-2xl shadow-zinc-400 transition-all"
         @click.stop>
-        <div class="flex items-center justify-between border-b pb-4">
+        <div class="flex items-center justify-between pb-4">
           <h5 class="text-xl font-medium text-gray-900">
             {{ title }}
           </h5>
@@ -21,18 +21,21 @@
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor" class="w-5 h-5">
+                stroke="currentColor" class="w-5 h-5 cursor-pointer hover:stroke-red-500 transition ease-in-out duration-150 hover:scale-110">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </span>
           </button>
         </div>
 
-        <div class="py-4">
-          <slot name="content"/>
+        <div class="py-3">
+          <div class="flex flex-col space-y-5">
+              <p>{{ description }}</p>
+              <slot name="content"/>
+          </div>
         </div>
 
-        <div class="border-t pt-4 flex justify-end space-x-2">
+        <div class="pt-4 flex justify-end space-x-2">
           <slot name="footer"/>
         </div>
       </div>
@@ -45,6 +48,10 @@ defineProps({
   title: {
     type: String,
     default: "Modal title"
+  },
+  description: {
+    type: String,
+    default: "Vous etes sur le point de ..."
   },
   isOpen: {
     type: Boolean,

@@ -45,11 +45,11 @@ const createComment = async (req, res) => {
       const CommentField = req.body;
       // Check if all required fields are present
 
-      const {description, post_id} =CommentField
+      const {description, post_id, user_id} =CommentField
     
        try {
       
-          if(!description ||  !post_id){
+          if(!description ||  !post_id || !user_id){
             return res.status(400).json({ message: "Missing parameters", status: "400" }); 
           }
           // Create new Comment
