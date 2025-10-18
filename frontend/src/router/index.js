@@ -29,7 +29,8 @@ const routes = [
     path: "/admin",
     component: AdminLayout,
     meta: {
-      requiredAdmin: true
+      requiredAdmin: true,
+      requiredAuth: true
     },
     children: [
       {
@@ -110,9 +111,6 @@ const router = createRouter({
 })
 
 router.beforeEach( async (to, from, next) => {
-
-  console.log(to, from)
-
   const { cookies } = useCookies()
 
   if(to.meta.requiredAuth)

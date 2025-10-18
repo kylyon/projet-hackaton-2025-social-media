@@ -4,6 +4,7 @@ const CommentSchema = new mongoose.Schema(
     {
         description: { type: String, required: true, unique: false },
         post_id : { type: String, required: true, unique: false },
+        user_id : { type: String, required: true, unique: false },
     }
 );
 
@@ -14,12 +15,14 @@ class Comment
 {
     #_description;
     #_post_id;
+    #_user_id;
   
 
-    constructor(postId,description)
+    constructor(postId,description, userId)
     {
         
         this.#_post_id = postId;
+        this.#_user_id = userId;
         this.#_description = description;
     }
 
@@ -32,6 +35,11 @@ class Comment
     get CommentpostId()
     {
         return this.#_post_id;
+    }
+    
+    get CommentUserId()
+    {
+        return this.#_user_id;
     }
 
     
@@ -111,7 +119,8 @@ class Comment
         try {
             const commentDB = await CommentModel.create({
                 description: this.#_description, 
-                post_id : this.#_post_id 
+                post_id : this.#_post_id,
+                user_id : this.#_user_id,
             });
 
             const comment = commentDB.toJSON()
