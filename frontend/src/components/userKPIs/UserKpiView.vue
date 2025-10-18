@@ -43,17 +43,14 @@
 
         <!-- Charts -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <PieChart :data="stats.roleDistribution" title="Répartition par Rôle" />
+          <PieChart :data="stats.roleDistribution" title="Attribution des rôles par utilisateur" />
           <BarChart :data="stats.hobbiesDistribution" title="Top 5 Hobbies" />
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <BarChart :data="stats.postsDistribution" title="Distribution des Posts" />
-          <PieChart :data="stats.hobbiesEngagement" title="Engagement par Hobbies" />
+          <BarChart :data="stats.postsDistribution" title="Répartition des publications par utilisateur" />
+          <PieChart :data="stats.hobbiesEngagement" title="Engagement sur les hobbies par utilisateur" />
         </div>
-
-        <!-- User Table -->
-        <UserTable :users="usersWithStats" />
       </template>
     </div>
   </div>
@@ -64,7 +61,6 @@ import { ref, computed, onMounted } from 'vue'
 import KpiCard from './KpiCard.vue'
 import BarChart from './BarChart.vue'
 import PieChart from './PieChart.vue'
-import UserTable from './UserTable.vue'
 import Loading from '../admin/Loading.vue'
 
 // État réactif

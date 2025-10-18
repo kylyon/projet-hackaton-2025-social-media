@@ -28,9 +28,9 @@
 
             <td class="px-6 py-4 flex items-center space-x-3 whitespace-nowrap">
               <!--Edit-->
-              <svg @click="() =>getHobbies(hobby._id)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-icon lucide-pencil w-5 h-5 stroke-zinc-500 hover:stroke-blue-500 transition ease-in-out  cursor-pointer"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
+              <svg @click="() =>getHobbies(hobby._id)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-icon lucide-pencil w-5 h-5 stroke-zinc-700 hover:stroke-zinc-900 transition-all ease-in-out hover:scale-110 stroke-1   cursor-pointer"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
               <!--Delete-->
-              <svg @click="()=> delData (hobby._id)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash w-5 h-5 stroke-zinc-500 hover:stroke-blue-500 transition ease-in-out  cursor-pointer"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              <svg  @click="()=> delData (hobby._id)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-delete-icon lucide-delete w-5 h-5 stroke-red-700 hover:stroke-red-500 transition-all ease-in-out hover:scale-110 stroke-1   cursor-pointer"><path d="M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/><path d="m12 9 6 6"/><path d="m18 9-6 6"/></svg>
             </td>
           </tr>
         </tbody>
@@ -41,87 +41,111 @@
   <Modal 
     :is-open="showModal" 
     @close="showModal = false"
-    title="Modification">
+    title="Confirmer la modification"
+    description="Vous êtes sur le point de modifier cet hobby. Cette action remplacera les informations actuelles. Souhaitez-vous continuer ?"
+    >
     <template #content>
-      <form @submit.prevent>
-         <div class="space-y-3" v-if="updateHobbiesData.length >0">
-              <label for="name">Name</label>
-              <input type="text" id="name" for="name" v-model="updateHobbiesData.name" class="m-0 -ms-px block flex-auto rounded-e border border-solid border-neutral-200 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-surface outline-none transition duration-200 ease-in-out placeholder:text-neutral-500 focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:placeholder:text-neutral-200 dark:autofill:shadow-autofill dark:focus:border-primary">
-              <input hidden type="text" v-model="updateHobbiesData._id">
-         </div>
-      </form>
-    </template>
+       <form @submit.prevent>
+          <div class="space-y-3" v-if="Object.keys(updateHobbiesData).length >0">
+                <input type="text" id="name" for="name" v-model="updateHobbiesData.name" class="m-0 -ms-px block flex-auto  w-full border border-solid border-blue-400 rounded-md bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-surface outline-none transition duration-200 ease-in-out placeholder:text-neutral-500 focus:z-[3] focus:border-primary focus:shadow-inset focus:outline-none motion-reduce:transition-none dark:border-white/10 dark:text-white dark:placeholder:text-neutral-200 dark:autofill:shadow-autofill dark:focus:border-primary">
+                <input hidden type="text" v-model="updateHobbiesData._id">
+          </div>
+
+           <Loading v-else />
+        </form>
+        <span class="text-center text-green-500" v-if="msgAction !== undefined">{{ msgAction }} !!!!</span>
+    
+      </template>
     <template #footer>
-       <button
-          @click="showModal = false"
-          type="button"
-          class="ms-1 inline-block rounded bg-zinc-400 px-6 pb-2 pt-2.5  text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
-          data-twe-ripple-init
-          data-twe-ripple-color="light">
-        Fermer
-      </button>
-      <button @click="sauvegarder" class="text-zinc-500 font-semibold">Sauvegarder</button>
+      <Button @button-action="showModal = false" title="Fermer" class="bg-zinc-800 "/>
+      <Button @button-action="sauvegarder" class="text-zinc-800 font-semibold cursor-pointer" title="Modifier"/>
     </template>
   </Modal>
 
 </template>
 
 <script setup>
-import {deleteData} from "../../../utils/deleteData";
+
 import {updateData}  from "../../../utils/updateData";
-import { getData } from "../../../utils/getData";
+import Loading from "./Loading.vue";
 import Modal from "./Modal.vue";
 import { ref } from "vue";
+import Button from "./Button.vue";
+
+const emit = defineEmits(['refresh']);
 
 defineProps({
   hobbies: {
     type: Array,
     required: true
   }
-})
+});
 
-const updateHobbiesData=ref([]); 
-const showModal=ref(false);
+const updateHobbiesData = ref({
+  _id: '',
+  name: ''
+}); 
+const showModal = ref(false);
+const msgAction=ref(undefined); //Message d'action
 
-async function getHobbies(id){
-  showModal.value=true 
-  const Hobbies=await fetch(`https://hackaton-backend-api.vercel.app/hobbies/${id}`);
-  const data=await Hobbies.json();
-  updateHobbiesData.value=data.hobbies; 
-
-  console.log(updateHobbiesData);
-}
-
-async function edit(id){
-
-  showModal.value=true
-  console.log(showModal.value+" "+id)
-  
-//  try {
-//       const  update=await updateData("https://hackaton-backend-api.vercel.app/hobbies/update",id,data);
-
-//       if( update){
-//         alert( update);
-//       }
-
-//   }catch(error){
-//     console.log(`Erreur lors de la modification : ${error}`);
-//     alert(`Erreur lors de la modification : ${error}`); 
-//   }
-}
-
-async function delData(id){
+async function getHobbies(id) {
   try {
-      const del=await deleteData("https://hackaton-backend-api.vercel.app/hobbies/delete",id);
+    showModal.value = true;
+    const response = await fetch(`https://hackaton-backend-api.vercel.app/hobbies/${id}`);
+   
 
-      if(del){
-        alert(del);
-      }
+    if(response.ok){
+         const hobbiesValue = await response.json();
+         updateHobbiesData.value = hobbiesValue.data;
+    }
 
-  }catch(error){
-    console.log(`Erreur lors de la suppression : ${error}`);
-    alert(`Erreur lors de la suppression : ${error}`); 
+  } catch (error) {
+    console.error("Error fetching hobby:", error);
+    alert("Error fetching hobby details");
   }
 }
 
+async function sauvegarder() {
+  try {
+    if (!updateHobbiesData.value._id || !updateHobbiesData.value.name) {
+      alert("Please fill all required fields");
+      return;
+    }
+
+    const response = await updateData(
+      "https://hackaton-backend-api.vercel.app/hobbies/update",
+      updateHobbiesData.value._id,
+      { name: updateHobbiesData.value.name }
+    );
+
+    if (response) {
+      msgAction.value="Gread !!! Hobby updated successfully";  // Le message de retour
+      
+      setTimeout(()=>{
+        showModal.value = false;
+        msgAction.value=undefined
+      },5000)
+
+      emit('refresh'); // To refresh the parent component's data
+    }
+  } catch (error) {
+    console.error("Error updating hobby:", error);
+    alert("Error updating hobby");
+  }
+}
+
+async function delData(id) {
+  try {
+    if (confirm("Êtes-vous sûr de vouloir supprimer ce hobby ?")) {
+      const response = await fetch(`https://hackaton-backend-api.vercel.app/hobbies/delete/${id}`);
+      if (response) {
+        alert("Hobby deleted successfully");
+        emit('refresh'); // To refresh the parent component's data
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting hobby:", error);
+    alert("Error deleting hobby");
+  }
+}
 </script>
