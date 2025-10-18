@@ -15,7 +15,8 @@ import Profile from '@/pages/Profile.vue'
 import Register from '@/pages/Register.vue'
 
 //Import des middelware
-import {authMiddleware} from '@/middleware/authMiddleware'
+import {authMiddleware, loggedMiddleware} from '@/middleware/authMiddleware'
+
 
 const routes = [
   {
@@ -25,21 +26,23 @@ const routes = [
   {
     path: "/admin",
     component: AdminLayout,
+    meta: {
+      requiredAuth: true,
+      requiredAdmin: true
+    },
     children: [
       {
-        path: '',
+        path: '/admin',
         name: "dashboard",
         component: adminHome,
-        meta: {
-          requiredAuth: false
-        }
       },
       {
         path: 'setting',
         name: "admin-setting",
         component: adminSetting,
         meta: {
-          requiredAuth: false
+          requiredAuth: true,
+          requiredAdmin: true
         }
       },
       {
@@ -47,7 +50,8 @@ const routes = [
         name: "users",
         component: AdminUsersView,
         meta: {
-          requiredAuth: false
+          requiredAuth: true,
+          requiredAdmin: true
         }
       },
       {
@@ -55,7 +59,8 @@ const routes = [
         name: "hobbies",
         component: AdminHobbiesView,
         meta: {
-          requiredAuth: false
+          requiredAuth: true,
+          requiredAdmin: true
         }
       }
 
@@ -81,12 +86,18 @@ const routes = [
       {
         path: 'login',
         name: 'login',
-        component: Login
+        component: Login,
+        meta: {
+          requiredNonAuth: true
+        }
       },
       {
         path: 'register',
         name: 'register',
-        component: Register
+        component: Register,
+        meta: {
+          requiredNonAuth: true
+        }
       }
     ]
   }
@@ -97,13 +108,23 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiredAuth) {
-    const { cookies } = useCookies()
+router.beforeEach( async (to, from, next) => {
+
+  console.log(to, from)
+
+  const { cookies } = useCookies()
+
+  if(to.meta.requiredAuth)
+  {
     return authMiddleware(to, from, next, cookies)
-  } else {
-    next()
   }
-})
+
+  if(to.meta.requiredNonAuth)
+  {
+    return loggedMiddleware(to, from, next, cookies)
+  }
+
+  next()
+} )
 
 export default router

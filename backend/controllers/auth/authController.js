@@ -14,7 +14,7 @@ const userLogin = async (req, res) => {
             }
         )
 
-        if(!userFind) return res.status(401).json({message: "User not find", status: 401});
+        if(!userFind) return res.status(401).json({message: "Nom d'utilisateur ou mot de passe incorrect", status: 401});
         
         const user = userFind[0]
         
@@ -28,7 +28,7 @@ const userLogin = async (req, res) => {
             maxAge: 3600 * 1000
         })
 
-        res.status(200).json({message: "User find", user: user})
+        res.status(200).json({message: "Utilisateur connecté", user: user})
     } catch (error) {
         return res.status(401).json({error, message: "Erreur lors de la connexion de l'utilisateur"})
     }

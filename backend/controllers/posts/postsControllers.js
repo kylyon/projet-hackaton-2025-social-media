@@ -46,11 +46,11 @@ const createPost = async (req, res) => {
 
   const postField = req.body;
   // Check if all required fields are present
-  const {description, comment_id, user_id} = postField
+  const {description, comment_id, user_id, hobby_id} = postField
 
    try {
   
-      if(!description ||  !comment_id || !user_id){
+      if(!description ||  !comment_id || !user_id || !hobby_id){
         return res.status(400).json({ message: "Missing parameters", status: "400" }); 
       }
       // Create new post
