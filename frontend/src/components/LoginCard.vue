@@ -79,10 +79,13 @@ async function login() {
       // Stocke les données utilisateur dans le store et localStorage
       userStore.setUser(res.user, res.user.token.tokenId)
 
-      router.push('/')
       identifier.value = ''
       password.value = ''
       errorMessage.value = ''
+
+      if(userStore.user.role === "admin") return router.push('/admin')
+      router.push('/')
+      
     } else {
       throw new Error('Identifiants incorrects')
     }
