@@ -23,7 +23,7 @@ export const createAuthToken = async (userId, userAgent, ttl = 3600) =>
 
 export const getAuthToken = async () => 
 {
-    const res = await fetch("http://localhost:3000/auth/get_token", {
+    const res = await fetch("https://hackaton-backend-api.vercel.app/auth/get_token", {
         method: "post",
         body: JSON.stringify({
             tokenId : (await window.cookieStore.get("auth_token")).value
